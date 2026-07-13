@@ -47,11 +47,38 @@
                     break;
                 case 3:
                     Console.WriteLine("Edit contact");
-
+                    Console.WriteLine("Enter name to edit");
+                    string tempName = Console.ReadLine();
+                    for(int i = 0; i < names.count; i++)
+                    {
+                        if (names.[i] == tempName)
+                        {
+                            Console.WriteLine("Enter the new name");
+                            names[i] = Console.ReadLine();
+                            Console.WriteLine("Enter the new Phone no.");
+                            phones[i]=Console.ReadLine();
+                            Console.WriteLine("Enter the new Email");
+                            emails[i] = Console.ReadLine();
+                            Console.WriteLine("Enter new Notes");
+                            notes[i] = Console.ReadLine();
+                        }
+                    }
                     break;
                 case 4:
                     Console.WriteLine("Delete contact");
-                    break;
+                    Console.WriteLine("Enter name to Search");
+                    string tempName = Console.ReadLine();
+                    for (int i = 0; i < names.Count; i++)
+                    {
+                        if (names[i] == tempName)
+                        {
+                            names[i] = names[i+1];
+                            phones[i] = phones[i + 1];
+                            emails[i] = emails[i + 1];
+                            notes[i] = notes[i + 1];
+                            break;
+                        }
+                        break;
                 case 5:
                     Console.WriteLine("Enter name to Search");
                     string tempName = Console.ReadLine();
