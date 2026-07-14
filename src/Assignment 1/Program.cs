@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 namespace Assignments
 {
+    /// <summary>
+    /// Base factory.
+    /// </summary>
     internal class Program
     {
         private static void Main(string[] args)
