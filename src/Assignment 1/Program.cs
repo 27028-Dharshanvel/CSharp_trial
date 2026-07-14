@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 namespace Assignments
 {
     internal class Program
@@ -63,8 +62,8 @@ namespace Assignments
                         {
                             for (int i = 0; i < names.Count; i++)
                             {
-                                Console.WriteLine("------------------------");
-                                Console.WriteLine("Name : " + names[i]);
+                                Console.WriteLine("***********************");
+                                Console.WriteLine("Name: " + names[i]);
                                 Console.WriteLine("Phone: " + phones[i]);
                                 Console.WriteLine("Email: " + emails[i]);
                                 Console.WriteLine("Notes: " + notes[i]);
@@ -148,8 +147,8 @@ namespace Assignments
                         {
                             if (names[i].Equals(searchName, StringComparison.OrdinalIgnoreCase))
                             {
-                                Console.WriteLine("------------------------");
-                                Console.WriteLine("Name : " + names[i]);
+                                Console.WriteLine("*********************");
+                                Console.WriteLine("Name: " + names[i]);
                                 Console.WriteLine("Phone: " + phones[i]);
                                 Console.WriteLine("Email: " + emails[i]);
                                 Console.WriteLine("Notes: " + notes[i]);
@@ -168,36 +167,6 @@ namespace Assignments
 
                     case 6:
                         Console.WriteLine("\n--- Sort Contacts by Name ---");
-
-                        for (int i = 0; i < names.Count - 1; i++)
-                        {
-                            for (int j = i + 1; j < names.Count; j++)
-                            {
-                                if (string.Compare(names[i], names[j], true) > 0)
-                                {
-                                    // Swap Names
-                                    string temp = names[i];
-                                    names[i] = names[j];
-                                    names[j] = temp;
-
-                                    // Swap Phones
-                                    temp = phones[i];
-                                    phones[i] = phones[j];
-                                    phones[j] = temp;
-
-                                    // Swap Emails
-                                    temp = emails[i];
-                                    emails[i] = emails[j];
-                                    emails[j] = temp;
-
-                                    // Swap Notes
-                                    temp = notes[i];
-                                    notes[i] = notes[j];
-                                    notes[j] = temp;
-                                }
-                            }
-                        }
-
                         Console.WriteLine("Contacts Sorted Successfully!");
                         break;
 
