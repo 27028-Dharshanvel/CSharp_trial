@@ -22,7 +22,8 @@ namespace ContactManagerApp.Repository
             public ContactRepository(string filePath)
             {
                 _filePath = filePath;
-             }
+            }
+
         /// <summary>
         /// Retrieves all contacts.
         /// </summary>

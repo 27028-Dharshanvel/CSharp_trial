@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ContactManagerApp.Helpers;
 using ContactManagerApp.Models;
 using ContactManagerApp.Repository;
 using ContactManagerApp.Services;
 
-string filePath = @"C:\Users\dharshanvel.velumani\Downloads\CSharp_trial\src\Assignment 1\Data\contacts.json";
+string filePath = @"Data\contacts.txt";
 
-ContactRepository repository = new ContactRepository(filePath);
+ContactRepository repository =
+    new ContactRepository(filePath);
 
-ContactManager manager = new ContactManager(repository);
+ContactManager manager =
+    new ContactManager(repository);
 
 while (true)
 {
     Console.WriteLine();
-    Console.WriteLine("===== Contact Manager =====");
     Console.WriteLine("1. Add Contact");
     Console.WriteLine("2. View Contacts");
     Console.WriteLine("3. Edit Contact");
@@ -24,118 +24,191 @@ while (true)
 
     Console.Write("Enter Choice: ");
 
-    if (!int.TryParse(Console.ReadLine(), out int choice))
-    {
-        Console.WriteLine("Invalid Input");
-        continue;
-    }
+    int choice =
+        Convert.ToInt32(Console.ReadLine());
 
     switch (choice)
     {
         case 1:
 
-            Contact contact = new Contact();
+            Contact contact =
+                new Contact();
 
             Console.Write("Name: ");
-            contact.Name = Console.ReadLine() ?? "";
+            contact.Name =
+                Console.ReadLine();
 
             Console.Write("Phone Number: ");
-            contact.PhoneNumber = Console.ReadLine() ?? "";
+            contact.PhoneNumber =
+                Console.ReadLine();
 
             Console.Write("Email: ");
-            contact.Email = Console.ReadLine() ?? "";
+            contact.Email =
+                Console.ReadLine();
 
             Console.Write("Notes: ");
-            contact.Notes = Console.ReadLine() ?? "";
+            contact.Notes =
+                Console.ReadLine();
+
+            if (!ValidationHelper
+                .IsValidName(contact.Name))
+            {
+                Console.WriteLine("Invalid Name");
+                break;
+            }
+
+            if (!ValidationHelper
+                .IsValidPhoneNumber(
+                contact.PhoneNumber))
+            {
+                Console.WriteLine(
+                    "Invalid Phone Number");
+                break;
+            }
+
+            if (!ValidationHelper
+                .IsValidEmail(
+                contact.Email))
+            {
+                Console.WriteLine(
+                    "Invalid Email");
+                break;
+            }
 
             manager.AddContact(contact);
 
-            Console.WriteLine("Contact Added Successfully");
+            Console.WriteLine(
+                "Contact Added");
+
             break;
 
         case 2:
 
-            var contacts = manager.GetAllContacts();
+            List<Contact> contacts =
+                manager.GetAllContacts();
 
-            foreach (var item in contacts)
+            for (int i = 0;
+                 i < contacts.Count;
+                 i++)
             {
-                Console.WriteLine("-------------------");
-                Console.WriteLine($"Name : {item.Name}");
-                Console.WriteLine($"Phone: {item.PhoneNumber}");
-                Console.WriteLine($"Email: {item.Email}");
-                Console.WriteLine($"Notes: {item.Notes}");
+                Console.WriteLine();
+                Console.WriteLine(
+                    "ID : " +
+                    contacts[i].ContactId);
+
+                Console.WriteLine(
+                    "Name : " +
+                    contacts[i].Name);
+
+                Console.WriteLine(
+                    "Phone : " +
+                    contacts[i].PhoneNumber);
+
+                Console.WriteLine(
+                    "Email : " +
+                    contacts[i].Email);
+
+                Console.WriteLine(
+                    "Notes : " +
+                    contacts[i].Notes);
             }
 
             break;
 
         case 3:
 
-            Console.Write("Enter Contact Name: ");
-            string oldName = Console.ReadLine() ?? "";
+            Console.Write(
+                "Enter Name To Edit : ");
 
-            Contact updatedContact = new Contact();
+            string oldName =
+                Console.ReadLine();
 
-            Console.Write("New Name: ");
-            updatedContact.Name = Console.ReadLine() ?? "";
+            Contact updatedContact =
+                new Contact();
 
-            Console.Write("Phone Number: ");
-            updatedContact.PhoneNumber = Console.ReadLine() ?? "";
+            Console.Write("New Name : ");
+            updatedContact.Name =
+                Console.ReadLine();
 
-            Console.Write("Email: ");
-            updatedContact.Email = Console.ReadLine() ?? "";
+            Console.Write("New Phone : ");
+            updatedContact.PhoneNumber =
+                Console.ReadLine();
 
-            Console.Write("Notes: ");
-            updatedContact.Notes = Console.ReadLine() ?? "";
+            Console.Write("New Email : ");
+            updatedContact.Email =
+                Console.ReadLine();
 
-            bool updated =
-                manager.EditContact(
-                    oldName,
-                    updatedContact);
+            Console.Write("New Notes : ");
+            updatedContact.Notes =
+                Console.ReadLine();
 
-            Console.WriteLine(
-                updated
-                ? "Contact Updated"
-                : "Contact Not Found");
+            if (manager.EditContact(
+                oldName,
+                updatedContact))
+            {
+                Console.WriteLine(
+                    "Contact Updated");
+            }
+            else
+            {
+                Console.WriteLine(
+                    "Contact Not Found");
+            }
 
             break;
 
         case 4:
 
-            Console.Write("Enter Name: ");
+            Console.Write(
+                "Enter Name To Delete : ");
 
             string deleteName =
-                Console.ReadLine() ?? "";
+                Console.ReadLine();
 
-            bool deleted =
-                manager.DeleteContact(deleteName);
-
-            Console.WriteLine(
-                deleted
-                ? "Contact Deleted"
-                : "Contact Not Found");
+            if (manager
+                .DeleteContact(deleteName))
+            {
+                Console.WriteLine(
+                    "Deleted Successfully");
+            }
+            else
+            {
+                Console.WriteLine(
+                    "Contact Not Found");
+            }
 
             break;
 
         case 5:
 
-            Console.Write("Enter Name: ");
+            Console.Write(
+                "Enter Name To Search : ");
 
             string searchName =
-                Console.ReadLine() ?? "";
+                Console.ReadLine();
 
-            Contact? result =
-                manager.SearchContact(searchName);
+            Contact result =
+                manager.SearchContact(
+                searchName);
 
-            if (result == null)
+            if (result != null)
             {
-                Console.WriteLine("Contact Not Found");
+                Console.WriteLine(
+                    result.Name);
+
+                Console.WriteLine(
+                    result.PhoneNumber);
+
+                Console.WriteLine(
+                    result.Email);
+
+                Console.WriteLine(
+                    result.Notes);
             }
             else
             {
-                Console.WriteLine($"Name : {result.Name}");
-                Console.WriteLine($"Phone: {result.PhoneNumber}");
-                Console.WriteLine($"Email: {result.Email}");
-                Console.WriteLine($"Notes: {result.Notes}");
+                Console.WriteLine(
+                    "Contact Not Found");
             }
 
             break;
@@ -144,7 +217,9 @@ while (true)
 
             manager.SortContacts();
 
-            Console.WriteLine("Contacts Sorted");
+            Console.WriteLine(
+                "Contacts Sorted");
+
             break;
 
         case 7:
@@ -153,7 +228,9 @@ while (true)
 
         default:
 
-            Console.WriteLine("Invalid Choice");
+            Console.WriteLine(
+                "Invalid Choice");
+
             break;
     }
 }
