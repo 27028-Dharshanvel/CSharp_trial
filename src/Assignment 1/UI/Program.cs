@@ -195,6 +195,10 @@ namespace ContactManagerApp
 
                         string? searchName =
                             Console.ReadLine();
+                        if (string.IsNullOrWhiteSpace(searchName))
+                            {
+                            break;
+                            }
 
                         Contact? result = manager.SearchContact(searchName);
 
