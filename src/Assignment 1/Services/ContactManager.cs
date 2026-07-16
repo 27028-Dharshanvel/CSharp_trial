@@ -1,143 +1,157 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using ContactManagerApp.Models;
+﻿using ContactManagerApp.Models;
 using ContactManagerApp.Repository;
+
 namespace ContactManagerApp.Services
 {
     /// <summary>
-    /// Base factory.
+    /// Class ContactManager
     /// </summary>
     public class ContactManager
     {
+        /// <summary>
+        /// Class ContactManager
+        /// </summary>
         private readonly ContactRepository _repository;
         /// <summary>
         /// Initializes a new instance of the <see cref="ContactManager"/> class.
         /// </summary>
-        /// <param name="repository">
-        /// The path to the file used to store contact information.
-        /// </param>
+        /// <param name="repository">The contact repository.</param>
         public ContactManager(ContactRepository repository)
         {
-            _repository = repository;
+            this._repository = repository;
         }
         /// <summary>
-        /// Adds a contact to the repository.
+        /// Adds contact.
         /// </summary>
-        /// <param name="contact">
-        /// The contact to add.
-        /// </param>
+        /// <param name="contact">Conatct</param>
         public void AddContact(Contact contact)
         {
-            List<Contact> contacts = _repository.GetAllContacts();
+            List<Contact> contacts =
+                _repository.LoadContacts();
 
             contacts.Add(contact);
 
             _repository.SaveContacts(contacts);
         }
         /// <summary>
-        /// Gets all contacts from the repository.
+        /// Gets the contact
         /// </summary>
-        /// <returns>
-        /// A list of all contacts.
-        /// </returns>
+        /// <returns>contacts</returns>
         public List<Contact> GetAllContacts()
         {
-            return _repository.GetAllContacts();
+            return _repository.LoadContacts();
         }
         /// <summary>
-        /// Searches for a contact by name.
+        /// Searches contacts 
         /// </summary>
-        /// <param name="name">
-        /// The name of the contact to search for.
-        /// </param>
-        /// <returns>
-        /// The matching contact if found; otherwise, null.
-        /// </returns>
-        public Contact? SearchContact(string name)
+        /// <param name="name">Name</param>
+        /// <returns>Contact</returns>
+        public Contact SearchContact(string name)
         {
-            return _repository
-                .GetAllContacts()
-                .FirstOrDefault(c =>
-                    c.Name.Equals(
-                        name,
-                        StringComparison.OrdinalIgnoreCase));
+            List<Contact> contacts =
+                _repository.LoadContacts();
+
+            for (int i = 0; i < contacts.Count; i++)
+            {
+                if (contacts[i].Name == name)
+                {
+                    return contacts[i];
+                }
+            }
+
+            return null;
         }
         /// <summary>
-        /// Deletes a contact by name.
+        /// Deletes contact
         /// </summary>
-        /// <param name="name">
-        /// The name of the contact to delete.
-        /// </param>
-        /// <returns>
-        /// True if the contact was deleted; otherwise, false.
-        /// </returns>
+        /// <param name="name">Name</param>
+        /// <returns>contact</returns>
         public bool DeleteContact(string name)
         {
-            List<Contact> contacts = _repository.GetAllContacts();
+            List<Contact> contacts =
+                _repository.LoadContacts();
 
-            Contact? contact = contacts
-                .FirstOrDefault(c =>
-                    c.Name.Equals(
-                        name,
-                        StringComparison.OrdinalIgnoreCase));
-
-            if (contact == null)
+            for (int i = 0; i < contacts.Count; i++)
             {
-                return false;
+                if (contacts[i].Name == name)
+                {
+                    contacts.RemoveAt(i);
+
+                    _repository.SaveContacts(contacts);
+
+                    return true;
+                }
             }
 
-            contacts.Remove(contact);
-
-            _repository.SaveContacts(contacts);
-
-            return true;
+            return false;
         }
         /// <summary>
-        /// Edits an existing contact.
+        /// Deletes contact
         /// </summary>
-        /// <param name="oldName">The name of the contact to edit.</param>
-        /// <param name="updatedContact">The updated contact information.</param>
-        /// <returns>
-        /// True if the contact was updated successfully; otherwise, false.
-        /// </returns>
+        /// <param name="oldName">Name</param>
+        /// <param name="updatedContact">UpdatedContact</param>
+        /// <returns>contact</returns>
         public bool EditContact(string oldName, Contact updatedContact)
         {
-            List<Contact> contacts = _repository.GetAllContacts();
+            List<Contact> contacts =
+                _repository.LoadContacts();
 
-            Contact? existingContact = contacts
-                .FirstOrDefault(c =>
-                    c.Name.Equals(
-                        oldName,
-                        StringComparison.OrdinalIgnoreCase));
-
-            if (existingContact == null)
+            for (int i = 0; i < contacts.Count; i++)
             {
-                return false;
+                if (contacts[i].Name == oldName)
+                {
+                    contacts[i].Name =
+                        updatedContact.Name;
+
+                    contacts[i].PhoneNumber =
+                        updatedContact.PhoneNumber;
+
+                    contacts[i].Email =
+                        updatedContact.Email;
+
+                    contacts[i].Notes =
+                        updatedContact.Notes;
+
+                    _repository.SaveContacts(contacts);
+
+                    return true;
+                }
             }
 
-            existingContact.Name = updatedContact.Name;
-            existingContact.PhoneNumber = updatedContact.PhoneNumber;
-            existingContact.Email = updatedContact.Email;
-            existingContact.Notes = updatedContact.Notes;
-
-            _repository.SaveContacts(contacts);
-
-            return true;
+            return false;
         }
         /// <summary>
-        /// Sorts the contacts in the repository.
+        /// Sorts contact
         /// </summary>
+        /// <param name="name">Name</param>
         public void SortContacts()
         {
-            List<Contact> contacts = _repository.GetAllContacts();
+            List<Contact> contacts =
+                _repository.LoadContacts();
 
-            contacts = contacts
-                .OrderBy(c => c.Name)
-                .ToList();
+            for (int i = 0;
+                 i < contacts.Count - 1;
+                 i++)
+            {
+                for (int j = i + 1;
+                     j < contacts.Count;
+                     j++)
+                {
+                    if (string.Compare(
+                        contacts[i].Name,
+                        contacts[j].Name) > 0)
+                    {
+                        Contact temp =
+                            contacts[i];
+
+                        contacts[i] =
+                            contacts[j];
+
+                        contacts[j] =
+                            temp;
+                    }
+                }
+            }
 
             _repository.SaveContacts(contacts);
         }

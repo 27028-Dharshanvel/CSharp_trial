@@ -1,39 +1,83 @@
-﻿using System.Text.RegularExpressions;
-
-namespace ContactManagerApp.Helpers
+﻿namespace ContactManagerApp.Helpers
 {
+    /// <summary>
+    /// ValidationHelper
+    /// </summary>
     public static class ValidationHelper
     {
+        /// <summary>
+        /// isvalidname
+        /// </summary>
+        /// <param name="name">name</param>
+        /// <returns>name.</returns>
         public static bool IsValidName(string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            if (name.Length < 2)
             {
                 return false;
             }
-            return Regex.IsMatch(name, @"^[a-zA-Z\s]{2,50}$");
-        }
 
+            for (int i = 0; i < name.Length; i++)
+            {
+                char ch = name[i];
+
+                if (!((ch >= 'A' && ch <= 'Z') ||
+                      (ch >= 'a' && ch <= 'z') ||
+                       ch == ' '))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        /// <summary>
+        /// Isvalidphonenumber
+        /// </summary>
+        /// <param name="phoneNumber">phonenumber</param>
+        /// <returns>phoneNumber</returns>
         public static bool IsValidPhoneNumber(string phoneNumber)
         {
-            if (string.IsNullOrWhiteSpace(phoneNumber))
+            if (phoneNumber.Length != 10)
             {
                 return false;
             }
-            return Regex.IsMatch(phoneNumber,@"^[0-9]{10}$");
-        }
 
+            for (int i = 0; i < phoneNumber.Length; i++)
+            {
+                if (phoneNumber[i] < '0' ||
+                    phoneNumber[i] > '9')
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        /// <summary>
+        /// IsvalidEmail
+        /// </summary>
+        /// <param name="email">email</param>
+        /// <returns>email.</returns>
         public static bool IsValidEmail(string email)
         {
-            if (string.IsNullOrWhiteSpace(email))
-            {
-                return false;
-            }
-            return Regex.IsMatch(email,@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
-        }
+            bool atFound = false;
+            bool dotFound = false;
 
-        public static bool IsValidNotes(string notes)
-        {
-            return notes.Length <= 250;
+            for (int i = 0; i < email.Length; i++)
+            {
+                if (email[i] == '@')
+                {
+                    atFound = true;
+                }
+
+                if (email[i] == '.')
+                {
+                    dotFound = true;
+                }
+            }
+
+            return atFound && dotFound;
         }
     }
 }

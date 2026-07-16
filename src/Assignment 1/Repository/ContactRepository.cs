@@ -1,68 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using ContactManagerApp.Models;
+﻿using ContactManagerApp.Models;
+
 namespace ContactManagerApp.Repository
-    {
+{
     /// <summary>
-    /// Contact Repository
+    /// ContactRepository
     /// </summary>
     public class ContactRepository
-        {
-            private readonly string _filePath;
+    {
+        private List<Contact> _contacts;
         /// <summary>
         /// Initializes a new instance of the <see cref="ContactRepository"/> class.
+        /// ContactRepository
         /// </summary>
-        /// <param name="filePath">
-        /// The path to the file used to store contact information.
-        /// </param>
-            public ContactRepository(string filePath)
-            {
-                _filePath = filePath;
-            }
-
+        public ContactRepository()
+        {
+            _contacts = new List<Contact>();
+        }
         /// <summary>
-        /// Retrieves all contacts.
+        /// saves contact
         /// </summary>
-        /// <returns>
-        /// A list containing all contacts.
-        /// </returns>
-            public List<Contact> GetAllContacts()
-            {
-                if (!File.Exists(_filePath))
-                {
-                    return new List<Contact>();
-                }
-
-                string json = File.ReadAllText(_filePath);
-
-                if (string.IsNullOrWhiteSpace(json))
-                {
-                    return new List<Contact>();
-                }
-
-                return JsonSerializer.Deserialize<List<Contact>>(json)
-                       ?? new List<Contact>();
-            }
+        /// <param name="contacts">contact</param>
+        public void SaveContacts(List<Contact> contacts)
+        {
+            this._contacts = contacts;
+        }
         /// <summary>
-        /// Saves the specified contacts.
+        /// Loads contacts
         /// </summary>
-        /// <param name="contacts">
-        /// The list of contacts to save.
-        /// </param>
-            public void SaveContacts(List<Contact> contacts)
-            {
-                string json = JsonSerializer.Serialize(
-                    contacts,
-                    new JsonSerializerOptions
-                    {
-                        WriteIndented = true
-                    });
-
-                File.WriteAllText(_filePath, json);
-            }
+        /// <returns>contacts</returns>
+        public List<Contact> LoadContacts()
+        {
+            return _contacts;
         }
     }
+}
