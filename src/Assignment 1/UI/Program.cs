@@ -49,28 +49,27 @@ namespace ContactManagerApp
 
                         Console.Write("Name: ");
                         contact.Name =
-                            Console.ReadLine();
+                            Console.ReadLine() ?? string.Empty;
 
                         Console.Write("Phone Number: ");
                         contact.PhoneNumber =
-                            Console.ReadLine();
+                            Console.ReadLine() ?? string.Empty;
 
                         Console.Write("Email: ");
                         contact.Email =
-                            Console.ReadLine();
+                            Console.ReadLine() ?? string.Empty;
 
                         Console.Write("Notes: ");
                         contact.Notes =
-                            Console.ReadLine();
+                            Console.ReadLine() ?? string.Empty;
 
-                        if (!ValidationHelper
-                            .IsValidName(contact.Name))
+                        if (!string.IsNullOrWhiteSpace(contact.Name) && !ValidationHelper.IsValidName(contact.Name))
                         {
                             Console.WriteLine("Invalid Name");
                             break;
                         }
 
-                        if (!ValidationHelper
+                        if (!string.IsNullOrWhiteSpace(contact.PhoneNumber) && !ValidationHelper
                             .IsValidPhoneNumber(
                             contact.PhoneNumber))
                         {
@@ -79,9 +78,7 @@ namespace ContactManagerApp
                             break;
                         }
 
-                        if (!ValidationHelper
-                            .IsValidEmail(
-                            contact.Email))
+                        if (!string.IsNullOrWhiteSpace(contact.Email) && !ValidationHelper.IsValidEmail(contact.Email))
                         {
                             Console.WriteLine(
                                 "Invalid Email");
@@ -133,7 +130,7 @@ namespace ContactManagerApp
                         Console.Write(
                             "Enter Name To Edit : ");
 
-                        string oldName =
+                        string? oldName =
                             Console.ReadLine();
 
                         Contact updatedContact =
@@ -141,21 +138,21 @@ namespace ContactManagerApp
 
                         Console.Write("New Name : ");
                         updatedContact.Name =
-                            Console.ReadLine();
+                            Console.ReadLine() ?? string.Empty;
 
                         Console.Write("New Phone : ");
                         updatedContact.PhoneNumber =
-                            Console.ReadLine();
+                            Console.ReadLine() ?? string.Empty;
 
                         Console.Write("New Email : ");
                         updatedContact.Email =
-                            Console.ReadLine();
+                            Console.ReadLine() ?? string.Empty;
 
                         Console.Write("New Notes : ");
                         updatedContact.Notes =
-                            Console.ReadLine();
+                            Console.ReadLine() ?? string.Empty;
 
-                        if (manager.EditContact(
+                        if (!string.IsNullOrWhiteSpace(oldName) && manager.EditContact(
                             oldName,
                             updatedContact))
                         {
@@ -175,11 +172,10 @@ namespace ContactManagerApp
                         Console.Write(
                             "Enter Name To Delete : ");
 
-                        string deleteName =
+                        string? deleteName =
                             Console.ReadLine();
 
-                        if (manager
-                            .DeleteContact(deleteName))
+                        if (!string.IsNullOrWhiteSpace(deleteName) && manager.DeleteContact(deleteName))
                         {
                             Console.WriteLine(
                                 "Deleted Successfully");
@@ -197,12 +193,19 @@ namespace ContactManagerApp
                         Console.Write(
                             "Enter Name To Search : ");
 
-                        string searchName =
+                        string? searchName =
                             Console.ReadLine();
 
-                        Contact result =
-                            manager.SearchContact(
-                            searchName);
+                        Contact? result = manager.SearchContact(searchName);
+
+                        if (result != null)
+                        {
+                            Console.WriteLine(result.Name);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Contact not found.");
+                        }
 
                         if (result != null)
                         {

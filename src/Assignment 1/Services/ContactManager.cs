@@ -12,6 +12,7 @@ namespace ContactManagerApp.Services
         /// Class ContactManager
         /// </summary>
         private readonly ContactRepository _repository;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ContactManager"/> class.
         /// </summary>
@@ -20,6 +21,7 @@ namespace ContactManagerApp.Services
         {
             this._repository = repository;
         }
+
         /// <summary>
         /// Adds contact.
         /// </summary>
@@ -27,29 +29,31 @@ namespace ContactManagerApp.Services
         public void AddContact(Contact contact)
         {
             List<Contact> contacts =
-                _repository.LoadContacts();
+                this._repository.LoadContacts();
 
             contacts.Add(contact);
 
-            _repository.SaveContacts(contacts);
+            this._repository.SaveContacts(contacts);
         }
+
         /// <summary>
         /// Gets the contact
         /// </summary>
         /// <returns>contacts</returns>
         public List<Contact> GetAllContacts()
         {
-            return _repository.LoadContacts();
+            return this._repository.LoadContacts();
         }
+
         /// <summary>
-        /// Searches contacts 
+        /// Searches contacts
         /// </summary>
         /// <param name="name">Name</param>
         /// <returns>Contact</returns>
-        public Contact SearchContact(string name)
+        public Contact? SearchContact(string name)
         {
             List<Contact> contacts =
-                _repository.LoadContacts();
+                this._repository.LoadContacts();
 
             for (int i = 0; i < contacts.Count; i++)
             {
@@ -61,6 +65,7 @@ namespace ContactManagerApp.Services
 
             return null;
         }
+
         /// <summary>
         /// Deletes contact
         /// </summary>
@@ -69,7 +74,7 @@ namespace ContactManagerApp.Services
         public bool DeleteContact(string name)
         {
             List<Contact> contacts =
-                _repository.LoadContacts();
+                this._repository.LoadContacts();
 
             for (int i = 0; i < contacts.Count; i++)
             {
@@ -77,7 +82,7 @@ namespace ContactManagerApp.Services
                 {
                     contacts.RemoveAt(i);
 
-                    _repository.SaveContacts(contacts);
+                    this._repository.SaveContacts(contacts);
 
                     return true;
                 }
@@ -85,6 +90,7 @@ namespace ContactManagerApp.Services
 
             return false;
         }
+
         /// <summary>
         /// Deletes contact
         /// </summary>
@@ -94,7 +100,7 @@ namespace ContactManagerApp.Services
         public bool EditContact(string oldName, Contact updatedContact)
         {
             List<Contact> contacts =
-                _repository.LoadContacts();
+                this._repository.LoadContacts();
 
             for (int i = 0; i < contacts.Count; i++)
             {
@@ -112,7 +118,7 @@ namespace ContactManagerApp.Services
                     contacts[i].Notes =
                         updatedContact.Notes;
 
-                    _repository.SaveContacts(contacts);
+                    this._repository.SaveContacts(contacts);
 
                     return true;
                 }
@@ -120,6 +126,7 @@ namespace ContactManagerApp.Services
 
             return false;
         }
+
         /// <summary>
         /// Sorts contact
         /// </summary>
@@ -127,7 +134,7 @@ namespace ContactManagerApp.Services
         public void SortContacts()
         {
             List<Contact> contacts =
-                _repository.LoadContacts();
+                this._repository.LoadContacts();
 
             for (int i = 0;
                  i < contacts.Count - 1;
@@ -153,7 +160,7 @@ namespace ContactManagerApp.Services
                 }
             }
 
-            _repository.SaveContacts(contacts);
+            this._repository.SaveContacts(contacts);
         }
     }
 }

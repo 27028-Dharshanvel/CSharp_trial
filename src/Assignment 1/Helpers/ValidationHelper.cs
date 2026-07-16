@@ -31,6 +31,7 @@
 
             return true;
         }
+
         /// <summary>
         /// Isvalidphonenumber
         /// </summary>
@@ -54,6 +55,7 @@
 
             return true;
         }
+
         /// <summary>
         /// IsvalidEmail
         /// </summary>
