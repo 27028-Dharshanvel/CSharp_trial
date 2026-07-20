@@ -35,5 +35,36 @@ namespace ContactManagerApp.Repository
         {
             return this._contacts;
         }
+
+        /// <summary>
+        /// Adds contact
+        /// </summary>
+        /// <param name="contact">Contact</param>
+        public void AddContact(Contact contact)
+        {
+            this._contacts.Add(contact);
+        }
+
+        /// <summary>
+        /// Deletes contact
+        /// </summary>
+        /// <param name="contact">Contact</param>
+        public void DeleteContact(Contact contact)
+        {
+            this._contacts.Remove(contact);
+        }
+
+        /// <summary>
+        /// Updates contact
+        /// </summary>
+        /// <param name="oldContact">Old Contact</param>
+        /// <param name="updatedContact">Updated Contact</param>
+        public void UpdateContact(Contact oldContact, Contact updatedContact)
+        {
+            oldContact.Name = updatedContact.Name;
+            oldContact.PhoneNumber = updatedContact.PhoneNumber;
+            oldContact.Email = updatedContact.Email;
+            oldContact.Notes = updatedContact.Notes;
+        }
     }
 }

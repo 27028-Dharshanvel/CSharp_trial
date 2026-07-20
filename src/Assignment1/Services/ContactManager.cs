@@ -28,12 +28,7 @@ namespace ContactManagerApp.Services
         /// <param name="contact">Conatct</param>
         public void AddContact(Contact contact)
         {
-            List<Contact> contacts =
-                this._repository.LoadContacts();
-
-            contacts.Add(contact);
-
-            this._repository.SaveContacts(contacts);
+            this._repository.AddContact(contact);
         }
 
         /// <summary>
@@ -80,9 +75,7 @@ namespace ContactManagerApp.Services
             {
                 if (contacts[i].Name == name)
                 {
-                    contacts.RemoveAt(i);
-
-                    this._repository.SaveContacts(contacts);
+                    this._repository.DeleteContact(contacts[i]);
 
                     return true;
                 }
@@ -106,19 +99,9 @@ namespace ContactManagerApp.Services
             {
                 if (contacts[i].Name == oldName)
                 {
-                    contacts[i].Name =
-                        updatedContact.Name;
-
-                    contacts[i].PhoneNumber =
-                        updatedContact.PhoneNumber;
-
-                    contacts[i].Email =
-                        updatedContact.Email;
-
-                    contacts[i].Notes =
-                        updatedContact.Notes;
-
-                    this._repository.SaveContacts(contacts);
+                    this._repository.UpdateContact(
+                        contacts[i],
+                        updatedContact);
 
                     return true;
                 }
@@ -137,12 +120,12 @@ namespace ContactManagerApp.Services
                 this._repository.LoadContacts();
 
             for (int i = 0;
-                 i < contacts.Count - 1;
-                 i++)
+                i < contacts.Count - 1;
+                i++)
             {
                 for (int j = i + 1;
-                     j < contacts.Count;
-                     j++)
+                    j < contacts.Count;
+                    j++)
                 {
                     if (string.Compare(
                         contacts[i].Name,

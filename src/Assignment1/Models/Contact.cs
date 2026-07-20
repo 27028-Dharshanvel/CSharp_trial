@@ -6,25 +6,12 @@
     public class Contact
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Contact"/> class.
-        /// Contact
-        /// </summary>
-        public Contact()
-        {
-            this.ContactId = Guid.NewGuid();
-            this.Name = string.Empty;
-            this.PhoneNumber = string.Empty;
-            this.Email = string.Empty;
-            this.Notes = string.Empty;
-        }
-
-        /// <summary>
         /// Gets or sets contactId
         /// </summary>
         /// <value>
         ///  Contact id
         /// </value>
-        public Guid ContactId { get; set; }
+        public Guid ContactId { get; set; } = Guid.NewGuid();
 
         /// <summary>
         /// Gets or sets name
@@ -32,30 +19,30 @@
         /// <value>
         /// Name
         /// </value>
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets name
+        /// Gets or sets Phonenumber
         /// </summary>
         /// <value>
-        /// Name
+        /// Phonenumber
         /// </value>
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets name
+        /// Gets or sets Email
         /// </summary>
         /// <value>
-        /// Name
+        /// Email
         /// </value>
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets name
+        /// Gets or sets notes
         /// </summary>
         /// <value>
-        /// Name
+        /// Notes
         /// </value>
-        public string Notes { get; set; }
+        public string Notes { get; set; } = string.Empty;
     }
 }
