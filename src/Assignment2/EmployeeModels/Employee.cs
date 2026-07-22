@@ -25,7 +25,7 @@ namespace Assignment2.EmployeeModels
         /// <value>
         /// Salary
         /// </value>
-        public double Salary { get; set; } = double.NaN;
+        public int Salary { get; set; } = 0;
 
         /// <summary>
         /// Gets position of Employee
@@ -39,10 +39,6 @@ namespace Assignment2.EmployeeModels
         /// CalculatesBonus
         /// </summary>
         /// <returns>Bonus amount</returns>
-        public abstract decimal CalculateBonus();
-        public void PrintDetails()
-        {
-
-        }
-
+        public abstract int CalculateBonus();
+    }
 }
