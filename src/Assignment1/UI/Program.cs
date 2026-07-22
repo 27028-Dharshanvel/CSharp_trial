@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using ContactManagerApp.Models;
 using ContactManagerApp.Repository;
 using ContactManagerApp.Services;
@@ -12,47 +13,6 @@ namespace ContactManagerApp
     internal class Program
     {
         /// <summary>
-        /// Choices
-        /// </summary>
-        public enum Choices
-        {
-            /// <summary>
-            /// Addscontact
-            /// </summary>
-            AddContact = 1,
-
-            /// <summary>
-            /// Viewscontact
-            /// </summary>
-            ViewContact,
-
-            /// <summary>
-            /// Editscontact
-            /// </summary>
-            EditContact,
-
-            /// <summary>
-            /// Deletescontact
-            /// </summary>
-            DeleteContact,
-
-            /// <summary>
-            /// Searchescontact
-            /// </summary>
-            SearchContact,
-
-            /// <summary>
-            /// Sortscontact
-            /// </summary>
-            SortContact,
-
-            /// <summary>
-            /// Exits
-            /// </summary>
-            Exit,
-        }
-
-        /// <summary>
         /// Application entry point.
         /// </summary>
         /// <param name="args">Command-line arguments.</param>
@@ -63,19 +23,13 @@ namespace ContactManagerApp
 
             ContactManager manager =
                 new ContactManager(repository);
+            bool isAppRunning = true;
 
-            while (true)
+            while (isAppRunning)
             {
-                Console.WriteLine();
-                Console.WriteLine("1. Add Contact");
-                Console.WriteLine("2. View Contacts");
-                Console.WriteLine("3. Edit Contact");
-                Console.WriteLine("4. Delete Contact");
-                Console.WriteLine("5. Search Contact");
-                Console.WriteLine("6. Sort Contacts");
-                Console.WriteLine("7. Exit");
-
-                Console.Write("Enter Choice: ");
+                Console.Write("============= ContactManager Console Application =============\n");
+                Console.WriteLine(" \n 1. Add Contact \r\n 2. View Contacts \n 3. Edit Contact \n 4. Delete Contact \r\n 5. Search Contact \r\n 6. Sort Contacts  \r\n 7. Exit");
+                Console.Write("\nEnter Choice: ");
                 string userInput = Console.ReadLine() ?? string.Empty;
 
                 if (int.TryParse(userInput, out int choice) &&
@@ -253,6 +207,8 @@ namespace ContactManagerApp
 
                         case Choices.Exit:
 
+                            Console.WriteLine("\nApplication exited");
+                            isAppRunning = false;
                             return;
 
                         default:

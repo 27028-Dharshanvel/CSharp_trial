@@ -30,11 +30,12 @@ namespace ContactManagerApp.Services
         /// <returns>Boolean value</returns>
         public bool AddContact(Contact contact)
         {
+            bool isValid = true;
             if (!string.IsNullOrWhiteSpace(contact.Name) &&
                 !ValidationHelper.IsValidName(contact.Name))
             {
-                System.Console.WriteLine("Invalid Name");
-                return false;
+                System.Console.WriteLine("\n Invalid Name");
+                isValid = false;
             }
 
             if (!string.IsNullOrWhiteSpace(contact.PhoneNumber) &&
@@ -42,21 +43,28 @@ namespace ContactManagerApp.Services
                     contact.PhoneNumber))
             {
                 System.Console.WriteLine(
-                    "Invalid Phone Number");
-                return false;
+                    "\n Invalid Phone Number");
+                isValid = false;
             }
 
             if (!string.IsNullOrWhiteSpace(contact.Email) &&
                 !ValidationHelper.IsValidEmail(contact.Email))
             {
                 System.Console.WriteLine(
-                    "Invalid Email");
-                return false;
+                    "\n Invalid Email");
+                isValid = false;
             }
 
-            this._repository.AddContact(contact);
+            if (isValid == false)
+            {
+                return isValid;
+            }
+            else
+            {
+                this._repository.AddContact(contact);
+            }
 
-            return true;
+            return isValid;
         }
 
         /// <summary>
