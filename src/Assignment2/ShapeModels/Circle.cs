@@ -9,10 +9,8 @@ namespace Assignment2.Models
     /// <summary>
     /// Circle
     /// </summary>
-    internal class Circle: Shape
+    internal class Circle : Shape
     {
-        public double Area { get; set; } = double.NaN;
-
         /// <summary>
         /// Gets or sets Radius
         /// </summary>

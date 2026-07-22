@@ -23,9 +23,9 @@ namespace Assignment2.Models
         /// Gets shapeType
         /// </summary>
         /// <value>
-        /// string 
+        /// string
         /// </value>
-        public abstract string ShapeType { get; } = string.Empty;
+        public abstract string ShapeType { get; }
 
         /// <summary>
         /// Calculates area

@@ -24,13 +24,14 @@ namespace Assignment2.EmployeeModels
                 return "Manager";
             }
         }
+
         /// <summary>
         /// CAlculates Bonus
         /// </summary>
         /// <returns> Bonus amount </returns>
-        public override decimal CalculateBonus()
+        public override int CalculateBonus()
         {
-            return Salary * 0.20m;
+            return (int)(this.Salary * 0.20m);
         }
     }
 }
