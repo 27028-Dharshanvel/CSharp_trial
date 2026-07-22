@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ContactManagerApp.Helpers;
 using ContactManagerApp.Models;
 using ContactManagerApp.Repository;
 using ContactManagerApp.Services;
@@ -78,9 +77,12 @@ namespace ContactManagerApp
 
                 Console.Write("Enter Choice: ");
                 string userInput = Console.ReadLine() ?? string.Empty;
-                if (int.TryParse(userInput, out int choice) && Enum.IsDefined(typeof(Choices), choice))
+
+                if (int.TryParse(userInput, out int choice) &&
+                    Enum.IsDefined(typeof(Choices), choice))
                 {
                     Choices userChoice = (Choices)choice;
+
                     switch (userChoice)
                     {
                         case Choices.AddContact:
@@ -104,32 +106,11 @@ namespace ContactManagerApp
                             contact.Notes =
                                 Console.ReadLine() ?? string.Empty;
 
-                            if (!string.IsNullOrWhiteSpace(contact.Name) && !ValidationHelper.IsValidName(contact.Name))
-                            {
-                                Console.WriteLine("Invalid Name");
-                                break;
-                            }
-
-                            if (!string.IsNullOrWhiteSpace(contact.PhoneNumber) && !ValidationHelper
-                                .IsValidPhoneNumber(
-                                contact.PhoneNumber))
+                            if (manager.AddContact(contact))
                             {
                                 Console.WriteLine(
-                                    "Invalid Phone Number");
-                                break;
+                                    "Contact Added");
                             }
-
-                            if (!string.IsNullOrWhiteSpace(contact.Email) && !ValidationHelper.IsValidEmail(contact.Email))
-                            {
-                                Console.WriteLine(
-                                    "Invalid Email");
-                                break;
-                            }
-
-                            manager.AddContact(contact);
-
-                            Console.WriteLine(
-                                "Contact Added");
 
                             break;
 
@@ -142,26 +123,7 @@ namespace ContactManagerApp
                                  i < contacts.Count;
                                  i++)
                             {
-                                Console.WriteLine();
-                                Console.WriteLine(
-                                    "ID : " +
-                                    contacts[i].ContactId);
-
-                                Console.WriteLine(
-                                    "Name : " +
-                                    contacts[i].Name);
-
-                                Console.WriteLine(
-                                    "Phone : " +
-                                    contacts[i].PhoneNumber);
-
-                                Console.WriteLine(
-                                    "Email : " +
-                                    contacts[i].Email);
-
-                                Console.WriteLine(
-                                    "Notes : " +
-                                    contacts[i].Notes);
+                                Console.WriteLine(contacts[i].ToString());
                             }
 
                             break;
@@ -193,9 +155,10 @@ namespace ContactManagerApp
                             updatedContact.Notes =
                                 Console.ReadLine() ?? string.Empty;
 
-                            if (!string.IsNullOrWhiteSpace(oldName) && manager.EditContact(
-                                oldName,
-                                updatedContact))
+                            if (!string.IsNullOrWhiteSpace(oldName) &&
+                                manager.EditContact(
+                                    oldName,
+                                    updatedContact))
                             {
                                 Console.WriteLine(
                                     "Contact Updated");
@@ -216,7 +179,8 @@ namespace ContactManagerApp
                             string? deleteName =
                                 Console.ReadLine();
 
-                            if (!string.IsNullOrWhiteSpace(deleteName) && manager.DeleteContact(deleteName))
+                            if (!string.IsNullOrWhiteSpace(deleteName) &&
+                                manager.DeleteContact(deleteName))
                             {
                                 Console.WriteLine(
                                     "Deleted Successfully");
@@ -236,20 +200,24 @@ namespace ContactManagerApp
 
                             string? searchName =
                                 Console.ReadLine();
+
                             if (string.IsNullOrWhiteSpace(searchName))
                             {
                                 break;
                             }
 
-                            Contact? result = manager.SearchContact(searchName);
+                            Contact? result =
+                                manager.SearchContact(searchName);
 
                             if (result != null)
                             {
-                                Console.WriteLine(result.Name);
+                                Console.WriteLine(
+                                    result.Name);
                             }
                             else
                             {
-                                Console.WriteLine("Contact not found.");
+                                Console.WriteLine(
+                                    "Contact not found.");
                             }
 
                             if (result != null)
@@ -297,7 +265,8 @@ namespace ContactManagerApp
                 }
                 else
                 {
-                    Console.WriteLine("Enter numeric value for choice");
+                    Console.WriteLine(
+                        "Enter numeric value for choice");
                 }
             }
         }

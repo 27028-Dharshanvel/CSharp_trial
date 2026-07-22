@@ -1,4 +1,5 @@
-﻿using ContactManagerApp.Models;
+﻿using ContactManagerApp.Helpers;
+using ContactManagerApp.Models;
 using ContactManagerApp.Repository;
 
 namespace ContactManagerApp.Services
@@ -26,9 +27,36 @@ namespace ContactManagerApp.Services
         /// Adds contact.
         /// </summary>
         /// <param name="contact">Conatct</param>
-        public void AddContact(Contact contact)
+        /// <returns>Boolean value</returns>
+        public bool AddContact(Contact contact)
         {
+            if (!string.IsNullOrWhiteSpace(contact.Name) &&
+                !ValidationHelper.IsValidName(contact.Name))
+            {
+                System.Console.WriteLine("Invalid Name");
+                return false;
+            }
+
+            if (!string.IsNullOrWhiteSpace(contact.PhoneNumber) &&
+                !ValidationHelper.IsValidPhoneNumber(
+                    contact.PhoneNumber))
+            {
+                System.Console.WriteLine(
+                    "Invalid Phone Number");
+                return false;
+            }
+
+            if (!string.IsNullOrWhiteSpace(contact.Email) &&
+                !ValidationHelper.IsValidEmail(contact.Email))
+            {
+                System.Console.WriteLine(
+                    "Invalid Email");
+                return false;
+            }
+
             this._repository.AddContact(contact);
+
+            return true;
         }
 
         /// <summary>
@@ -75,7 +103,8 @@ namespace ContactManagerApp.Services
             {
                 if (contacts[i].Name == name)
                 {
-                    this._repository.DeleteContact(contacts[i]);
+                    this._repository.DeleteContact(
+                        contacts[i]);
 
                     return true;
                 }
@@ -90,7 +119,9 @@ namespace ContactManagerApp.Services
         /// <param name="oldName">Name</param>
         /// <param name="updatedContact">UpdatedContact</param>
         /// <returns>contact</returns>
-        public bool EditContact(string oldName, Contact updatedContact)
+        public bool EditContact(
+            string oldName,
+            Contact updatedContact)
         {
             List<Contact> contacts =
                 this._repository.LoadContacts();
@@ -143,7 +174,8 @@ namespace ContactManagerApp.Services
                 }
             }
 
-            this._repository.SaveContacts(contacts);
+            this._repository.SaveContacts(
+                contacts);
         }
     }
 }

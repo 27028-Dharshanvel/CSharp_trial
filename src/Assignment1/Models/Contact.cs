@@ -44,5 +44,25 @@
         /// Notes
         /// </value>
         public string Notes { get; set; } = string.Empty;
+
+        /// <summary>
+        /// ToString Method
+        /// </summary>
+        /// <returns>Contact details</returns>
+        public override string ToString()
+
+        {
+
+            return $"ID : {this.ContactId}\n" +
+
+            $"Name : {this.Name}\n" +
+
+            $"Phone : {this.PhoneNumber}\n" +
+
+            $"Email : {this.Email}\n" +
+
+            $"Notes : {this.Notes}";
+
+        }
     }
 }
