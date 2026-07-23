@@ -31,7 +31,7 @@ namespace Assignment2.EmployeeModels
         /// <returns> Bonus amount </returns>
         public override int CalculateBonus()
         {
-            return (int)(this.Salary * 0.20m);
+            return (int)(this.Salary * 0.30m);
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assignment2.Models
+namespace Assignment2.ShapeModels
 {
     /// <summary>
     /// Circle

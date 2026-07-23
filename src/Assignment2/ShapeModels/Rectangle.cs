@@ -4,15 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assignment2.Models
+namespace Assignment2.ShapeModels
 {
     /// <summary>
     /// Rectangle
     /// </summary>
     internal class Rectangle : Shape
     {
-        public double Area { get; set; } = double.NaN;
-
         /// <summary>
         /// Gets or sets length of Rectangle
         /// </summary>
