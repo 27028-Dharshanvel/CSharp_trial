@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
+using ContactManagerApp.Helpers;
 using ContactManagerApp.Models;
 using ContactManagerApp.Repository;
 using ContactManagerApp.Services;
@@ -41,26 +42,7 @@ namespace ContactManagerApp
                     {
                         case Choices.AddContact:
 
-                            Contact contact =
-                                new Contact();
-
-                            Console.Write("Name: ");
-                            contact.Name =
-                                Console.ReadLine() ?? string.Empty;
-
-                            Console.Write("Phone Number: ");
-                            contact.PhoneNumber =
-                                Console.ReadLine() ?? string.Empty;
-
-                            Console.Write("Email: ");
-                            contact.Email =
-                                Console.ReadLine() ?? string.Empty;
-
-                            Console.Write("Notes: ");
-                            contact.Notes =
-                                Console.ReadLine() ?? string.Empty;
-
-                            if (manager.AddContact(contact))
+                            if (manager.AddContact(ConsoleHelper.AddContactDetails()))
                             {
                                 Console.WriteLine(
                                     "Contact Added");
@@ -90,29 +72,13 @@ namespace ContactManagerApp
                             string? oldName =
                                 Console.ReadLine();
 
-                            Contact updatedContact =
-                                new Contact();
-
-                            Console.Write("New Name : ");
-                            updatedContact.Name =
-                                Console.ReadLine() ?? string.Empty;
-
-                            Console.Write("New Phone : ");
-                            updatedContact.PhoneNumber =
-                                Console.ReadLine() ?? string.Empty;
-
-                            Console.Write("New Email : ");
-                            updatedContact.Email =
-                                Console.ReadLine() ?? string.Empty;
-
-                            Console.Write("New Notes : ");
-                            updatedContact.Notes =
-                                Console.ReadLine() ?? string.Empty;
+                            Console.Write(
+                                "\nEnter New Contact Details : \n");
 
                             if (!string.IsNullOrWhiteSpace(oldName) &&
                                 manager.EditContact(
                                     oldName,
-                                    updatedContact))
+                                    ConsoleHelper.AddContactDetails()))
                             {
                                 Console.WriteLine(
                                     "Contact Updated");
