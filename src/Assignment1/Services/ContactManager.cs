@@ -81,16 +81,18 @@ namespace ContactManagerApp.Services
         /// </summary>
         /// <param name="name">Name</param>
         /// <returns>Contact</returns>
-        public Contact? SearchContact(string name)
+        public string? SearchContact(string name)
         {
             List<Contact> contacts =
                 this._repository.LoadContacts();
 
             for (int i = 0; i < contacts.Count; i++)
             {
-                if (contacts[i].Name == name)
+                if (string.Equals(contacts[i].Name, name, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(contacts[i].PhoneNumber, name, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(contacts[i].Email, name, StringComparison.OrdinalIgnoreCase))
                 {
-                    return contacts[i];
+                    return contacts[i].ToString();
                 }
             }
 

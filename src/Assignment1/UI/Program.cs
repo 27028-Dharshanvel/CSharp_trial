@@ -115,8 +115,8 @@ namespace ContactManagerApp
 
                         case Choices.SearchContact:
 
-                            Console.Write(
-                                "Enter Name To Search : ");
+                            Console.WriteLine(
+                                "Enter Name or PhoneNo. or Email To Search : ");
 
                             string? searchName =
                                 Console.ReadLine();
@@ -126,38 +126,17 @@ namespace ContactManagerApp
                                 break;
                             }
 
-                            Contact? result =
+                            string? result =
                                 manager.SearchContact(searchName);
 
                             if (result != null)
                             {
-                                Console.WriteLine(
-                                    result.Name);
+                                Console.WriteLine(result);
                             }
                             else
                             {
                                 Console.WriteLine(
                                     "Contact not found.");
-                            }
-
-                            if (result != null)
-                            {
-                                Console.WriteLine(
-                                    result.Name);
-
-                                Console.WriteLine(
-                                    result.PhoneNumber);
-
-                                Console.WriteLine(
-                                    result.Email);
-
-                                Console.WriteLine(
-                                    result.Notes);
-                            }
-                            else
-                            {
-                                Console.WriteLine(
-                                    "Contact Not Found");
                             }
 
                             break;
