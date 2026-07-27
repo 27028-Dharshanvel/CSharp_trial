@@ -5,7 +5,7 @@ using Assignment2.BankAccountServices;
 using Assignment2.Controllers;
 using Assignment2.EmployeeModels;
 using Assignment2.Helpers;
-using Assignment2.ShapeModels;
+using Assignment2.Models;
 
 namespace Assignment2
 {
@@ -14,111 +14,6 @@ namespace Assignment2
     /// </summary>
     internal class Program
     {
-        /// <summary>
-        /// Enum for Mainmenu
-        /// </summary>
-        public enum MainMenu
-        {
-            /// <summary>
-            /// shape
-            /// </summary>
-            Shape = 1,
-
-            /// <summary>
-            /// Employee
-            /// </summary>
-            Employee,
-
-            /// <summary>
-            /// BankAccount
-            /// </summary>
-            BankAccount,
-
-            /// <summary>
-            /// exit
-            /// </summary>
-            Exit,
-        }
-
-        /// <summary>
-        /// ShapeMenu
-        /// </summary>
-        public enum ShapeMenu
-        {
-            /// <summary>
-            /// Rectangle
-            /// </summary>
-            Rectangle = 1,
-
-            /// <summary>
-            /// Circle
-            /// </summary>
-            Circle,
-
-            /// <summary>
-            /// Back
-            /// </summary>
-            Back,
-        }
-
-        /// <summary>
-        /// EmployeeMenu
-        /// </summary>
-        public enum EmployeeMenu
-        {
-            /// <summary>
-            /// Manager
-            /// </summary>
-            Manager = 1,
-
-            /// <summary>
-            /// Developer
-            /// </summary>
-            Developer,
-
-            /// <summary>
-            /// Back
-            /// </summary>
-            Back,
-        }
-
-        /// <summary>
-        /// BankMenu
-        /// </summary>
-        public enum BankMenu
-        {
-            /// <summary>
-            /// SavingsAccount
-            /// </summary>
-            SavingsAccount = 1,
-
-            /// <summary>
-            /// CheckingAccount
-            /// </summary>
-            CheckingAccount,
-
-            /// <summary>
-            /// Back
-            /// </summary>
-            Back,
-        }
-
-        /// <summary>
-        /// BankingOperations Enumerator
-        /// </summary>
-        public enum BankingOperations
-        {
-            /// <summary>
-            /// Deposit
-            /// </summary>
-            Deposit = 1,
-
-            /// <summary>
-            /// Withdraw
-            /// </summary>
-            Withdraw,
-        }
-
         /// <summary>
         /// Entry point of the program
         /// </summary>
@@ -141,25 +36,23 @@ namespace Assignment2
                 Console.WriteLine("3. Bank Account");
                 Console.WriteLine("4. Exit");
 
-                Console.Write("\nEnter your choice : ");
-
-                MainMenu choice = (MainMenu)Convert.ToInt32(Console.ReadLine());
+                Choices.MainMenu choice = (Choices.MainMenu)Helper.ReadInt("Enter your choice : ");
 
                 switch (choice)
                 {
-                    case MainMenu.Shape:
+                    case Choices.MainMenu.Shape:
                         ShowShapeMenu(shapeController);
                         break;
 
-                    case MainMenu.Employee:
+                    case Choices.MainMenu.Employee:
                         ShowEmployeeMenu(employeeController);
                         break;
 
-                    case MainMenu.BankAccount:
+                    case Choices.MainMenu.BankAccount:
                         ShowBankMenu(bankController);
                         break;
 
-                    case MainMenu.Exit:
+                    case Choices.MainMenu.Exit:
                         exit = true;
                         break;
 
@@ -184,13 +77,11 @@ namespace Assignment2
                 Console.WriteLine("2. Circle");
                 Console.WriteLine("3. Back");
 
-                Console.Write("\nEnter your choice : ");
-
-                ShapeMenu choice = (ShapeMenu)Convert.ToInt32(Console.ReadLine());
+                Choices.ShapeMenu choice = (Choices.ShapeMenu)Helper.ReadInt("Enter your choice : ");
 
                 switch (choice)
                 {
-                    case ShapeMenu.Rectangle:
+                    case Choices.ShapeMenu.Rectangle:
                         ShapeModels.Rectangle rect = new ();
                         rect.Length = Helper.ReadDouble("Enter the Length :");
                         rect.Width = Helper.ReadDouble("Enter the Width :");
@@ -198,14 +89,14 @@ namespace Assignment2
                         Console.ReadKey();
                         break;
 
-                    case ShapeMenu.Circle:
+                    case Choices.ShapeMenu.Circle:
                         ShapeModels.Circle circle = new ();
                         circle.Radius = Helper.ReadDouble("Enter the Radius :");
                         Console.WriteLine($"\nArea of the circle :{circle.CalculateArea()}");
                         Console.ReadKey();
                         break;
 
-                    case ShapeMenu.Back:
+                    case Choices.ShapeMenu.Back:
                         back = true;
                         break;
 
@@ -230,27 +121,25 @@ namespace Assignment2
                 Console.WriteLine("2. Developer");
                 Console.WriteLine("3. Back");
 
-                Console.Write("\nEnter your choice : ");
-
-                EmployeeMenu choice = (EmployeeMenu)Convert.ToInt32(Console.ReadLine());
+                Choices.EmployeeMenu choice = (Choices.EmployeeMenu)Helper.ReadInt("Enter your choice : ");
 
                 switch (choice)
                 {
-                    case EmployeeMenu.Manager:
+                    case Choices.EmployeeMenu.Manager:
                         Manager manager = new ();
                         manager.Salary = Helper.ReadInt("Enter your Salary");
                         Console.WriteLine($"Your Bonus amount is : {manager.CalculateBonus()}");
                         Console.ReadKey();
                         break;
 
-                    case EmployeeMenu.Developer:
-                        Developer developer = new();
+                    case Choices.EmployeeMenu.Developer:
+                        Developer developer = new ();
                         developer.Salary = Helper.ReadInt("Enter your Salary");
                         Console.WriteLine($"Your Bonus amount is : {developer.CalculateBonus()}");
                         Console.ReadKey();
                         break;
 
-                    case EmployeeMenu.Back:
+                    case Choices.EmployeeMenu.Back:
                         back = true;
                         break;
 
@@ -265,69 +154,66 @@ namespace Assignment2
         private static void ShowBankMenu(BankController controller)
         {
             bool back = false;
+            bool isBankRunning = false;
 
             while (!back)
             {
                 Console.Clear();
 
-                Console.WriteLine("----- Bank Menu -----");
-                Console.WriteLine("1. Savings Account");
-                Console.WriteLine("2. Checking Account");
-                Console.WriteLine("3. Back");
+                Console.WriteLine("----- Bank Menu -----\n\n1. Savings account \n2.Checking account \n3.Back");
 
-                Console.Write("\nEnter your choice : ");
-
-                BankMenu choice = (BankMenu)Convert.ToInt32(Console.ReadLine());
+                Choices.BankMenu choice = (Choices.BankMenu)Helper.ReadInt("Enter your choice : ");
 
                 switch (choice)
                 {
-                    case BankMenu.SavingsAccount:
+                    case Choices.BankMenu.SavingsAccount:
+
                         SavingsAccount savingsAccount1 = new ();
                         Helper.DisplayBankingOperations();
-                        BankingOperations userChoice = (BankingOperations)Helper.ReadInt("Enter the operation to perform :");
+                        Choices.BankingOperations userChoice = (Choices.BankingOperations)Helper.ReadInt("Enter the operation to perform :");
                         switch (userChoice)
                         {
-                            case BankingOperations.Deposit:
+                            case Choices.BankingOperations.Deposit:
 
                                 savingsAccount1.Deposit(Helper.ReadInt("Enter amount to Deposit :"));
-                                Console.WriteLine("Amount Deposited");
+                                Console.WriteLine($"Amount Deposited \nCurrent Balance : ${savingsAccount1.AccountBalance}");
                                 Console.ReadKey();
                                 break;
 
-                            case BankingOperations.Withdraw:
+                            case Choices.BankingOperations.Withdraw:
 
                                 savingsAccount1.Withdraw(Helper.ReadInt("Enter amount to Withdraw :"));
-                                Console.WriteLine("Amount Withdrawn");
+                                Console.WriteLine($"Amount Withdrawn \nCurrent Balance : ${savingsAccount1.AccountBalance}");
                                 Console.ReadKey();
                                 break;
                         }
 
                         break;
 
-                    case BankMenu.CheckingAccount:
+                    case Choices.BankMenu.CheckingAccount:
                         Helper.DisplayBankingOperations();
                         CheckingAccount checkingAccount1 = new ();
-                        BankingOperations userChoice2 = (BankingOperations)Helper.ReadInt("Enter the operation to perform :");
+                        Choices.BankingOperations userChoice2 = (Choices.BankingOperations)Helper.ReadInt("Enter the operation to perform :");
                         switch (userChoice2)
                         {
-                            case BankingOperations.Deposit:
+                            case Choices.BankingOperations.Deposit:
 
-                                checkingAccount1.Deposit(Helper.ReadInt("Enter amount to Deposit :"));
-                                Console.WriteLine("Amount Deposited");
+                                checkingAccount1.Deposit(Helper.ReadInt("Enter amount to Deposit : "));
+                                Console.WriteLine($"Amount Deposited \nCurrent Balance : ${checkingAccount1.AccountBalance}");
                                 Console.ReadKey();
                                 break;
 
-                            case BankingOperations.Withdraw:
+                            case Choices.BankingOperations.Withdraw:
 
                                 checkingAccount1.Withdraw(Helper.ReadInt("Enter amount to Withdraw :"));
-                                Console.WriteLine("Amount Withdrawn");
+                                Console.WriteLine($"Amount Withdrawn \nCurrent Balance : ${checkingAccount1.AccountBalance}");
                                 Console.ReadKey();
                                 break;
                         }
 
                         break;
 
-                    case BankMenu.Back:
+                    case Choices.BankMenu.Back:
                         back = true;
                         break;
 
