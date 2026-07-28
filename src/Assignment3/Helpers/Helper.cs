@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assignment3.Helpers
+﻿namespace Assignment3.Helpers
 {
     /// <summary>
     /// Helper
@@ -31,6 +25,39 @@ namespace Assignment3.Helpers
 
                 Console.WriteLine("Please enter a valid integer.");
             }
+        }
+
+        /// <summary>
+        /// Reads string and validate whether it is double
+        /// </summary>
+        /// <param name="message">message</param>
+        /// <returns>double</returns>
+        public static double ReadDouble(string message)
+        {
+            double value;
+
+            while (true)
+            {
+                Console.Write(message);
+
+                if (double.TryParse(Console.ReadLine(), out value))
+                {
+                    return value;
+                }
+
+                Console.WriteLine("Please enter a valid integer.");
+            }
+        }
+
+        /// <summary>
+        /// Reads string
+        /// </summary>
+        /// <param name="message">message</param>
+        /// <returns>string</returns>
+        public static string ReadString(string message)
+        {
+            Console.Write(message);
+            return Console.ReadLine() ?? string.Empty;
         }
     }
 }
