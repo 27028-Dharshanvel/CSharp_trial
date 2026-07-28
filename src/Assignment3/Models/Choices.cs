@@ -1,15 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assignment3.Models
+﻿namespace Assignment3.Models
 {
     /// <summary>
     /// Choices
     /// </summary>
-    internal class Choices
-    { 
+    public class Choices
+    {
+        /// <summary>
+        /// InventoryOperations
+        /// </summary>
+        public enum InventoryOperations
+        {
+            /// <summary>
+            /// Adds Products.
+            /// </summary>
+            AddProducts = 1,
+
+            /// <summary>
+            /// Views Products.
+            /// </summary>
+            ViewProducts,
+
+            /// <summary>
+            /// Edits Products.
+            /// </summary>
+            EditProducts,
+
+            /// <summary>
+            /// Deletes Products.
+            /// </summary>
+            DeleteProducts,
+
+            /// <summary>
+            /// Searches products.
+            /// </summary>
+            SearchProducts,
+
+            /// <summary>
+            /// Sorts products.
+            /// </summary>
+            SortBy,
+
+            /// <summary>
+            /// Exits application.
+            /// </summary>
+            Exit,
+        }
     }
 }
