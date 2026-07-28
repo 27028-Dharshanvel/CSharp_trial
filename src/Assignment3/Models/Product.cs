@@ -7,6 +7,7 @@
     {
         /// <summary>
         /// Gets or sets unique Id for product.
+        /// This is used internally by backend.
         /// </summary>
         /// <value>
         /// Guid.
@@ -14,10 +15,19 @@
         public Guid Id { get; set; }
 
         /// <summary>
+        /// Gets or sets Product Id.
+        /// This is entered by user.
+        /// </summary>
+        /// <value>
+        /// Product Id.
+        /// </value>
+        public string? ProductId { get; set; }
+
+        /// <summary>
         /// Gets or sets the name of the product.
         /// </summary>
         /// <value>
-        /// The name of the product.
+        /// Product name.
         /// </value>
         public string? Name { get; set; }
 
@@ -33,7 +43,7 @@
         /// Gets or sets quantity.
         /// </summary>
         /// <value>
-        /// quantity
+        /// Quantity.
         /// </value>
         public double Quantity { get; set; }
 
@@ -46,6 +56,7 @@
             return new Product
             {
                 Id = this.Id,
+                ProductId = this.ProductId,
                 Name = this.Name,
                 Price = this.Price,
                 Quantity = this.Quantity,

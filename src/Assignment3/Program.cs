@@ -1,16 +1,16 @@
 ﻿using Assignment3.View;
 
-namespace Assignments
+namespace Assignment3
 {
     /// <summary>
-    /// Entry Point of the Application
+    /// Entry point of the application.
     /// </summary>
     internal class Program
     {
         /// <summary>
-        /// Entry point of the program
+        /// Main Method
         /// </summary>
-        /// <param name="args">args</param>
+        /// <param name="args">Command Line Arguments</param>
         public static void Main(string[] args)
         {
             ConsoleView.ConsoleOperations();

@@ -11,22 +11,29 @@ namespace Assignment3.Service
         private ProductInventory _inventory = new ProductInventory();
 
         /// <summary>
-        /// Adds product name
+        /// Adds product
         /// </summary>
-        /// <param name="productName">productName</param>
-        /// <param name="productPrice">productPrice</param>
-        /// <param name="productQuantity">productQuantity</param>
-        /// <returns>boolean</returns>
-        public bool AddProduct(string productName, double productPrice, double productQuantity)
+        /// <param name="productId">Product Id</param>
+        /// <param name="productName">Product Name</param>
+        /// <param name="productPrice">Product Price</param>
+        /// <param name="productQuantity">Product Quantity</param>
+        /// <returns>Boolean</returns>
+        public bool AddProduct(
+            string productId,
+            string productName,
+            double productPrice,
+            double productQuantity)
         {
             Product product = new Product();
+
+            product.Id = Guid.NewGuid();
+            product.ProductId = productId;
             product.Name = productName;
             product.Price = productPrice;
             product.Quantity = productQuantity;
-            product.Id = Guid.NewGuid();
+
             if (this._inventory.Add(product))
             {
-                product.Name = "Random Name";
                 return true;
             }
             else
@@ -36,12 +43,75 @@ namespace Assignment3.Service
         }
 
         /// <summary>
-        /// ViewsProducts
+        /// Views Products
         /// </summary>
         /// <returns>Product List</returns>
         public List<Product> ViewProducts()
         {
-           return _inventory.GetProduct();
+            return _inventory.GetProduct();
+        }
+
+        /// <summary>
+        /// Edit Product
+        /// </summary>
+        /// <param name="productId">Product Id</param>
+        /// <param name="oldName">Existing Product Name</param>
+        /// <param name="newName">New Product Name</param>
+        /// <param name="newPrice">New Product Price</param>
+        /// <param name="newQuantity">New Product Quantity</param>
+        /// <returns>Boolean</returns>
+        public bool EditProduct(
+            string productId,
+            string oldName,
+            string newName,
+            double newPrice,
+            double newQuantity)
+        {
+            Product product = new Product();
+
+            product.ProductId = productId;
+            product.Name = newName;
+            product.Price = newPrice;
+            product.Quantity = newQuantity;
+
+            return _inventory.Edit(productId, oldName, product);
+        }
+
+        /// <summary>
+        /// Delete Product
+        /// </summary>
+        /// <param name="value">Product Id or Name</param>
+        /// <returns>Boolean</returns>
+        public bool DeleteProduct(string value)
+        {
+            return _inventory.Delete(value);
+        }
+
+        /// <summary>
+        /// Search Product
+        /// </summary>
+        /// <param name="value">Product Id or Name</param>
+        /// <returns>Product List</returns>
+        public List<Product> SearchProduct(string value)
+        {
+            return _inventory.Search(value);
+        }
+
+        /// <summary>
+        /// Sort Products
+        /// </summary>
+        /// <param name="choice">Sort Choice</param>
+        /// <returns>Product List</returns>
+        public List<Product> SortProducts(int choice)
+        {
+            if (choice == 1)
+            {
+                return _inventory.SortByName();
+            }
+            else
+            {
+                return _inventory.SortByPrice();
+            }
         }
     }
 }
