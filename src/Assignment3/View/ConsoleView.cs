@@ -14,47 +14,179 @@ namespace Assignment3.View
         /// </summary>
         public static void ConsoleOperations()
         {
-            while(true) 
+            Services services = new Services();
+
+            while (true)
             {
-                Console.WriteLine("********* Inventory Management Application ************" +
-                    "\n\n1.Add products" +
-                    "\n2.View Products" +
-                    "\n3.Edit product" + 
-                    "\n4.Delete Product");
-                Choices.InventoryOperations userChoice = (Choices.InventoryOperations)Helper.ReadInt("\nSelect the operation to perform : ");
-                Services services = new Services();
+                Console.Clear();
+
+                Console.WriteLine("********* Inventory Management Application ************");
+                Console.WriteLine("\n1.Add Products");
+                Console.WriteLine("2.View Products");
+                Console.WriteLine("3.Edit Product");
+                Console.WriteLine("4.Delete Product");
+                Console.WriteLine("5.Search Product");
+                Console.WriteLine("6.Sort Products");
+                Console.WriteLine("7.Exit");
+
+                Choices.InventoryOperations userChoice =
+                    (Choices.InventoryOperations)Helper.ReadInt(
+                        "\nSelect the operation to perform : ");
+
                 switch (userChoice)
                 {
                     case Choices.InventoryOperations.AddProducts:
+
                         Console.Clear();
-                        Console.WriteLine("Enter the Product Details : ");
+
+                        Console.WriteLine("Enter Product Details :");
+
                         if (services.AddProduct(
-                            Helper.ReadString("\nProduct name : "),
-                            Helper.ReadDouble("\nProduct price : "),
-                            Helper.ReadDouble("\nProduct Quantity : ")))
+                            Helper.ReadString("\nProduct Id : "),
+                            Helper.ReadString("Product Name : "),
+                            Helper.ReadDouble("Product Price : "),
+                            Helper.ReadDouble("Product Quantity : ")))
                         {
-                            Console.WriteLine("Product added to Inventory");
+                            Console.WriteLine("\nProduct Added Successfully.");
                         }
                         else
                         {
-                            Console.WriteLine("Product not added to Inventory");
+                            Console.WriteLine("\nProduct Not Added.");
                         }
 
                         Console.ReadKey();
                         break;
 
                     case Choices.InventoryOperations.ViewProducts:
-                        var products = services.ViewProducts();
-                        foreach (var product in products)
+
+                        Console.Clear();
+
+                        List<Product> products = services.ViewProducts();
+
+                        if (products.Count == 0)
                         {
-                            Console.WriteLine(product.Name);
+                            Console.WriteLine("No Products Available.");
+                        }
+                        else
+                        {
+                            foreach (Product product in products)
+                            {
+                                Console.WriteLine("--------------------------------");
+                                Console.WriteLine($"Product Id : {product.ProductId}");
+                                Console.WriteLine($"Name       : {product.Name}");
+                                Console.WriteLine($"Price      : {product.Price}");
+                                Console.WriteLine($"Quantity   : {product.Quantity}");
+                            }
                         }
 
                         Console.ReadKey();
+                        break;
+
+                    case Choices.InventoryOperations.EditProducts:
+
                         Console.Clear();
+
+                        Console.WriteLine("Enter Product Identification Details");
+
+                        if (services.EditProduct(
+                            Helper.ReadString("Product Id : "),
+                            Helper.ReadString("Existing Product Name : "),
+                            Helper.ReadString("New Product Name : "),
+                            Helper.ReadDouble("New Product Price : "),
+                            Helper.ReadDouble("New Product Quantity : ")))
+                        {
+                            Console.WriteLine("\nProduct Updated Successfully.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nProduct Not Found.");
+                        }
+
+                        Console.ReadKey();
+                        break;
+
+                    case Choices.InventoryOperations.DeleteProducts:
+
+                        Console.Clear();
+
+                        if (services.DeleteProduct(
+                            Helper.ReadString(
+                                "Enter Product Id or Product Name : ")))
+                        {
+                            Console.WriteLine("\nProduct Deleted Successfully.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nProduct Not Found.");
+                        }
+
+                        Console.ReadKey();
+                        break;
+
+                    case Choices.InventoryOperations.SearchProducts:
+
+                        Console.Clear();
+
+                        List<Product> searchedProducts =
+                            services.SearchProduct(
+                                Helper.ReadString(
+                                    "Enter Product Id or Product Name : "));
+
+                        if (searchedProducts.Count == 0)
+                        {
+                            Console.WriteLine("No Products Found.");
+                        }
+                        else
+                        {
+                            foreach (Product product in searchedProducts)
+                            {
+                                Console.WriteLine("--------------------------------");
+                                Console.WriteLine($"Product Id : {product.ProductId}");
+                                Console.WriteLine($"Name       : {product.Name}");
+                                Console.WriteLine($"Price      : {product.Price}");
+                                Console.WriteLine($"Quantity   : {product.Quantity}");
+                            }
+                        }
+
+                        Console.ReadKey();
+                        break;
+
+                    case Choices.InventoryOperations.SortBy:
+
+                        Console.Clear();
+
+                        Console.WriteLine("1.Sort By Name");
+                        Console.WriteLine("2.Sort By Price");
+
+                        int choice = Helper.ReadInt(
+                            "\nSelect Sorting Type : ");
+
+                        List<Product> sortedProducts =
+                            services.SortProducts(choice);
+
+                        foreach (Product product in sortedProducts)
+                        {
+                            Console.WriteLine("--------------------------------");
+                            Console.WriteLine($"Product Id : {product.ProductId}");
+                            Console.WriteLine($"Name       : {product.Name}");
+                            Console.WriteLine($"Price      : {product.Price}");
+                            Console.WriteLine($"Quantity   : {product.Quantity}");
+                        }
+
+                        Console.ReadKey();
+                        break;
+
+                    case Choices.InventoryOperations.Exit:
+
+                        return;
+
+                    default:
+
+                        Console.WriteLine("Invalid Choice.");
+                        Console.ReadKey();
                         break;
                 }
             }
         }
-    } 
+    }
 }
