@@ -9,7 +9,7 @@ namespace Assignment2.Models
     /// <summary>
     /// BankingOperations
     /// </summary>
-    public enum BankingOperations
+    public enum BankingOperationsMenu
     {
         /// <summary>
         /// Deposit
