@@ -20,14 +20,14 @@ namespace Assignment3.View
             {
                 Console.Clear();
 
-                Console.WriteLine("********* Inventory Management Application ************");
-                Console.WriteLine("\n1.Add Products");
-                Console.WriteLine("2.View Products");
-                Console.WriteLine("3.Edit Product");
-                Console.WriteLine("4.Delete Product");
-                Console.WriteLine("5.Search Product");
-                Console.WriteLine("6.Sort Products");
-                Console.WriteLine("7.Exit");
+                Console.WriteLine("********* Inventory Management Application ************" +
+                    "\n1.add Products" +
+                    "\n2.View Products" +
+                    "\n3.Edit Products" +
+                    "\n4.Delete Product" +
+                    "\n5.Search Product" +
+                    "\n6.Sort Products" +
+                    "\n7.Exit");
 
                 Choices.InventoryOperations userChoice =
                     (Choices.InventoryOperations)Helper.ReadInt(
