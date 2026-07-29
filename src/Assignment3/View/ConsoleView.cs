@@ -21,7 +21,7 @@ namespace Assignment3.View
                 Console.Clear();
 
                 Console.WriteLine("********* Inventory Management Application ************" +
-                    "\n1.add Products" +
+                    "\n1.Add Products" +
                     "\n2.View Products" +
                     "\n3.Edit Products" +
                     "\n4.Delete Product" +
