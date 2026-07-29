@@ -19,7 +19,6 @@ namespace Assignment3.View
             while (true)
             {
                 Console.Clear();
-
                 Console.WriteLine("********* Inventory Management Application ************" +
                     "\n1.Add Products" +
                     "\n2.View Products" +
@@ -28,14 +27,13 @@ namespace Assignment3.View
                     "\n5.Search Product" +
                     "\n6.Sort Products" +
                     "\n7.Exit");
-
-                Choices.InventoryOperations userChoice =
-                    (Choices.InventoryOperations)Helper.ReadInt(
+                InventoryOperations userChoice =
+                    (InventoryOperations)Helper.ReadInt(
                         "\nSelect the operation to perform : ");
 
                 switch (userChoice)
                 {
-                    case Choices.InventoryOperations.AddProducts:
+                    case InventoryOperations.AddProducts:
 
                         Console.Clear();
 
@@ -47,17 +45,17 @@ namespace Assignment3.View
                             Helper.ReadDouble("Product Price : "),
                             Helper.ReadDouble("Product Quantity : ")))
                         {
-                            Console.WriteLine("\nProduct Added Successfully.");
+                            Helper.Success("\nProduct Added Successfully.");
                         }
                         else
                         {
-                            Console.WriteLine("\nProduct Not Added.");
+                            Helper.Error("\nProduct Not Added.");
                         }
 
                         Console.ReadKey();
                         break;
 
-                    case Choices.InventoryOperations.ViewProducts:
+                    case InventoryOperations.ViewProducts:
 
                         Console.Clear();
 
@@ -82,7 +80,7 @@ namespace Assignment3.View
                         Console.ReadKey();
                         break;
 
-                    case Choices.InventoryOperations.EditProducts:
+                    case InventoryOperations.EditProducts:
 
                         Console.Clear();
 
@@ -105,7 +103,7 @@ namespace Assignment3.View
                         Console.ReadKey();
                         break;
 
-                    case Choices.InventoryOperations.DeleteProducts:
+                    case InventoryOperations.DeleteProducts:
 
                         Console.Clear();
 
@@ -123,7 +121,7 @@ namespace Assignment3.View
                         Console.ReadKey();
                         break;
 
-                    case Choices.InventoryOperations.SearchProducts:
+                    case InventoryOperations.SearchProducts:
 
                         Console.Clear();
 
@@ -151,7 +149,7 @@ namespace Assignment3.View
                         Console.ReadKey();
                         break;
 
-                    case Choices.InventoryOperations.SortBy:
+                    case InventoryOperations.SortBy:
 
                         Console.Clear();
 
@@ -176,7 +174,7 @@ namespace Assignment3.View
                         Console.ReadKey();
                         break;
 
-                    case Choices.InventoryOperations.Exit:
+                    case InventoryOperations.Exit:
 
                         return;
 

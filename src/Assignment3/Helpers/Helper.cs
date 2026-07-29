@@ -59,5 +59,16 @@
             Console.Write(message);
             return Console.ReadLine() ?? string.Empty;
         }
+
+        /// <summary>
+        /// Displays success message in green color.
+        /// </summary>
+        /// <param name="message">message</param>
+        public static void Success(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"{message}");
+            Console.ResetColor();
+        }
     }
 }
