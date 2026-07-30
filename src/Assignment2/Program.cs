@@ -30,11 +30,11 @@ namespace Assignment2
             {
                 Console.Clear();
 
-                Console.WriteLine("========== Object Oriented Programming ==========");
-                Console.WriteLine("1. Shape");
-                Console.WriteLine("2. Employee");
-                Console.WriteLine("3. Bank Account");
-                Console.WriteLine("4. Exit");
+                Console.WriteLine("========== Object Oriented Programming ==========" +
+                    "\n1. Shape" +
+                    "\n2. Employee" +
+                    "\n3. Bank Account" +
+                    "\n4. Exit");
 
                 MainMenu choice = (MainMenu)Helper.ReadInt("Enter your choice : ");
 
@@ -72,10 +72,7 @@ namespace Assignment2
             {
                 Console.Clear();
 
-                Console.WriteLine("----- Shape Menu -----");
-                Console.WriteLine("1. Rectangle");
-                Console.WriteLine("2. Circle");
-                Console.WriteLine("3. Back");
+                Console.WriteLine("----- Shape Menu -----" + "\n1. Recatnagle" + "\n2. Circle" + "\n3. Back");
 
                 ShapeMenu choice = (ShapeMenu)Helper.ReadInt("Enter your choice : ");
 
@@ -85,7 +82,7 @@ namespace Assignment2
                         ShapeModels.Rectangle rect = new ();
                         rect.Length = Helper.ReadDouble("Enter the Length :");
                         rect.Width = Helper.ReadDouble("Enter the Width :");
-                        Console.WriteLine($"\nArea of the circle :{rect.CalculateArea()}");
+                        Console.WriteLine($"\nArea of the rectangle :{rect.CalculateArea()}");
                         Console.ReadKey();
                         break;
 
@@ -116,11 +113,10 @@ namespace Assignment2
             {
                 Console.Clear();
 
-                Console.WriteLine("----- Employee Menu -----");
-                Console.WriteLine("1. Manager");
-                Console.WriteLine("2. Developer");
-                Console.WriteLine("3. Back");
-
+                Console.WriteLine("----- Employee Menu -----" +
+                    "\n1. Manager" +
+                    "\n2.Developer" +
+                    "\n3.Back");
                 EmployeeMenu choice = (EmployeeMenu)Helper.ReadInt("Enter your choice : ");
 
                 switch (choice)
