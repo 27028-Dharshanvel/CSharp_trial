@@ -25,13 +25,13 @@ namespace Assignment2.BankAccountModels
         /// <value>
         /// AccountNumber
         /// </value>
-        public int AccountBalance { get; set; } = 0;
+        public decimal AccountBalance { get; set; } = 0;
 
         /// <summary>
         /// Withdraw
         /// </summary>
         /// <param name="amount"> amount </param>
-        public virtual void Withdraw(int amount)
+        public virtual void Withdraw(decimal amount)
         {
             this.AccountBalance = this.AccountBalance - amount;
         }
@@ -40,7 +40,7 @@ namespace Assignment2.BankAccountModels
         /// Deposit
         /// </summary>
         /// <param name="amount"> amount </param>
-        public virtual void Deposit(int amount)
+        public virtual void Deposit(decimal amount)
         {
             this.AccountBalance = this.AccountBalance + amount;
         }
