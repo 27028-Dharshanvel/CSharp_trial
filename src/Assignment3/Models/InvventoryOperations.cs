@@ -1,10 +1,5 @@
 ﻿namespace Assignment3.Models
 {
-    /// <summary>
-    /// Choices
-    /// </summary>
-    public class Choices
-    {
         /// <summary>
         /// InventoryOperations
         /// </summary>
@@ -45,5 +40,4 @@
             /// </summary>
             Exit,
         }
-    }
 }
