@@ -18,7 +18,7 @@ namespace Assignment2.BankAccountServices
         /// </summary>
         /// <param name="account">account</param>
         /// <param name="amount">amount</param>
-        public void Deposit(BankAccount account, int amount)
+        public void Deposit(BankAccount account, decimal amount)
         {
             account.Deposit(amount);
         }
@@ -28,7 +28,7 @@ namespace Assignment2.BankAccountServices
         /// </summary>
         /// <param name="account">account</param>
         /// <param name="amount">amount</param>
-        public void Withdraw(BankAccount account, int amount)
+        public void Withdraw(BankAccount account, decimal amount)
         {
             account.Withdraw(amount);
         }

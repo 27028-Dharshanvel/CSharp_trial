@@ -80,16 +80,16 @@ namespace Assignment2
                 {
                     case ShapeMenu.Rectangle:
                         ShapeModels.Rectangle rect = new ();
-                        rect.Length = Helper.ReadDouble("Enter the Length :");
-                        rect.Width = Helper.ReadDouble("Enter the Width :");
-                        Console.WriteLine($"\nArea of the rectangle :{rect.CalculateArea()}");
+                        rect.Length = Helper.ReadDouble("Enter the Length : ");
+                        rect.Width = Helper.ReadDouble("Enter the Width : ");
+                        Console.WriteLine($"\nArea of the rectangle : {rect.CalculateArea()}");
                         Console.ReadKey();
                         break;
 
                     case ShapeMenu.Circle:
                         ShapeModels.Circle circle = new ();
-                        circle.Radius = Helper.ReadDouble("Enter the Radius :");
-                        Console.WriteLine($"\nArea of the circle :{circle.CalculateArea()}");
+                        circle.Radius = Helper.ReadDouble("Enter the Radius : ");
+                        Console.WriteLine($"\nArea of the circle : {circle.CalculateArea()}");
                         Console.ReadKey();
                         break;
 
@@ -98,7 +98,7 @@ namespace Assignment2
                         break;
 
                     default:
-                        Console.WriteLine("Invalid Choice.");
+                        Console.WriteLine("\nInvalid Choice.");
                         Console.ReadKey();
                         break;
                 }
@@ -114,24 +114,24 @@ namespace Assignment2
                 Console.Clear();
 
                 Console.WriteLine("----- Employee Menu -----" +
-                    "\n1. Manager" +
+                    "\n1.Manager" +
                     "\n2.Developer" +
                     "\n3.Back");
-                EmployeeMenu choice = (EmployeeMenu)Helper.ReadInt("Enter your choice : ");
+                EmployeeMenu choice = (EmployeeMenu)Helper.ReadInt("\nEnter your choice : ");
 
                 switch (choice)
                 {
                     case EmployeeMenu.Manager:
                         Manager manager = new ();
-                        manager.Salary = Helper.ReadInt("Enter your Salary");
-                        Console.WriteLine($"Your Bonus amount is : {manager.CalculateBonus()}");
+                        manager.Salary = Helper.ReadDecimal("\nEnter your Salary : ");
+                        Console.WriteLine($"\nYour Bonus amount is : {manager.CalculateBonus()}");
                         Console.ReadKey();
                         break;
 
                     case EmployeeMenu.Developer:
                         Developer developer = new ();
-                        developer.Salary = Helper.ReadInt("Enter your Salary");
-                        Console.WriteLine($"Your Bonus amount is : {developer.CalculateBonus()}");
+                        developer.Salary = Helper.ReadDecimal("Enter your Salary");
+                        Console.WriteLine($"\nYour Bonus amount is : {developer.CalculateBonus()}");
                         Console.ReadKey();
                         break;
 
@@ -140,7 +140,7 @@ namespace Assignment2
                         break;
 
                     default:
-                        Console.WriteLine("Invalid Choice.");
+                        Console.WriteLine("\nInvalid Choice.");
                         Console.ReadKey();
                         break;
                 }
@@ -150,15 +150,17 @@ namespace Assignment2
         private static void ShowBankMenu(BankController controller)
         {
             bool back = false;
-            bool isBankRunning = false;
 
             while (!back)
             {
                 Console.Clear();
 
-                Console.WriteLine("----- Bank Menu -----\n\n1. Savings account \n2.Checking account \n3.Back");
+                Console.WriteLine("----- Bank Menu -----" +
+                    "\n\n1.Savings account" +
+                    "\n2.Checking account" +
+                    "\n3.Back");
 
-                BankMenu choice = (BankMenu)Helper.ReadInt("Enter your choice : ");
+                BankMenu choice = (BankMenu)Helper.ReadInt("\nEnter your choice : ");
 
                 switch (choice)
                 {
@@ -166,20 +168,20 @@ namespace Assignment2
 
                         SavingsAccount savingsAccount1 = new ();
                         Helper.DisplayBankingOperations();
-                        BankingOperationsMenu userChoice = (BankingOperationsMenu)Helper.ReadInt("Enter the operation to perform :");
+                        BankingOperationsMenu userChoice = (BankingOperationsMenu)Helper.ReadInt("\nEnter the operation to perform :");
                         switch (userChoice)
                         {
                             case BankingOperationsMenu.Deposit:
 
-                                savingsAccount1.Deposit(Helper.ReadInt("Enter amount to Deposit :"));
-                                Console.WriteLine($"Amount Deposited \nCurrent Balance : ${savingsAccount1.AccountBalance}");
+                                savingsAccount1.Deposit(Helper.ReadDecimal("\nEnter amount to Deposit :"));
+                                Console.WriteLine($"\nAmount Deposited \nCurrent Balance : ${savingsAccount1.AccountBalance}");
                                 Console.ReadKey();
                                 break;
 
                             case BankingOperationsMenu.Withdraw:
 
-                                savingsAccount1.Withdraw(Helper.ReadInt("Enter amount to Withdraw :"));
-                                Console.WriteLine($"Amount Withdrawn \nCurrent Balance : ${savingsAccount1.AccountBalance}");
+                                savingsAccount1.Withdraw(Helper.ReadDecimal("Enter amount to Withdraw :"));
+                                Console.WriteLine($"\nAmount Withdrawn \nCurrent Balance : ${savingsAccount1.AccountBalance}");
                                 Console.ReadKey();
                                 break;
                         }
@@ -189,20 +191,20 @@ namespace Assignment2
                     case BankMenu.CheckingAccount:
                         Helper.DisplayBankingOperations();
                         CheckingAccount checkingAccount1 = new ();
-                        BankingOperationsMenu userChoice2 = (BankingOperationsMenu)Helper.ReadInt("Enter the operation to perform :");
+                        BankingOperationsMenu userChoice2 = (BankingOperationsMenu)Helper.ReadInt("\nEnter the operation to perform :");
                         switch (userChoice2)
                         {
                             case BankingOperationsMenu.Deposit:
 
-                                checkingAccount1.Deposit(Helper.ReadInt("Enter amount to Deposit : "));
-                                Console.WriteLine($"Amount Deposited \nCurrent Balance : ${checkingAccount1.AccountBalance}");
+                                checkingAccount1.Deposit(Helper.ReadDecimal("\nEnter amount to Deposit : "));
+                                Console.WriteLine($"\nAmount Deposited \nCurrent Balance : ${checkingAccount1.AccountBalance}");
                                 Console.ReadKey();
                                 break;
 
                             case BankingOperationsMenu.Withdraw:
 
-                                checkingAccount1.Withdraw(Helper.ReadInt("Enter amount to Withdraw :"));
-                                Console.WriteLine($"Amount Withdrawn \nCurrent Balance : ${checkingAccount1.AccountBalance}");
+                                checkingAccount1.Withdraw(Helper.ReadDecimal("Enter amount to Withdraw :"));
+                                Console.WriteLine($"\nAmount Withdrawn \nCurrent Balance : ${checkingAccount1.AccountBalance}");
                                 Console.ReadKey();
                                 break;
                         }
@@ -214,7 +216,7 @@ namespace Assignment2
                         break;
 
                     default:
-                        Console.WriteLine("Invalid Choice.");
+                        Console.WriteLine("\nInvalid Choice.");
                         Console.ReadKey();
                         break;
                 }

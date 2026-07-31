@@ -23,7 +23,7 @@ namespace Assignment2.BankAccountModels
         /// Withdraw
         /// </summary>
         /// <param name="amount">amount</param>
-        public override void Withdraw(int amount)
+        public override void Withdraw(decimal amount)
         {
             if ((this.AccountBalance - amount) >= this.MinimumBalance)
             {

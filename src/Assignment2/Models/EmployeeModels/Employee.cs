@@ -25,7 +25,7 @@ namespace Assignment2.EmployeeModels
         /// <value>
         /// Salary
         /// </value>
-        public int Salary { get; set; } = 0;
+        public decimal Salary { get; set; } = 0;
 
         /// <summary>
         /// Gets position of Employee
@@ -39,6 +39,6 @@ namespace Assignment2.EmployeeModels
         /// CalculatesBonus
         /// </summary>
         /// <returns>Bonus amount</returns>
-        public abstract int CalculateBonus();
+        public abstract decimal CalculateBonus();
     }
 }
