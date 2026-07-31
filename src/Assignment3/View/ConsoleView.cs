@@ -164,11 +164,11 @@ namespace Assignment3.View
 
                         foreach (Product product in sortedProducts)
                         {
-                            Console.WriteLine("--------------------------------");
-                            Console.WriteLine($"Product Id : {product.ProductId}");
-                            Console.WriteLine($"Name       : {product.Name}");
-                            Console.WriteLine($"Price      : {product.Price}");
-                            Console.WriteLine($"Quantity   : {product.Quantity}");
+                            Console.WriteLine("--------------------------------\n");
+                            Console.WriteLine($"\nProduct Id : {product.ProductId}");
+                            Console.WriteLine($"\nName       : {product.Name}");
+                            Console.WriteLine($"\nPrice      : {product.Price}");
+                            Console.WriteLine($"\nQuantity   : {product.Quantity}");
                         }
 
                         Console.ReadKey();
