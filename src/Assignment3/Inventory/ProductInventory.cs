@@ -7,7 +7,7 @@ namespace Assignment3.Inventory
     /// </summary>
     internal class ProductInventory
     {
-        private List<Product>? _products = new List<Product>();
+        private List<Product> _products = new List<Product>();
 
         /// <summary>
         /// Add Products to inventory
@@ -16,13 +16,13 @@ namespace Assignment3.Inventory
         /// <returns>product</returns>
         public bool Add(Product product)
         {
-            if (product == null)
+            if (product == null || this.ProductIdExists(product.ProductId))
             {
                 return false;
             }
             else
             {
-                _products.Add(product);
+                this._products.Add(product);
                 return true;
             }
         }
@@ -33,7 +33,7 @@ namespace Assignment3.Inventory
         /// <returns>products</returns>
         public List<Product> GetProduct()
         {
-            return _products.Select(p => p.Clone()).ToList();
+            return this._products.Select(p => p.Clone()).ToList();
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Assignment3.Inventory
         /// <returns>Boolean</returns>
         public bool Edit(string productId, string productName, Product product)
         {
-            Product? existingProduct = _products.FirstOrDefault(p =>
+            Product? existingProduct = this._products.FirstOrDefault(p =>
                 p.ProductId == productId &&
                 p.Name != null &&
                 p.Name.Equals(productName, StringComparison.OrdinalIgnoreCase));
@@ -69,7 +69,7 @@ namespace Assignment3.Inventory
         /// <returns>Boolean</returns>
         public bool Delete(string value)
         {
-            Product? product = _products.FirstOrDefault(p =>
+            Product? product = this._products.FirstOrDefault(p =>
                 p.ProductId == value ||
                 (p.Name != null &&
                 p.Name.Equals(value, StringComparison.OrdinalIgnoreCase)));
@@ -79,7 +79,7 @@ namespace Assignment3.Inventory
                 return false;
             }
 
-            _products.Remove(product);
+            this._products.Remove(product);
 
             return true;
         }
@@ -91,7 +91,7 @@ namespace Assignment3.Inventory
         /// <returns>Products</returns>
         public List<Product> Search(string value)
         {
-            return _products
+            return this._products
                 .Where(p =>
                     p.ProductId == value ||
                     (p.Name != null &&
@@ -106,7 +106,7 @@ namespace Assignment3.Inventory
         /// <returns>Products</returns>
         public List<Product> SortByName()
         {
-            return _products
+            return this._products
                 .OrderBy(p => p.Name)
                 .Select(p => p.Clone())
                 .ToList();
@@ -118,10 +118,21 @@ namespace Assignment3.Inventory
         /// <returns>Products</returns>
         public List<Product> SortByPrice()
         {
-            return _products
+            return this._products
                 .OrderBy(p => p.Price)
                 .Select(p => p.Clone())
                 .ToList();
+        }
+
+        /// <summary>
+        /// Checks whether Product Id already exists
+        /// </summary>
+        /// <param name="productId">Product Id</param>
+        /// <returns>Boolean</returns>
+        public bool ProductIdExists(string productId)
+        {
+            return this._products.Any(p =>
+                p.ProductId.Equals(productId, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

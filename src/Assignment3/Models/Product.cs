@@ -37,7 +37,7 @@
         /// <value>
         /// Price.
         /// </value>
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         /// <summary>
         /// Gets or sets quantity.
