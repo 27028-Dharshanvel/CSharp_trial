@@ -45,8 +45,33 @@
                     return value;
                 }
 
-                Console.WriteLine("Please enter a valid integer.");
+                Console.WriteLine("Please enter a valid decimal.");
             }
+        }
+
+        /// <summary>
+        /// Reads string and validate whether it is decimal
+        /// </summary>
+        /// <param name="message">message</param>
+        /// <param name="maxTries">maxTries</param>
+        /// <returns>decimal.</returns>
+        public static decimal ReadDecimal(string message, int maxTries)
+        {
+            decimal value;
+            while (maxTries > 0)
+            {
+                Console.Write(message);
+
+                if (decimal.TryParse(Console.ReadLine(), out value))
+                {
+                    return value;
+                }
+
+                Console.WriteLine("Please enter a valid decimal.");
+                maxTries--;
+            }
+
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -77,7 +102,7 @@
         /// <param name="message">message</param>
         public static void Error(string message)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"{message}");
             Console.ResetColor();
         }

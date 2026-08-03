@@ -36,20 +36,26 @@ namespace Assignment3.View
                     case InventoryOperations.AddProducts:
 
                         Console.Clear();
-
-                        Console.WriteLine("Enter Product Details :");
-
-                        if (services.AddProduct(
-                            Helper.ReadString("\nProduct Id : "),
-                            Helper.ReadString("Product Name : "),
-                            Helper.ReadDouble("Product Price : "),
-                            Helper.ReadDouble("Product Quantity : ")))
+                        try
                         {
-                            Helper.Success("\nProduct Added Successfully.");
+                            Console.WriteLine("Enter Product Details :");
+
+                            if (services.AddProduct(
+                                ConsoleHelper.ReadString("\nProduct Id : ", "Product ID", 10, 3),
+                                ConsoleHelper.ReadString("Product Name : ", "Product name", 10, 3),
+                                ConsoleHelper.ReadDecimal("Product Price : ", "Price", 9999999, 3),
+                                ConsoleHelper.ReadDouble("Product Quantity : ", "Quantity", 99999, 3)))
+                            {
+                                Helper.Success("\nProduct Added Successfully.");
+                            }
+                            else
+                            {
+                                Helper.Error("\nProduct not added.Product ID might already exist");
+                            }
                         }
-                        else
+                        catch (Exception)
                         {
-                            Helper.Error("\nProduct Not Added.");
+                            Helper.Error("\nToo many attempts .Try again later");
                         }
 
                         Console.ReadKey();
@@ -69,11 +75,11 @@ namespace Assignment3.View
                         {
                             foreach (Product product in products)
                             {
-                                Console.WriteLine("--------------------------------");
-                                Console.WriteLine($"Product Id : {product.ProductId}");
-                                Console.WriteLine($"Name       : {product.Name}");
-                                Console.WriteLine($"Price      : {product.Price}");
-                                Console.WriteLine($"Quantity   : {product.Quantity}");
+                                Console.WriteLine("--------------------------------" +
+                                    $"\nProduct Id : {product.ProductId}" +
+                                    $"\nName       : {product.Name}" +
+                                    $"\nPrice      : {product.Price}" +
+                                    $"\nQuantity   : {product.Quantity}");
                             }
                         }
 
@@ -90,7 +96,7 @@ namespace Assignment3.View
                             Helper.ReadString("Product Id : "),
                             Helper.ReadString("Existing Product Name : "),
                             Helper.ReadString("New Product Name : "),
-                            Helper.ReadDouble("New Product Price : "),
+                            Helper.ReadDecimal("New Product Price : ", 3),
                             Helper.ReadDouble("New Product Quantity : ")))
                         {
                             Console.WriteLine("\nProduct Updated Successfully.");

@@ -21,7 +21,7 @@ namespace Assignment3.Service
         public bool AddProduct(
             string productId,
             string productName,
-            double productPrice,
+            decimal productPrice,
             double productQuantity)
         {
             Product product = new Product();
@@ -48,7 +48,7 @@ namespace Assignment3.Service
         /// <returns>Product List</returns>
         public List<Product> ViewProducts()
         {
-            return _inventory.GetProduct();
+            return this._inventory.GetProduct();
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Assignment3.Service
             string productId,
             string oldName,
             string newName,
-            double newPrice,
+            decimal newPrice,
             double newQuantity)
         {
             Product product = new Product();
@@ -74,7 +74,7 @@ namespace Assignment3.Service
             product.Price = newPrice;
             product.Quantity = newQuantity;
 
-            return _inventory.Edit(productId, oldName, product);
+            return this._inventory.Edit(productId, oldName, product);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Assignment3.Service
         /// <returns>Boolean</returns>
         public bool DeleteProduct(string value)
         {
-            return _inventory.Delete(value);
+            return this._inventory.Delete(value);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Assignment3.Service
         /// <returns>Product List</returns>
         public List<Product> SearchProduct(string value)
         {
-            return _inventory.Search(value);
+            return this._inventory.Search(value);
         }
 
         /// <summary>
@@ -106,11 +106,11 @@ namespace Assignment3.Service
         {
             if (choice == 1)
             {
-                return _inventory.SortByName();
+                return this._inventory.SortByName();
             }
             else
             {
-                return _inventory.SortByPrice();
+                return this._inventory.SortByPrice();
             }
         }
     }
