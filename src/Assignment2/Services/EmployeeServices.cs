@@ -8,15 +8,15 @@ using Assignment2.EmployeeModels;
 namespace Assignment2.Controllers
 {
     /// <summary>
-    /// Employee Controller
+    /// Employee Services
     /// </summary>
-    internal class EmployeeController
+    internal class EmployeeServices
     {
         /// <summary>
-        /// Calculates Bonus
+        /// Calculates bonus amount from the salary.
         /// </summary>
         /// <param name="employee">employee</param>
-        /// <returns>Bonus amount</returns>
+        /// <returns>Bonus amount.</returns>
         public decimal CalculateBonus(Employee employee)
         {
             return employee.CalculateBonus();

@@ -15,14 +15,14 @@ namespace Assignment2
     internal class Program
     {
         /// <summary>
-        /// Entry point of the program
+        /// Entry point of the program.
         /// </summary>
-        /// <param name="args">Command line arguments</param>
+        /// <param name="args">Command line arguments.</param>
         public static void Main(string[] args)
         {
-            ShapeController shapeController = new ShapeController();
-            EmployeeController employeeController = new EmployeeController();
-            BankController bankController = new BankController();
+            ShapeServices shapeController = new ShapeServices();
+            EmployeeServices employeeController = new EmployeeServices();
+            BankServices bankController = new BankServices();
 
             bool exit = false;
 
@@ -54,6 +54,7 @@ namespace Assignment2
 
                     case MainMenu.Exit:
                         exit = true;
+                        Console.WriteLine("Application exited");
                         break;
 
                     default:
@@ -64,7 +65,7 @@ namespace Assignment2
             }
         }
 
-        private static void ShowShapeMenu(ShapeController controller)
+        private static void ShowShapeMenu(ShapeServices controller)
         {
             bool back = false;
 
@@ -72,7 +73,10 @@ namespace Assignment2
             {
                 Console.Clear();
 
-                Console.WriteLine("----- Shape Menu -----" + "\n1. Recatnagle" + "\n2. Circle" + "\n3. Back");
+                Console.WriteLine("----- Shape Menu -----" +
+                    "\n1. Rectangle" +
+                    "\n2. Circle" +
+                    "\n3. Back");
 
                 ShapeMenu choice = (ShapeMenu)Helper.ReadInt("Enter your choice : ");
 
@@ -105,7 +109,7 @@ namespace Assignment2
             }
         }
 
-        private static void ShowEmployeeMenu(EmployeeController controller)
+        private static void ShowEmployeeMenu(EmployeeServices controller)
         {
             bool back = false;
 
@@ -147,7 +151,7 @@ namespace Assignment2
             }
         }
 
-        private static void ShowBankMenu(BankController controller)
+        private static void ShowBankMenu(BankServices controller)
         {
             bool back = false;
 

@@ -12,10 +12,10 @@ namespace Assignment2.EmployeeModels
     internal class Developer : Employee
     {
         /// <summary>
-        /// Gets position
+        /// Gets position of the employee.
         /// </summary>
         /// <value>
-        /// Positionvof Employee
+        /// Position of Employee.
         /// </value>
         public override string Position
         {
@@ -26,7 +26,7 @@ namespace Assignment2.EmployeeModels
         }
 
         /// <summary>
-        /// Calculates Bonus
+        /// Calculates Bonus amount from salary.
         /// </summary>
         /// <returns> Bonus amount </returns>
         public override decimal CalculateBonus()

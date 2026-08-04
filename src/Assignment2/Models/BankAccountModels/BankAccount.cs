@@ -12,23 +12,23 @@ namespace Assignment2.BankAccountModels
     internal abstract class BankAccount
     {
         /// <summary>
-        /// Gets or sets accountNumber
+        /// Gets or sets AccountNumber.
         /// </summary>
         /// <value>
-        /// AccountNumber
+        /// AccountNumber.
         /// </value>
         public string AccountNumber { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets accountNumber
+        /// Gets or sets AccountBalance.
         /// </summary>
         /// <value>
-        /// AccountNumber
+        /// Account Balance
         /// </value>
         public decimal AccountBalance { get; set; } = 0;
 
         /// <summary>
-        /// Withdraw
+        /// Default Withdraw method to withdraw amount.
         /// </summary>
         /// <param name="amount"> amount </param>
         public virtual void Withdraw(decimal amount)
@@ -37,7 +37,7 @@ namespace Assignment2.BankAccountModels
         }
 
         /// <summary>
-        /// Deposit
+        /// Default Deposit method to deposit amount.
         /// </summary>
         /// <param name="amount"> amount </param>
         public virtual void Deposit(decimal amount)

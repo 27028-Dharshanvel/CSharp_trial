@@ -12,23 +12,23 @@ namespace Assignment2.ShapeModels
     internal abstract class Shape
     {
         /// <summary>
-        /// Gets or sets colour
+        /// Gets or sets colour.
         /// </summary>
         /// <value>
-        /// Gets or sets colour.
+        /// Colour as a string.
         /// </value>
         public string Colour { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets shapeType
+        /// Gets shapeType.
         /// </summary>
         /// <value>
-        /// string
+        /// Shapes type as string.
         /// </value>
         public abstract string ShapeType { get; }
 
         /// <summary>
-        /// Calculates area
+        /// Calculates area of the shape.
         /// </summary>
         /// <returns>Area in double </returns>
         public abstract double CalculateArea();
