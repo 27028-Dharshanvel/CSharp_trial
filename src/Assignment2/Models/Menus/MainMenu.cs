@@ -12,7 +12,7 @@ namespace Assignment2.Models
         public enum MainMenu
         {
             /// <summary>
-            /// shape
+            /// Shape
             /// </summary>
             Shape = 1,
 
@@ -27,7 +27,7 @@ namespace Assignment2.Models
             BankAccount,
 
             /// <summary>
-            /// exit
+            /// Exit
             /// </summary>
             Exit,
         }

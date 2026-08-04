@@ -12,7 +12,7 @@ namespace Assignment2.BankAccountModels
     internal class CheckingAccount : BankAccount
     {
         /// <summary>
-        /// Withdraw
+        /// Withdraw method to withdraw amount from accountbalance.
         /// </summary>
         /// <param name="amount"> amount </param>
         public override void Withdraw(decimal amount)

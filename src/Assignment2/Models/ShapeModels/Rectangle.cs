@@ -12,7 +12,7 @@ namespace Assignment2.ShapeModels
     internal class Rectangle : Shape
     {
         /// <summary>
-        /// Gets or sets length of Rectangle
+        /// Gets or sets length of Rectangle.
         /// </summary>
         /// <value>
         /// Length.
@@ -20,7 +20,7 @@ namespace Assignment2.ShapeModels
         public double Length { get; set; } = double.NaN;
 
         /// <summary>
-        /// Gets or sets width of Rectangle
+        /// Gets or sets width of Rectangle.
         /// </summary>
         /// <value>
         /// Width.
@@ -28,7 +28,7 @@ namespace Assignment2.ShapeModels
         public double Width { get; set; } = double.NaN;
 
         /// <summary>
-        /// Gets shapes type
+        /// Gets shapes type.
         /// </summary>
         /// <value>
         /// Shapes type.
@@ -42,9 +42,9 @@ namespace Assignment2.ShapeModels
         }
 
         /// <summary>
-        /// Calculates area
+        /// Calculates area of the rectangle.
         /// </summary>
-        /// <returns>area </returns>
+        /// <returns>Area of the rectangle.</returns>
         public override double CalculateArea()
         {
             return this.Length * this.Width;

@@ -12,7 +12,7 @@ namespace Assignment2.EmployeeModels
     internal abstract class Employee
     {
         /// <summary>
-        /// Gets or sets name
+        /// Gets or sets name.
         /// </summary>
         /// <value>
         /// Name of Employee
@@ -20,7 +20,7 @@ namespace Assignment2.EmployeeModels
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets salary
+        /// Gets or sets salary.
         /// </summary>
         /// <value>
         /// Salary
@@ -28,7 +28,7 @@ namespace Assignment2.EmployeeModels
         public decimal Salary { get; set; } = 0;
 
         /// <summary>
-        /// Gets position of Employee
+        /// Gets position of Employee.
         /// </summary>
         /// <value>
         /// Position of Employee.
@@ -36,7 +36,7 @@ namespace Assignment2.EmployeeModels
         public abstract string Position { get; }
 
         /// <summary>
-        /// CalculatesBonus
+        /// Calculates Bonus from the salary.
         /// </summary>
         /// <returns>Bonus amount</returns>
         public abstract decimal CalculateBonus();

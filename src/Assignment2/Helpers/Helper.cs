@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace Assignment2.Helpers
 {
     /// <summary>
-    /// Helper clas
+    /// Helper class
     /// </summary>
     internal class Helper
     {
         /// <summary>
-        /// Reads string and validate whether it is int
+        /// Reads string and validate whether it is integer.
         /// </summary>
         /// <param name="message">message</param>
         /// <returns>int</returns>
@@ -34,7 +34,7 @@ namespace Assignment2.Helpers
         }
 
         /// <summary>
-        /// Reads string and validate whether it is double
+        /// Reads string and validate whether it is double.
         /// </summary>
         /// <param name="message">message</param>
         /// <returns>double</returns>
@@ -56,7 +56,7 @@ namespace Assignment2.Helpers
         }
 
         /// <summary>
-        /// To Read a decimal value.
+        /// Reads string and validate whether it is decimal.
         /// </summary>
         /// <param name="message">Decimal</param>
         /// <returns>Amount in decimal.</returns>
@@ -76,12 +76,14 @@ namespace Assignment2.Helpers
                 Console.WriteLine("Please enter a valid decimal number.");
             }
         }
+
         /// <summary>
-        /// To display Banking Operations
+        /// To display Banking Operations.
         /// </summary>
         public static void DisplayBankingOperations()
         {
-            Console.WriteLine("\n 1.Deposit \n 2.Withdraw");
+            Console.WriteLine("\n 1.Deposit " +
+                "\n 2.Withdraw");
         }
     }
 }

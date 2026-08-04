@@ -8,15 +8,15 @@ using Assignment2.ShapeModels;
 namespace Assignment2.Controllers
 {
     /// <summary>
-    /// Shape Controller
+    /// Shape Services
     /// </summary>
-    internal class ShapeController
+    internal class ShapeServices
     {
         /// <summary>
-        /// Calculates Area
+        /// Calculates Area of the shape.
         /// </summary>
         /// <param name="shape">shape</param>
-        /// <returns>area</returns>
+        /// <returns>Area in double value.</returns>
         public double CalculateArea(Shape shape)
         {
             return shape.CalculateArea();

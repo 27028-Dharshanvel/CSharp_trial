@@ -9,12 +9,12 @@ using Assignment2.Helpers;
 namespace Assignment2.BankAccountServices
 {
     /// <summary>
-    /// BankController
+    /// Bank Services
     /// </summary>
-    internal class BankController
+    internal class BankServices
     {
         /// <summary>
-        /// Deposit amount
+        /// Deposits amount to bank account.
         /// </summary>
         /// <param name="account">account</param>
         /// <param name="amount">amount</param>
@@ -24,7 +24,7 @@ namespace Assignment2.BankAccountServices
         }
 
         /// <summary>
-        /// Withdraw amount
+        /// Withdraws amount from bank account.
         /// </summary>
         /// <param name="account">account</param>
         /// <param name="amount">amount</param>
