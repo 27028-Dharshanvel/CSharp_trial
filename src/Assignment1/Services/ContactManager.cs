@@ -1,4 +1,4 @@
-﻿using ContactManagerApp.Helpers;
+using ContactManagerApp.Helpers;
 using ContactManagerApp.Models;
 using ContactManagerApp.Repository;
 
@@ -12,13 +12,13 @@ namespace ContactManagerApp.Services
         /// <summary>
         /// Class ContactManager
         /// </summary>
-        private readonly ContactRepository _repository;
+        private readonly IRepository _repository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContactManager"/> class.
         /// </summary>
         /// <param name="repository">The contact repository.</param>
-        public ContactManager(ContactRepository repository)
+        public ContactManager(IRepository repository)
         {
             this._repository = repository;
         }

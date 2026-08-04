@@ -1,11 +1,11 @@
-﻿using ContactManagerApp.Models;
+using ContactManagerApp.Models;
 
 namespace ContactManagerApp.Repository
 {
     /// <summary>
     /// ContactRepository
     /// </summary>
-    public class ContactRepository
+    public class ContactRepository : IRepository
     {
         private List<Contact> _contacts;
 
