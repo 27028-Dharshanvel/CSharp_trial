@@ -158,23 +158,29 @@ namespace Assignment3.View
                     case InventoryOperations.SortBy:
 
                         Console.Clear();
-
-                        Console.WriteLine("1.Sort By Name");
-                        Console.WriteLine("2.Sort By Price");
-
-                        int choice = Helper.ReadInt(
-                            "\nSelect Sorting Type : ");
-
-                        List<Product> sortedProducts =
-                            services.SortProducts(choice);
-
-                        foreach (Product product in sortedProducts)
+                        try
                         {
-                            Console.WriteLine("--------------------------------\n");
-                            Console.WriteLine($"\nProduct Id : {product.ProductId}");
-                            Console.WriteLine($"\nName       : {product.Name}");
-                            Console.WriteLine($"\nPrice      : {product.Price}");
-                            Console.WriteLine($"\nQuantity   : {product.Quantity}");
+                            Console.WriteLine("1.Sort By Name");
+                            Console.WriteLine("2.Sort By Price");
+
+                            int choice = ConsoleHelper.ReadInt(
+                                "\nSelect Sorting Type : ", "Choice", 3, 3);
+
+                            List<Product> sortedProducts =
+                                services.SortProducts(choice);
+
+                            foreach (Product product in sortedProducts)
+                            {
+                                Console.WriteLine("--------------------------------\n");
+                                Console.WriteLine($"\nProduct Id : {product.ProductId}");
+                                Console.WriteLine($"\nName       : {product.Name}");
+                                Console.WriteLine($"\nPrice      : {product.Price}");
+                                Console.WriteLine($"\nQuantity   : {product.Quantity}");
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            Helper.Error("\nToo many attempts! Try again later");
                         }
 
                         Console.ReadKey();

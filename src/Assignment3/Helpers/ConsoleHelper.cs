@@ -46,6 +46,42 @@ namespace Assignment3.Helpers
         /// <param name="maxCharacters">maxCharacters</param>
         /// <param name="maxTries">maxTries</param>
         /// <returns>decimal.</returns>
+        public static int ReadInt(string message, string input, int maxCharacters, int maxTries)
+        {
+            int value;
+            while (maxTries > 0)
+            {
+                Console.Write(message);
+
+                if (int.TryParse(Console.ReadLine(), out value))
+                {
+                    if (value < maxCharacters)
+                    {
+                        return value;
+                    }
+                    else
+                    {
+                        Helper.Error($"{input} should neither be Null nor exceed {maxCharacters}.");
+                        maxTries--;
+                        continue;
+                    }
+                }
+
+                Helper.Error("Please enter a valid integer.");
+                maxTries--;
+            }
+
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Reads string and validate whether it is decimal
+        /// </summary>
+        /// <param name="message">message</param>
+        /// <param name="input">input</param>
+        /// <param name="maxCharacters">maxCharacters</param>
+        /// <param name="maxTries">maxTries</param>
+        /// <returns>decimal.</returns>
         public static decimal ReadDecimal(string message, string input, int maxCharacters, int maxTries)
         {
             decimal value;
