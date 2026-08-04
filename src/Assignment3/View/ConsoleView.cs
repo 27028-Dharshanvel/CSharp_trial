@@ -1,6 +1,7 @@
 ﻿using Assignment3.Helpers;
 using Assignment3.Models;
 using Assignment3.Service;
+using ConsoleTables;
 
 namespace Assignment3.View
 {
@@ -73,14 +74,13 @@ namespace Assignment3.View
                         }
                         else
                         {
+                            var table1 = new ConsoleTable("ProductID", "ProductName", "Price", "Quantity");
                             foreach (Product product in products)
                             {
-                                Console.WriteLine("--------------------------------" +
-                                    $"\nProduct Id : {product.ProductId}" +
-                                    $"\nName       : {product.Name}" +
-                                    $"\nPrice      : {product.Price}" +
-                                    $"\nQuantity   : {product.Quantity}");
+                                table1.AddRow(product.ProductId,  product.Name, product.Price, product.Quantity);
                             }
+
+                            table1.Write();
                         }
 
                         Console.ReadKey();
@@ -133,8 +133,8 @@ namespace Assignment3.View
 
                         List<Product> searchedProducts =
                             services.SearchProduct(
-                                Helper.ReadString(
-                                    "Enter Product Id or Product Name : "));
+                                ConsoleHelper.ReadString(
+                                    "Enter Product Id or Product Name : ", "Input", 20, 3));
 
                         if (searchedProducts.Count == 0)
                         {
@@ -142,14 +142,13 @@ namespace Assignment3.View
                         }
                         else
                         {
+                            var table2 = new ConsoleTable("ProductID", "ProductName", "Price", "Quantity");
                             foreach (Product product in searchedProducts)
                             {
-                                Console.WriteLine("--------------------------------");
-                                Console.WriteLine($"Product Id : {product.ProductId}");
-                                Console.WriteLine($"Name       : {product.Name}");
-                                Console.WriteLine($"Price      : {product.Price}");
-                                Console.WriteLine($"Quantity   : {product.Quantity}");
+                                table2.AddRow(product.ProductId, product.Name, product.Price, product.Quantity);
                             }
+
+                            table2.Write();
                         }
 
                         Console.ReadKey();
@@ -166,8 +165,14 @@ namespace Assignment3.View
                             int choice = ConsoleHelper.ReadInt(
                                 "\nSelect Sorting Type : ", "Choice", 3, 3);
 
-                            List<Product> sortedProducts =
+                            List<Product>? sortedProducts =
                                 services.SortProducts(choice);
+
+                            if (sortedProducts == null)
+                            {
+                                Helper.Error("Inventory is empty");
+                                break;
+                            }
 
                             foreach (Product product in sortedProducts)
                             {
