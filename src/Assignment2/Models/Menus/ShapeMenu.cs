@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Assignment2.Models
 {
-
     /// <summary>
     /// ShapeMenu
     /// </summary>
