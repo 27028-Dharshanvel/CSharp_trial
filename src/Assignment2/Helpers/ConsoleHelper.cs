@@ -207,6 +207,34 @@ namespace Assignment2.Helpers
         */
 
         /// <summary>
+        /// Addproduct
+        /// </summary>
+        /// <param name="message">message</param>
+        /// <param name="value">input</param>
+        /// <param name="maxCharacters">maxCharacters</param>
+        /// <param name="maxTries">maxTries</param>
+        /// <param name="defaultValue">defaultValue</param>
+        /// <returns>string.</returns>
+        public static string ReadString(string message, string value, int maxCharacters, int maxTries, string defaultValue)
+        {
+            while (maxTries > 0)
+            {
+                Console.Write(message);
+                string input = Console.ReadLine();
+
+                if (!string.IsNullOrWhiteSpace(input) && input.Length <= maxCharacters)
+                {
+                    return input;
+                }
+
+                maxTries--;
+                Error($"{value} should neither be Null nor exceed {maxCharacters} characters.");
+            }
+
+            return defaultValue;
+        }
+
+        /// <summary>
         /// Display error message in red color.
         /// </summary>
         /// <param name="message">message</param>

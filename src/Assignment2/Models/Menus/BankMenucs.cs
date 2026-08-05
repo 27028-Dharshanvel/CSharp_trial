@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,14 +12,24 @@ namespace Assignment2.Models
     public enum BankMenu
     {
         /// <summary>
-        /// SavingsAccount
+        /// CreateAccount
         /// </summary>
-        SavingsAccount = 1,
+        CreateAccount = 1,
 
         /// <summary>
-        /// CheckingAccount
+        /// ViewAccountDetails
         /// </summary>
-        CheckingAccount,
+        ViewAccountDetails,
+
+        /// <summary>
+        /// DepositAmount
+        /// </summary>
+        DepositAmount,
+
+        /// <summary>
+        /// WithdrawAmount
+        /// </summary>
+        WithdrawAmount,
 
         /// <summary>
         /// Back

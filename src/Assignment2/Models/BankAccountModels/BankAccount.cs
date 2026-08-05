@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,18 +39,37 @@ namespace Assignment2.BankAccountModels
         /// Default Withdraw method to withdraw amount.
         /// </summary>
         /// <param name="amount"> amount </param>
-        public virtual void Withdraw(decimal amount)
+        /// <returns>True if withdrawal succeeded; otherwise, false.</returns>
+        public virtual bool Withdraw(decimal amount)
         {
-            this.AccountBalance = this.AccountBalance - amount;
+            if (amount <= 0)
+            {
+                return false;
+            }
+
+            if (amount <= this.AccountBalance)
+            {
+                this.AccountBalance = this.AccountBalance - amount;
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
         /// Default Deposit method to deposit amount.
         /// </summary>
         /// <param name="amount"> amount </param>
-        public virtual void Deposit(decimal amount)
+        /// <returns>True if deposit succeeded; otherwise, false.</returns>
+        public virtual bool Deposit(decimal amount)
         {
+            if (amount <= 0)
+            {
+                return false;
+            }
+
             this.AccountBalance = this.AccountBalance + amount;
+            return true;
         }
     }
 }
