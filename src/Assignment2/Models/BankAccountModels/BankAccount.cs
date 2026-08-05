@@ -20,6 +20,14 @@ namespace Assignment2.BankAccountModels
         public string AccountNumber { get; set; } = string.Empty;
 
         /// <summary>
+        /// Gets or sets AccountHolder.
+        /// </summary>
+        /// <value>
+        /// AccountNumber.
+        /// </value>
+        public string AccountHolder { get; set; } = string.Empty;
+
+        /// <summary>
         /// Gets or sets AccountBalance.
         /// </summary>
         /// <value>

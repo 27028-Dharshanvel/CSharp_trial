@@ -205,11 +205,13 @@ namespace Assignment2
                 Console.Clear();
 
                 Console.WriteLine("----- Bank Menu -----" +
-                    "\n\n1.Savings account" +
-                    "\n2.Checking account" +
-                    "\n3.Back");
+                    "\n1.Create Account" +
+                    "\n2.View Account Details " +
+                    "\n3.Deposit Amount " +
+                    "\n4.Withdraw Amount" +
+                    "\n5.Back");
 
-                BankMenu choice = (BankMenu)ConsoleHelper.ReadInt("\nEnter your choice : ", "Choice", 1, 4, 3, 999);
+                BankMenu choice = (BankMenu)ConsoleHelper.ReadInt("\nEnter your choice : ", "Choice", 1, 6, 3, 999);
                 if ((int)choice == 999)
                 {
                     Console.ReadKey();
@@ -218,6 +220,10 @@ namespace Assignment2
 
                 switch (choice)
                 {
+                    case BankMenu.CreateAccount:
+                        Console.WriteLine("1.Create new Savings Account" +
+                            "2.Create new Checking Account");
+
                     case BankMenu.SavingsAccount:
 
                         SavingsAccount savingsAccount1 = new ();
