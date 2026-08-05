@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,18 +14,46 @@ namespace Assignment2.BankAccountServices
     /// </summary>
     internal class BankServices
     {
-
         private BankRepository _bankRepository = new BankRepository();
+
+        /// <summary>
+        /// Creates a new bank account.
+        /// </summary>
+        /// <param name="account">Bank account.</param>
+        /// <returns>The created bank account with assigned account number.</returns>
+        public BankAccount CreateAccount(BankAccount account)
+        {
+            long nextAccNum = this._bankRepository.GetNextAccountNumber();
+            account.AccountNumber = nextAccNum.ToString();
+            this._bankRepository.Create(account);
+            return account;
+        }
+
+        /// <summary>
+        /// Gets account by account number.
+        /// </summary>
+        /// <param name="accountNumber">Account number.</param>
+        /// <returns>Bank account if found, otherwise null.</returns>
+        public BankAccount? GetAccount(string accountNumber)
+        {
+            return this._bankRepository.GetAccountByNumber(accountNumber);
+        }
 
         /// <summary>
         /// Deposits amount to bank account.
         /// </summary>
         /// <param name="account">account</param>
         /// <param name="amount">amount</param>
-        public void Deposit(BankAccount account, decimal amount)
+        /// <returns>True if deposit succeeded, false otherwise.</returns>
+        public bool Deposit(BankAccount account, decimal amount)
         {
-            account.Deposit(amount);
-            _bankRepository.Update(account);
+            bool success = account.Deposit(amount);
+            if (success)
+            {
+                this._bankRepository.Update(account);
+            }
+
+            return success;
         }
 
         /// <summary>
@@ -33,10 +61,16 @@ namespace Assignment2.BankAccountServices
         /// </summary>
         /// <param name="account">account</param>
         /// <param name="amount">amount</param>
-        public void Withdraw(BankAccount account, decimal amount)
+        /// <returns>True if withdrawal succeeded, false otherwise.</returns>
+        public bool Withdraw(BankAccount account, decimal amount)
         {
-            account.Withdraw(amount);
-            _bankRepository.Update(account);
+            bool success = account.Withdraw(amount);
+            if (success)
+            {
+                this._bankRepository.Update(account);
+            }
+
+            return success;
         }
     }
 }

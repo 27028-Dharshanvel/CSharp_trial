@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+using System.Drawing;
 using System.Runtime.CompilerServices;
 using Assignment2.BankAccountModels;
 using Assignment2.BankAccountServices;
@@ -6,6 +6,7 @@ using Assignment2.Controllers;
 using Assignment2.EmployeeModels;
 using Assignment2.Helpers;
 using Assignment2.Models;
+using Assignment2.Models.Menus;
 using Assignment2.ShapeModels;
 
 namespace Assignment2
@@ -206,8 +207,8 @@ namespace Assignment2
 
                 Console.WriteLine("----- Bank Menu -----" +
                     "\n1.Create Account" +
-                    "\n2.View Account Details " +
-                    "\n3.Deposit Amount " +
+                    "\n2.View Account Details" +
+                    "\n3.Deposit Amount" +
                     "\n4.Withdraw Amount" +
                     "\n5.Back");
 
@@ -221,89 +222,161 @@ namespace Assignment2
                 switch (choice)
                 {
                     case BankMenu.CreateAccount:
-                        Console.WriteLine("1.Create new Savings Account" +
-                            "2.Create new Checking Account");
-
-                    case BankMenu.SavingsAccount:
-
-                        SavingsAccount savingsAccount1 = new ();
-                        ConsoleHelper.DisplayBankingOperations();
-                        BankingOperationsMenu userChoice = (BankingOperationsMenu)ConsoleHelper.ReadInt("\nEnter the operation to perform :", "Choice", 1, 3, 3, 999);
-                        if ((int)choice == 999)
+                        Console.WriteLine("\n--- Create Account ---" +
+                            "\n1. Savings Account" +
+                            "\n2. Checking Account");
+                        BankAccountTypeMenu accountTypeChoice = (BankAccountTypeMenu)ConsoleHelper.ReadInt("Select Account Type : ", "Choice", 1, 3, 3, 999);
+                        if ((int)accountTypeChoice == 999)
                         {
                             Console.ReadKey();
                             break;
                         }
 
-                        switch (userChoice)
+                        string name = ConsoleHelper.ReadString("Enter Account Holder Name : ", "Account Holder Name", 30, 3, "@@@");
+                        if (name == "@@@")
                         {
-                            case BankingOperationsMenu.Deposit:
+                            Console.ReadKey();
+                            break;
+                        }
 
-                                savingsAccount1.Deposit(ConsoleHelper.ReadDecimal("\nEnter amount to Deposit :", "Amount", 1, 1000000000, 3, -99));
-                                if ((int)choice == -99)
-                                {
-                                    Console.ReadKey();
-                                    break;
-                                }
-                                Console.WriteLine($"\nAmount Deposited \nCurrent Balance : ${savingsAccount1.AccountBalance}");
+                        if (accountTypeChoice == BankAccountTypeMenu.SavingsAccount)
+                        {
+                            decimal initialDeposit = ConsoleHelper.ReadDecimal($"Enter Initial Deposit : ", "Initial Deposit", 1, 1000000000, 3, -99);
+                            if (initialDeposit == -99)
+                            {
                                 Console.ReadKey();
                                 break;
+                            }
 
-                            case BankingOperationsMenu.Withdraw:
+                            SavingsAccount savingsAccount = new SavingsAccount
+                            {
+                                AccountHolder = name,
+                                AccountBalance = initialDeposit,
+                            };
 
-                                savingsAccount1.Withdraw(ConsoleHelper.ReadDecimal("Enter amount to Withdraw :", "Amount", 1, 1000000000, 3, -99));
-                                if ((int)choice == -99)
-                                {
-                                    Console.ReadKey();
-                                    break;
-                                }
-
-                                Console.WriteLine($"\nAmount Withdrawn \nCurrent Balance : ${savingsAccount1.AccountBalance}");
+                            if (initialDeposit < savingsAccount.MinimumBalance)
+                            {
+                                ConsoleHelper.Error($"Initial deposit must be at least ${savingsAccount.MinimumBalance} for a Savings Account.");
                                 Console.ReadKey();
                                 break;
+                            }
+
+                            controller.CreateAccount(savingsAccount);
+                            Console.WriteLine($"\nSavings Account Created Successfully!\nAccount Number : {savingsAccount.AccountNumber}\nAccount Balance : ${savingsAccount.AccountBalance}");
+                            Console.ReadKey();
+                        }
+                        else if (accountTypeChoice == BankAccountTypeMenu.CheckingAccount)
+                        {
+                            decimal initialDeposit = ConsoleHelper.ReadDecimal("Enter Initial Deposit : ", "Initial Deposit", 0, 1000000000, 3, -99);
+                            if (initialDeposit == -99)
+                            {
+                                Console.ReadKey();
+                                break;
+                            }
+
+                            CheckingAccount checkingAccount = new CheckingAccount
+                            {
+                                AccountHolder = name,
+                                AccountBalance = initialDeposit,
+                            };
+
+                            controller.CreateAccount(checkingAccount);
+                            Console.WriteLine($"\nChecking Account Created Successfully!\nAccount Number : {checkingAccount.AccountNumber}\nAccount Balance : ${checkingAccount.AccountBalance}");
+                            Console.ReadKey();
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nInvalid Account Type.");
+                            Console.ReadKey();
                         }
 
                         break;
 
-                    case BankMenu.CheckingAccount:
-                        ConsoleHelper.DisplayBankingOperations();
-                        CheckingAccount checkingAccount1 = new ();
-                        BankingOperationsMenu userChoice2 = (BankingOperationsMenu)ConsoleHelper.ReadInt("\nEnter the operation to perform :", "Choice", 1, 3, 3, 999);
-                        if ((int)choice == 999)
+                    case BankMenu.ViewAccountDetails:
+                        Console.Write("\nEnter Account Number : ");
+                        string viewAccNum = Console.ReadLine() ?? string.Empty;
+                        BankAccount? accountToView = controller.GetAccount(viewAccNum);
+                        if (accountToView == null)
+                        {
+                            ConsoleHelper.Error("Account not found.");
+                            Console.ReadKey();
+                            break;
+                        }
+
+                        string accType = accountToView is SavingsAccount ? "Savings Account" : "Checking Account";
+                        Console.WriteLine($"\n--- Account Details ---" +
+                            $"\nAccount Number  : {accountToView.AccountNumber}" +
+                            $"\nAccount Holder  : {accountToView.AccountHolder}" +
+                            $"\nAccount Type    : {accType}" +
+                            $"\nAccount Balance : ${accountToView.AccountBalance}");
+                        Console.ReadKey();
+                        break;
+
+                    case BankMenu.DepositAmount:
+                        Console.Write("\nEnter Account Number : ");
+                        string depAccNum = Console.ReadLine() ?? string.Empty;
+                        BankAccount? depAccount = controller.GetAccount(depAccNum);
+                        if (depAccount == null)
+                        {
+                            ConsoleHelper.Error("Account not found.");
+                            Console.ReadKey();
+                            break;
+                        }
+
+                        decimal depAmount = ConsoleHelper.ReadDecimal("Enter amount to Deposit : ", "Amount", 1, 1000000000, 3, -99);
+                        if (depAmount == -99)
                         {
                             Console.ReadKey();
                             break;
                         }
 
-                        switch (userChoice2)
+                        if (controller.Deposit(depAccount, depAmount))
                         {
-                            case BankingOperationsMenu.Deposit:
-
-                                checkingAccount1.Deposit(ConsoleHelper.ReadDecimal("\nEnter amount to Deposit : ", "Amount", 1, 1000000000, 3, -99));
-                                if ((int)choice == -99)
-                                {
-                                    Console.ReadKey();
-                                    break;
-                                }
-
-                                Console.WriteLine($"\nAmount Deposited \nCurrent Balance : ${checkingAccount1.AccountBalance}");
-                                Console.ReadKey();
-                                break;
-
-                            case BankingOperationsMenu.Withdraw:
-
-                                checkingAccount1.Withdraw(ConsoleHelper.ReadDecimal("Enter amount to Withdraw :", "Amount", 1, 1000000000, 3, -99));
-                                if ((int)choice == -99)
-                                {
-                                    Console.ReadKey();
-                                    break;
-                                }
-
-                                Console.WriteLine($"\nAmount Withdrawn \nCurrent Balance : ${checkingAccount1.AccountBalance}");
-                                Console.ReadKey();
-                                break;
+                            Console.WriteLine($"\nAmount Deposited Successfully!\nCurrent Balance : ${depAccount.AccountBalance}");
+                        }
+                        else
+                        {
+                            ConsoleHelper.Error("Deposit failed. Please enter a valid positive amount.");
                         }
 
+                        Console.ReadKey();
+                        break;
+
+                    case BankMenu.WithdrawAmount:
+                        Console.Write("\nEnter Account Number : ");
+                        string withAccNum = Console.ReadLine() ?? string.Empty;
+                        BankAccount? withAccount = controller.GetAccount(withAccNum);
+                        if (withAccount == null)
+                        {
+                            ConsoleHelper.Error("Account not found.");
+                            Console.ReadKey();
+                            break;
+                        }
+
+                        decimal withAmount = ConsoleHelper.ReadDecimal("Enter amount to Withdraw : ", "Amount", 1, 1000000000, 3, -99);
+                        if (withAmount == -99)
+                        {
+                            Console.ReadKey();
+                            break;
+                        }
+
+                        if (controller.Withdraw(withAccount, withAmount))
+                        {
+                            Console.WriteLine($"\nAmount Withdrawn Successfully!\nCurrent Balance : ${withAccount.AccountBalance}");
+                        }
+                        else
+                        {
+                            if (withAccount is SavingsAccount savings && (withAccount.AccountBalance - withAmount) < savings.MinimumBalance)
+                            {
+                                ConsoleHelper.Error($"Withdrawal failed! Savings account requires maintaining a minimum balance of ${savings.MinimumBalance}.");
+                            }
+                            else
+                            {
+                                ConsoleHelper.Error("Withdrawal failed! Insufficient balance.");
+                            }
+                        }
+
+                        Console.ReadKey();
                         break;
 
                     case BankMenu.Back:
