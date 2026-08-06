@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assignment2.Models.Menus
+﻿namespace Assignment2.Models.Menus
 {
     /// <summary>
     /// Type of Bank Accounts
