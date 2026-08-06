@@ -39,7 +39,7 @@ namespace Assignment2.Views
                 {
                     case ShapeMenu.Rectangle:
                         ShapeModels.Rectangle rect = new ();
-                        rect.Colour = InputReader.ReadString("Enter colour of the shape", "Colour", 10, 3, "@@@");
+                        rect.Colour = InputReader.ReadString("Enter colour of the shape : ", "Colour", 10, 3, "@@@");
                         if (rect.Colour == "@@@")
                         {
                             Console.ReadKey();
@@ -66,7 +66,7 @@ namespace Assignment2.Views
 
                     case ShapeMenu.Circle:
                         ShapeModels.Circle circle = new ();
-                        circle.Colour = InputReader.ReadString("Enter colour of the shape", "Colour", 10, 3, "@@@");
+                        circle.Colour = InputReader.ReadString("Enter colour of the shape : ", "Colour", 10, 3, "@@@");
                         if (circle.Colour == "@@@")
                         {
                             Console.ReadKey();
