@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Assignment2.BankAccountModels;
-using Assignment2.Helpers;
 using Assignment2.Repository;
 
 namespace Assignment2.BankAccountServices
@@ -20,7 +14,7 @@ namespace Assignment2.BankAccountServices
         /// Creates a new bank account.
         /// </summary>
         /// <param name="account">Bank account.</param>
-        /// <returns>The created bank account with assigned account number.</returns>
+        /// <returns>The created bank account.</returns>
         public BankAccount CreateAccount(BankAccount account)
         {
             long nextAccNum = this._bankRepository.GetNextAccountNumber();

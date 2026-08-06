@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Assignment2.BankAccountModels
 {
     /// <summary>
@@ -15,7 +9,7 @@ namespace Assignment2.BankAccountModels
         /// Gets or sets AccountNumber.
         /// </summary>
         /// <value>
-        /// AccountNumber.
+        /// AccountNumber ins string.
         /// </value>
         public string AccountNumber { get; set; } = string.Empty;
 
@@ -23,7 +17,7 @@ namespace Assignment2.BankAccountModels
         /// Gets or sets AccountHolder.
         /// </summary>
         /// <value>
-        /// AccountNumber.
+        /// AccountHolder name as string.
         /// </value>
         public string AccountHolder { get; set; } = string.Empty;
 

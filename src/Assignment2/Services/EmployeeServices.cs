@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assignment2.EmployeeModels;
+﻿using Assignment2.EmployeeModels;
 
 namespace Assignment2.Controllers
 {
@@ -16,7 +11,7 @@ namespace Assignment2.Controllers
         /// Calculates bonus amount from the salary.
         /// </summary>
         /// <param name="employee">employee</param>
-        /// <returns>Bonus amount.</returns>
+        /// <returns>Bonus amount</returns>
         public decimal CalculateBonus(Employee employee)
         {
             return employee.CalculateBonus();

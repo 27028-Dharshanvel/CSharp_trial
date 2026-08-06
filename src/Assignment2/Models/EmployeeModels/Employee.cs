@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assignment2.EmployeeModels
+﻿namespace Assignment2.EmployeeModels
 {
     /// <summary>
     /// Employee
@@ -26,14 +20,6 @@ namespace Assignment2.EmployeeModels
         /// Salary
         /// </value>
         public decimal Salary { get; set; } = 0;
-
-        /// <summary>
-        /// Gets position of Employee.
-        /// </summary>
-        /// <value>
-        /// Position of Employee.
-        /// </value>
-        public abstract string Position { get; }
 
         /// <summary>
         /// Calculates Bonus from the salary.

@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assignment2.Helpers
+﻿namespace Assignment2.Helpers
 {
     /// <summary>
-    /// Helper class
+    /// InputReader class
     /// </summary>
-    internal class ConsoleHelper
+    internal class InputReader
     {
         /// <summary>
         /// Reads string and validate whether it is an integer,within range and with limited tries.
@@ -20,7 +14,7 @@ namespace Assignment2.Helpers
         /// <param name="maxValue">Exclusive upper bound of the range.</param>
         /// <param name="maxTries">Maximum Tries user can make.</param>
         /// <param name="defaultValue">Default integer value that will be returned.</param>
-        /// <returns>int</returns>
+        /// <returns>Integer</returns>
         public static int ReadInt(string message, string inputType, int minValue, int maxValue, int maxTries, int defaultValue)
         {
             int value;
@@ -43,7 +37,7 @@ namespace Assignment2.Helpers
                             continue;
                         }
 
-                        Error($"{inputType} should be in range of {minValue} and {maxValue}");
+                        Warn($"{inputType} should be in range of {minValue} and {maxValue}");
                         continue;
                     }
                 }
@@ -54,7 +48,7 @@ namespace Assignment2.Helpers
                     continue;
                 }
 
-                Error("Please enter a valid integer.");
+                Warn("Please enter a valid integer.");
             }
 
             Error("\nToo many Attempts! Try again later");
@@ -71,7 +65,7 @@ namespace Assignment2.Helpers
         /// <param name="maxTries">Maximum Tries user can make.</param>
         /// <param name="defaultValue">Default value that will be returned.</param>
         /// <returns>Double</returns>
-        public static double ReadDouble(string message, string inputType, int minValue, int maxValue, int maxTries, double defaultValue)
+        public static double ReadDouble(string message, string inputType, double minValue, double maxValue, int maxTries, double defaultValue)
         {
             double value;
 
@@ -93,7 +87,7 @@ namespace Assignment2.Helpers
                             continue;
                         }
 
-                        Error($"{inputType} should be in range of {minValue} and {maxValue}");
+                        Warn($"{inputType} should be in range of {minValue} and {maxValue}");
                         continue;
                     }
                 }
@@ -104,7 +98,7 @@ namespace Assignment2.Helpers
                     continue;
                 }
 
-                Error("Please enter a valid double.");
+                Warn("Please enter a valid double.");
             }
 
             Error("\nToo many Attempts! Try again later");
@@ -112,7 +106,7 @@ namespace Assignment2.Helpers
         }
 
         /// <summary>
-        /// Reads string and validate whether it is an double,within range and with limited tries.
+        /// Reads string and validate whether it is an decimal,within range and with limited tries.
         /// </summary>
         /// <param name="message">Prompt for the user.</param>
         /// <param name="inputType">Variable name of the input </param>
@@ -120,8 +114,8 @@ namespace Assignment2.Helpers
         /// <param name="maxValue">Exclusive upper bound of the range.</param>
         /// <param name="maxTries">Maximum Tries user can make.</param>
         /// <param name="defaultValue">Default value that will be returned.</param>
-        /// <returns>Double</returns>
-        public static decimal ReadDecimal(string message, string inputType, int minValue, int maxValue, int maxTries, decimal defaultValue)
+        /// <returns>Decimal</returns>
+        public static decimal ReadDecimal(string message, string inputType, decimal minValue, decimal maxValue, int maxTries, decimal defaultValue)
         {
             decimal value;
 
@@ -143,7 +137,7 @@ namespace Assignment2.Helpers
                             continue;
                         }
 
-                        Error($"{inputType} should be in range of {minValue} and {maxValue}");
+                        Warn($"{inputType} should be in range of {minValue} and {maxValue}");
                         continue;
                     }
                 }
@@ -154,66 +148,21 @@ namespace Assignment2.Helpers
                     continue;
                 }
 
-                Error("Please enter a valid decimal.");
+                Warn("Please enter a valid decimal.");
             }
 
             Error("\nToo many Attempts! Try again later");
             return defaultValue;
         }
 
-        /*/// <summary>
-        /// Reads string and validate whether it is double.
-        /// </summary>
-        /// <param name="message">message</param>
-        /// <returns>double</returns>
-        public static double ReadDouble(string message)
-        {
-            double value;
-
-            while (true)
-            {
-                Console.Write(message);
-
-                if (double.TryParse(Console.ReadLine(), out value))
-                {
-                    return value;
-                }
-
-                Console.WriteLine("Please enter a valid integer.");
-            }
-        }
-
         /// <summary>
-        /// Reads string and validate whether it is decimal.
+        /// Reads string and validate null values.
         /// </summary>
-        /// <param name="message">Decimal</param>
-        /// <returns>Amount in decimal.</returns>
-        public static decimal ReadDecimal(string message)
-        {
-            decimal value;
-
-            while (true)
-            {
-                Console.Write(message);
-
-                if (decimal.TryParse(Console.ReadLine(), out value))
-                {
-                    return value;
-                }
-
-                Console.WriteLine("Please enter a valid decimal number.");
-            }
-        }
-        */
-
-        /// <summary>
-        /// Addproduct
-        /// </summary>
-        /// <param name="message">message</param>
-        /// <param name="value">input</param>
-        /// <param name="maxCharacters">maxCharacters</param>
-        /// <param name="maxTries">maxTries</param>
-        /// <param name="defaultValue">defaultValue</param>
+        /// <param name="message">Prompt for the user.</param>
+        /// <param name="value">Variable name of the value</param>
+        /// <param name="maxCharacters">Maximum characters that can be entered.</param>
+        /// <param name="maxTries">Maximum tries.</param>
+        /// <param name="defaultValue">Default string that will be returned.</param>
         /// <returns>string.</returns>
         public static string ReadString(string message, string value, int maxCharacters, int maxTries, string defaultValue)
         {
@@ -228,7 +177,7 @@ namespace Assignment2.Helpers
                 }
 
                 maxTries--;
-                Error($"{value} should neither be Null nor exceed {maxCharacters} characters.");
+                Warn($"{value} should neither be Null nor exceed {maxCharacters} characters.");
             }
 
             return defaultValue;
@@ -237,7 +186,7 @@ namespace Assignment2.Helpers
         /// <summary>
         /// Display error message in red color.
         /// </summary>
-        /// <param name="message">message</param>
+        /// <param name="message">Message that should be displayed.</param>
         public static void Error(string message)
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -246,12 +195,25 @@ namespace Assignment2.Helpers
         }
 
         /// <summary>
-        /// To display Banking Operations.
+        /// Display success message in green color.
         /// </summary>
-        public static void DisplayBankingOperations()
+        /// <param name="message">Message that should be displayed.</param>
+        public static void Success(string message)
         {
-            Console.WriteLine("\n 1.Deposit " +
-                "\n 2.Withdraw");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"{message}");
+            Console.ResetColor();
+        }
+
+        /// <summary>
+        /// Display warning message in yellow color.
+        /// </summary>
+        /// <param name="message">Message that should be displayed.</param>
+        public static void Warn(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"{message}");
+            Console.ResetColor();
         }
     }
 }

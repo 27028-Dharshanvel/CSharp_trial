@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assignment2.ShapeModels
+﻿namespace Assignment2.ShapeModels
 {
     /// <summary>
     /// Circle
@@ -40,7 +34,7 @@ namespace Assignment2.ShapeModels
         /// <returns>Area of the circle.</returns>
         public override double CalculateArea()
         {
-            return 3.14 * this.Radius * this.Radius;
+            return Math.PI * this.Radius * this.Radius;
         }
     }
 }

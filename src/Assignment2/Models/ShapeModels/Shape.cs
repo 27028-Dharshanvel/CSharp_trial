@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assignment2.ShapeModels
+﻿namespace Assignment2.ShapeModels
 {
     /// <summary>
     /// Shape
@@ -32,14 +26,5 @@ namespace Assignment2.ShapeModels
         /// </summary>
         /// <returns>Area in double </returns>
         public abstract double CalculateArea();
-
-        /// <summary>
-        /// Displays shape details
-        /// </summary>
-        public void PrintDetails()
-        {
-            Console.WriteLine("Color of the shape : ", this.Colour);
-            Console.WriteLine("Area of the shape : ", this.CalculateArea());
-        }
     }
 }
