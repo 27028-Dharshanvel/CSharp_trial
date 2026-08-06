@@ -19,11 +19,12 @@ namespace ContactManagerApp
         /// <param name="args">Command-line arguments.</param>
         public static void Main(string[] args)
         {
-            ContactRepository repository =
-                new ContactRepository();
+            IRepository repository =
+                new PersistenceRepository();
 
             ContactManager manager =
                 new ContactManager(repository);
+
             bool isAppRunning = true;
 
             while (isAppRunning)

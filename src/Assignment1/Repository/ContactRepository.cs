@@ -3,15 +3,15 @@
 namespace ContactManagerApp.Repository
 {
     /// <summary>
-    /// ContactRepository
+    /// In-memory contact repository.
     /// </summary>
-    public class ContactRepository
+    public class ContactRepository : IRepository
     {
         private List<Contact> _contacts;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContactRepository"/> class.
-        /// ContactRepository
+        /// Initializes ContactRepository.
         /// </summary>
         public ContactRepository()
         {
@@ -19,46 +19,46 @@ namespace ContactManagerApp.Repository
         }
 
         /// <summary>
-        /// saves contact
+        /// Savecontacts
         /// </summary>
-        /// <param name="contacts">contact</param>
+        /// <param name="contacts">contacts</param>
         public void SaveContacts(List<Contact> contacts)
         {
             this._contacts = contacts;
         }
 
         /// <summary>
-        /// Loads contacts
+        /// Loads Contacts.
         /// </summary>
-        /// <returns>contacts</returns>
+        /// <returns>list of contacts.</returns>
         public List<Contact> LoadContacts()
         {
             return this._contacts;
         }
 
         /// <summary>
-        /// Adds contact
+        /// Adds Contacts.
         /// </summary>
-        /// <param name="contact">Contact</param>
+        /// <param name="contact">contact</param>
         public void AddContact(Contact contact)
         {
             this._contacts.Add(contact);
         }
 
         /// <summary>
-        /// Deletes contact
+        /// Deletes Contacts.
         /// </summary>
-        /// <param name="contact">Contact</param>
+        /// <param name="contact">contact</param>
         public void DeleteContact(Contact contact)
         {
             this._contacts.Remove(contact);
         }
 
         /// <summary>
-        /// Updates contact
+        /// Update Contacts.
         /// </summary>
-        /// <param name="oldContact">Old Contact</param>
-        /// <param name="updatedContact">Updated Contact</param>
+        /// <param name="oldContact">oldcontact</param>
+        /// <param name="updatedContact">updatedContact</param>
         public void UpdateContact(Contact oldContact, Contact updatedContact)
         {
             oldContact.Name = updatedContact.Name;
