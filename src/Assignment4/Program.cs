@@ -1,10 +1,19 @@
-﻿namespace Assignments
+﻿using Assignment4.Views;
+
+namespace Assignments
 {
+    /// <summary>
+    /// Program class
+    /// </summary>
     internal class Program
     {
-        static void Main(string[] args)
+        /// <summary>
+        /// Entry point of the program.
+        /// </summary>
+        /// <param name="args">Command line arguments</param>
+        public static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            MainMenu.DisplayMainMenu();
         }
     }
 }
