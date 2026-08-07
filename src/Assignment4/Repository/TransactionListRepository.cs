@@ -19,47 +19,47 @@ namespace Assignment4.Repository
         }
 
         /// <summary>
-        /// Savecontacts
+        /// Savetransactions
         /// </summary>
-        /// <param name="contacts">contacts</param>
-        public void SaveContacts(List<Transaction> contacts)
+        /// <param name="transactions">transactions</param>
+        public void SaveTransactions(List<Transaction> transactions)
         {
-            this._transactions = contacts;
+            this._transactions = transactions;
         }
 
         /// <summary>
-        /// Loads Contacts.
+        /// Loads Transactions.
         /// </summary>
-        /// <returns>list of contacts.</returns>
-        public List<Transaction> LoadContacts()
+        /// <returns>list of transactions.</returns>
+        public List<Transaction> LoadTransactions()
         {
             return this._transactions;
         }
 
         /// <summary>
-        /// Adds Contacts.
+        /// Adds Transactions.
         /// </summary>
-        /// <param name="contact">contact</param>
-        public void AddContact(Transaction contact)
+        /// <param name="transaction">transaction</param>
+        public void AddTransaction(Transaction transaction)
         {
-            this._transactions.Add(contact);
+            this._transactions.Add(transaction);
         }
 
         /// <summary>
-        /// Deletes Contacts.
+        /// Deletes Transactions.
         /// </summary>
-        /// <param name="contact">contact</param>
-        public void DeleteContact(Transaction contact)
+        /// <param name="transaction">transaction</param>
+        public void DeleteTransaction(Transaction transaction)
         {
-            this._transactions.Remove(contact);
+            this._transactions.Remove(transaction);
         }
 
         /// <summary>
-        /// Update Contacts.
+        /// Update Transactions.
         /// </summary>
-        /// <param name="oldTransaction">oldcontact</param>
-        /// <param name="updatedTransaction">updatedContact</param>
-        public void UpdateContact(Transaction oldTransaction, Transaction updatedTransaction)
+        /// <param name="oldTransaction">oldtransaction</param>
+        /// <param name="updatedTransaction">updatedTransaction</param>
+        public void UpdateTransaction(Transaction oldTransaction, Transaction updatedTransaction)
         {
             oldTransaction.Amount = updatedTransaction.Amount;
             oldTransaction.Date = updatedTransaction.Date;

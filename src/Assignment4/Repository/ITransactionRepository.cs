@@ -11,31 +11,31 @@ namespace Assignment4.Repository
         /// Save Contacts.
         /// </summary>
         /// <param name="transactions">contacts</param>
-        void SaveContacts(List<Transaction> transactions);
+        void SaveTransactions(List<Transaction> transactions);
 
         /// <summary>
-        /// Loads Contact.
+        /// Loads Transactions.
         /// </summary>
         /// <returns>List</returns>
-        List<Transaction> LoadContacts();
+        List<Transaction> LoadTransactions();
 
         /// <summary>
-        /// Adds Contact.
+        /// Adds Transaction.
         /// </summary>
-        /// <param name="transaction">contact</param>
-        void AddContact(Transaction transaction);
+        /// <param name="transaction">transaction</param>
+        void AddTransaction(Transaction transaction);
 
         /// <summary>
-        /// Deletes Contacts.
+        /// Deletes Transactions.
         /// </summary>
-        /// <param name="transaction">contacts</param>
-        void DeleteContact(Transaction transaction);
+        /// <param name="transaction">transactions</param>
+        void DeleteTransaction(Transaction transaction);
 
         /// <summary>
-        /// Save Contacts.
+        /// Updates Transactions.
         /// </summary>
-        /// <param name="oldTransaction">old contact</param>
-        /// <param name="updatedTransaction">updated contact</param>
-        void UpdateContact(Transaction oldTransaction, Transaction updatedTransaction);
+        /// <param name="oldTransaction">oldtransaction</param>
+        /// <param name="updatedTransaction">updatedTransaction</param>
+        void UpdateTransaction(Transaction oldTransaction, Transaction updatedTransaction);
     }
 }
