@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +26,7 @@ namespace Assignment4.Models
         /// <summary>
         /// Gets or sets Password.
         /// </summary>
-        private string? Password { get; set; }
+        /// <value>Password hash.</value>
+        public string? Password { get; set; }
     }
 }
