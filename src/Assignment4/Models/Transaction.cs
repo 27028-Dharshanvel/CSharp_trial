@@ -15,7 +15,7 @@ namespace Assignment4.Models
         /// Gets or sets id
         /// </summary>
         /// <value>Id.</value>
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Gets or sets amount.
@@ -24,9 +24,15 @@ namespace Assignment4.Models
         public decimal Amount { get; set; }
 
         /// <summary>
+        /// Gets or sets Date of the transaction.
+        /// </summary>
+        /// <value>Date.</value>
+        public DateOnly Date { get; set; }
+
+        /// <summary>
         /// Gets or sets Note
         /// </summary>
-        /// <value>Id.</value>
-        public string? Description { get; set; }
+        /// <value>Category.</value>
+        public string? Category { get; set; }
     }
 }
