@@ -38,15 +38,15 @@ namespace Assignment2
                 switch (choice)
                 {
                     case MainMenu.Shape:
-                        ConsoleView.ShowShapeMenu();
+                        ConsoleShapeMenu.ShowShapeMenu();
                         break;
 
                     case MainMenu.Employee:
-                        ConsoleView.ShowEmployeeMenu();
+                        ConsoleEmployeeMenu.ShowEmployeeMenu();
                         break;
 
                     case MainMenu.BankAccount:
-                        ConsoleView.ShowBankMenu(bankServices);
+                        ConsoleBankMenu.ShowBankMenu(bankServices);
                         break;
 
                     case MainMenu.Exit:

@@ -26,5 +26,15 @@
         /// </summary>
         /// <returns>Area in double </returns>
         public abstract double CalculateArea();
+
+        /// <summary>
+        /// Print Details.
+        /// </summary>
+        public void PrintDetails()
+        {
+            Console.WriteLine(@$"Type of Shape : {this.ShapeType}
+Colour of the shape : {this.Colour}
+Area of the shape : {this.CalculateArea()}");
+        }
     }
 }

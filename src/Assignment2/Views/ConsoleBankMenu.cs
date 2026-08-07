@@ -1,6 +1,5 @@
 ﻿using Assignment2.BankAccountModels;
 using Assignment2.BankAccountServices;
-using Assignment2.EmployeeModels;
 using Assignment2.Helpers;
 using Assignment2.Models;
 using Assignment2.Models.Menus;
@@ -8,156 +7,10 @@ using Assignment2.Models.Menus;
 namespace Assignment2.Views
 {
     /// <summary>
-    /// Console View class
+    /// Console view for Bank Menu.
     /// </summary>
-    internal class ConsoleView
+    internal class ConsoleBankMenu
     {
-        /// <summary>
-        /// Displays shape Menu.
-        /// </summary>
-        public static void ShowShapeMenu()
-        {
-            bool back = false;
-
-            while (!back)
-            {
-                Console.Clear();
-
-                Console.WriteLine(@"----- Shape Menu -----
-1. Rectangle
-2. Circle
-3. Back");
-
-                ShapeMenu choice = (ShapeMenu)InputReader.ReadInt("Enter your choice : ", "Choice", 1, 4, 3, -1);
-                if ((int)choice == -1)
-                {
-                    Console.ReadKey();
-                    choice = ShapeMenu.Back;
-                }
-
-                switch (choice)
-                {
-                    case ShapeMenu.Rectangle:
-                        ShapeModels.Rectangle rect = new ();
-                        rect.Colour = InputReader.ReadString("Enter colour of the shape : ", "Colour", 10, 3, "@@@");
-                        if (rect.Colour == "@@@")
-                        {
-                            Console.ReadKey();
-                            break;
-                        }
-
-                        rect.Length = InputReader.ReadDouble("Enter the Length : ", "Length", 1, 1000000, 3, -1);
-                        if (rect.Length == -1)
-                        {
-                            Console.ReadKey();
-                            break;
-                        }
-
-                        rect.Width = InputReader.ReadDouble("Enter the Width : ", "Width", 1, 1000000, 3, -1);
-                        if (rect.Width == -1)
-                        {
-                            Console.ReadKey();
-                            break;
-                        }
-
-                        Console.WriteLine($"\nArea of the rectangle : {rect.CalculateArea()}");
-                        Console.ReadKey();
-                        break;
-
-                    case ShapeMenu.Circle:
-                        ShapeModels.Circle circle = new ();
-                        circle.Colour = InputReader.ReadString("Enter colour of the shape : ", "Colour", 10, 3, "@@@");
-                        if (circle.Colour == "@@@")
-                        {
-                            Console.ReadKey();
-                            break;
-                        }
-
-                        circle.Radius = InputReader.ReadDouble("Enter the Radius : ", "Radius", 1, 1000000, 3, -1);
-                        if (circle.Radius == -1)
-                        {
-                            Console.ReadKey();
-                            break;
-                        }
-
-                        Console.WriteLine($"\nArea of the circle : {circle.CalculateArea()}");
-                        Console.ReadKey();
-                        break;
-
-                    case ShapeMenu.Back:
-                        back = true;
-                        break;
-
-                    default:
-                        InputReader.Error("\nInvalid Choice.");
-                        Console.ReadKey();
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Displays Employee Menu.
-        /// </summary>
-        public static void ShowEmployeeMenu()
-        {
-            bool back = false;
-
-            while (!back)
-            {
-                Console.Clear();
-
-                Console.WriteLine(@"----- Employee Menu -----
-1.Manager
-2.Developer
-3.Back");
-                EmployeeMenu choice = (EmployeeMenu)InputReader.ReadInt("\nEnter your choice : ", "Choice", 1, 4, 3, -1);
-                if ((int)choice == -1)
-                {
-                    Console.ReadKey();
-                    choice = EmployeeMenu.Back;
-                }
-
-                switch (choice)
-                {
-                    case EmployeeMenu.Manager:
-                        Manager manager = new ();
-                        manager.Salary = InputReader.ReadDecimal("\nEnter your Salary : ", "Salary", 0, 1000000000, 3, -1);
-                        if (manager.Salary == -1)
-                        {
-                            Console.ReadKey();
-                            break;
-                        }
-
-                        Console.WriteLine($"\nYour Bonus amount is : {manager.CalculateBonus()}");
-                        Console.ReadKey();
-                        break;
-
-                    case EmployeeMenu.Developer:
-                        Developer developer = new ();
-                        developer.Salary = InputReader.ReadDecimal("Enter your Salary : ", "Salary", 0, 1000000000, 3, -1);
-                        if (developer.Salary == -1)
-                        {
-                            Console.ReadKey();
-                            break;
-                        }
-
-                        Console.WriteLine($"\nYour Bonus amount is : {developer.CalculateBonus()}");
-                        Console.ReadKey();
-                        break;
-
-                    case EmployeeMenu.Back:
-                        back = true;
-                        break;
-
-                    default:
-                        InputReader.Error("\nInvalid Choice.");
-                        Console.ReadKey();
-                        break;
-                }
-            }
-        }
-
         /// <summary>
         /// Displays Bank Menu.
         /// </summary>
