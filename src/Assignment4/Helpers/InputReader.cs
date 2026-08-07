@@ -1,6 +1,6 @@
-﻿using System.Globalization;
+using System.Globalization;
 
-namespace Assignment2.Helpers
+namespace Assignment4.Helpers
 {
     /// <summary>
     /// InputReader class
@@ -171,7 +171,7 @@ namespace Assignment2.Helpers
             while (maxTries > 0)
             {
                 Console.Write(message);
-                string input = Console.ReadLine();
+                string? input = Console.ReadLine();
 
                 if (!string.IsNullOrWhiteSpace(input) && input.Length <= maxCharacters)
                 {
