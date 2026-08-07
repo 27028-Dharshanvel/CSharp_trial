@@ -6,7 +6,19 @@ using System.Threading.Tasks;
 
 namespace Assignment4.Models
 {
-    internal class TransactionTypeEnum
+    /// <summary>
+    /// Transaction type
+    /// </summary>
+    internal enum TransactionTypeEnum
     {
+        /// <summary>
+        /// Add Income
+        /// </summary>
+        AddIncome = 1,
+
+        /// <summary>
+        /// Add Expense
+        /// </summary>
+        AddExpense,
     }
 }

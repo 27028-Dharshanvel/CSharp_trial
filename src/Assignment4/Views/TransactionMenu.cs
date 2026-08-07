@@ -22,7 +22,25 @@ namespace Assignment4.Views
             switch (choice)
             {
                 case TransactionMenuEnum.AddTransaction:
-                    Console.WriteLine(""
+                    Console.WriteLine(@"1.Add Income
+2.Add expense");
+                    TransactionTypeEnum userChoice = (TransactionTypeEnum)InputReader.ReadInt("\nEnter yout choice : ", "Choice", 1, 3, 3, -1);
+                    switch (userChoice)
+                    {
+                        case TransactionTypeEnum.AddIncome:
+                            decimal incomeAmount = InputReader.ReadDecimal("Enter Income amount : ", "Amount", 1, 100000000, 3, -1);
+                            DateOnly incomeDate = InputReader.GetValidDate("Enter date of transaction : ", 5, 3, default(DateOnly));
+                            string incomeSource = InputReader.ReadString("Enter Source of Income : ", "Income Source", 15, 3, "@@@");
+                            break;
+
+                        case TransactionTypeEnum.AddExpense:
+                            decimal expenseAmount = InputReader.ReadDecimal("Enter Income amount : ", "Amount", 1, 100000000, 3, -1);
+                            DateOnly expenseDate = InputReader.GetValidDate("Enter date of transaction : ", 5, 3, default(DateOnly));
+                            string expenseCategory = InputReader.ReadString("Enter Source of Income : ", "Income Source", 15, 3, "@@@");
+                            break;
+                    }
+
+                    break;
             }
         }
     }

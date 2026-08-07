@@ -15,7 +15,7 @@ namespace Assignment4.Models
         /// Gets or sets id
         /// </summary>
         /// <value>Id.</value>
-        public Guid Id { get; set; }
+        public Guid TransactionId { get; set; }
 
         /// <summary>
         /// Gets or sets amount.

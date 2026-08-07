@@ -1,4 +1,6 @@
-﻿namespace Assignment2.Helpers
+﻿using System.Globalization;
+
+namespace Assignment2.Helpers
 {
     /// <summary>
     /// InputReader class
@@ -181,6 +183,58 @@
             }
 
             return defaultValue;
+        }
+
+        /// <summary>
+        /// Reads string and check whether it is a valid date.
+        /// </summary>
+        /// <param name="message">Prompt for the user.</param>
+        /// <param name="maxYearsBack">Maximum years in past from today that can be entered.</param>
+        /// <param name="maxTries">Maximum tries user can make.</param>
+        /// <param name="defaultDate">Default date that will be returned.</param>
+        /// <returns>Date</returns>
+        public static DateOnly GetValidDate(string message, int maxYearsBack, int maxTries, DateOnly defaultDate)
+        {
+            DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+            DateOnly minDate = today.AddYears(-maxYearsBack);
+
+            while (maxTries > 0)
+            {
+                Console.Write($"Enter a date (yyyy-MM-dd) : ");
+                string? input = Console.ReadLine();
+
+                if (!DateOnly.TryParseExact(
+                        input,
+                        "yyyy-MM-dd",
+                        CultureInfo.InvariantCulture,
+                        DateTimeStyles.None,
+                        out DateOnly date))
+                {
+                    Warn("Invalid format. Please enter date as yyyy-MM-dd.");
+                    maxTries--;
+                    continue;
+                }
+
+                if (date > today)
+                {
+                    Warn("Future dates are not allowed.");
+                    maxTries--;
+                    continue;
+                }
+
+                if (date < minDate)
+                {
+                    Warn(@$"Date cannot be older than {maxYearsBack} years.
+Enter a date on or after {minDate:yyyy-MM-dd}.");
+                    maxTries--;
+                    continue;
+                }
+
+                return date;
+            }
+
+            Error("\nToo many Attempts! Try again later");
+            return defaultDate;
         }
 
         /// <summary>
