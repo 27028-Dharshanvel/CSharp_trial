@@ -29,7 +29,6 @@ namespace Assignment4.Views
                 switch (choice)
                 {
                     case 1:
-                        Console.Write("Username : ");
                         string username = InputReader.ReadString("Username : ", "Username", 15, 3, "@@@");
                         Guid userId = default(Guid);
 
