@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Assignment4.Helpers;
 using Assignment4.Models;
 using Assignment4.Repository;
@@ -14,22 +12,14 @@ namespace Assignment4.Views
     internal static class TransactionMenu
     {
         /// <summary>
-        /// Displays Transaction Menu.
-        /// </summary>
-        public static void DisplayTransactionMenu()
-        {
-            Service service = new Service(new TransactionListRepository());
-            DisplayTransactionMenu(service);
-        }
-
-        /// <summary>
         /// Displays Transaction Menu with specified service.
         /// </summary>
         /// <param name="service">Transaction service instance.</param>
-        public static void DisplayTransactionMenu(Service service)
+        /// <param name="userId">Guid for users.</param>
+        public static void DisplayTransactionMenu(TransactionService service, Guid userId)
         {
             bool inTransactionMenu = true;
-
+            Guid currentUserId = userId;
             while (inTransactionMenu)
             {
                 Console.WriteLine("\n================Transaction Menu====================");
@@ -55,29 +45,29 @@ namespace Assignment4.Views
                 switch (choice)
                 {
                     case TransactionMenuEnum.AddTransaction:
-                        AddTransactionHandler(service);
+                        AddTransactionHandler(service, currentUserId);
                         break;
 
                     case TransactionMenuEnum.ViewTransactions:
-                        ViewTransactionsHandler(service);
+                        ViewTransactionsHandler(service, currentUserId);
                         break;
 
                     case TransactionMenuEnum.EditTransaction:
-                        EditTransactionHandler(service);
+                        EditTransactionHandler(service, currentUserId);
                         break;
 
                     case TransactionMenuEnum.DeleteTransaction:
-                        DeleteTransactionHandler(service);
+                        DeleteTransactionHandler(service, currentUserId);
                         break;
 
                     case TransactionMenuEnum.ViewStats:
-                        ViewStatsHandler(service);
+                        ViewStatsHandler(service, currentUserId);
                         break;
                 }
             }
         }
 
-        private static void AddTransactionHandler(Service service)
+        private static void AddTransactionHandler(TransactionService service, Guid userId)
         {
             Console.WriteLine(@"
 1.Add Income
@@ -104,7 +94,7 @@ namespace Assignment4.Views
                         break;
                     }
 
-                    service.AddTransaction(incomeAmount, incomeSource, incomeDate);
+                    service.AddTransaction(userId, incomeAmount, incomeSource, incomeDate);
                     InputReader.Success("Income transaction added successfully!");
                     break;
 
@@ -127,13 +117,13 @@ namespace Assignment4.Views
                         break;
                     }
 
-                    service.AddTransaction(-expenseAmount, expenseCategory, expenseDate);
+                    service.AddTransaction(userId, -expenseAmount, expenseCategory, expenseDate);
                     InputReader.Success("Expense transaction added successfully!");
                     break;
             }
         }
 
-        private static void ViewTransactionsHandler(Service service)
+        private static void ViewTransactionsHandler(TransactionService service, Guid userId)
         {
             List<Transaction> transactions = service.GetAllTransactions();
             if (transactions.Count == 0)
@@ -146,16 +136,19 @@ namespace Assignment4.Views
             int index = 1;
             foreach (Transaction transaction in transactions)
             {
-                string type = transaction.Amount >= 0 ? "Income" : "Expense";
-                decimal displayAmount = Math.Abs(transaction.Amount);
-                table.AddRow(index++, type, displayAmount.ToString("0.00"), transaction.Category, transaction.Date.ToString("yyyy-MM-dd"));
+                if (transaction.UserId == userId)
+                {
+                    string type = transaction.Amount >= 0 ? "Income" : "Expense";
+                    decimal displayAmount = Math.Abs(transaction.Amount);
+                    table.AddRow(index++, type, displayAmount.ToString("0.00"), transaction.Category, transaction.Date.ToString("yyyy-MM-dd"));
+                }
             }
 
             Console.WriteLine();
             table.Write();
         }
 
-        private static void EditTransactionHandler(Service service)
+        private static void EditTransactionHandler(TransactionService service, Guid userId)
         {
             List<Transaction> transactions = service.GetAllTransactions();
             if (transactions.Count == 0)
@@ -164,7 +157,7 @@ namespace Assignment4.Views
                 return;
             }
 
-            ViewTransactionsHandler(service);
+            ViewTransactionsHandler(service, userId);
             int selectedIndex = InputReader.ReadInt("\nEnter transaction index to edit : ", "Index", 1, transactions.Count + 1, 3, -1);
             if (selectedIndex == -1)
             {
@@ -204,7 +197,7 @@ namespace Assignment4.Views
             }
         }
 
-        private static void DeleteTransactionHandler(Service service)
+        private static void DeleteTransactionHandler(TransactionService service, Guid userId)
         {
             List<Transaction> transactions = service.GetAllTransactions();
             if (transactions.Count == 0)
@@ -213,7 +206,7 @@ namespace Assignment4.Views
                 return;
             }
 
-            ViewTransactionsHandler(service);
+            ViewTransactionsHandler(service, userId);
             int selectedIndex = InputReader.ReadInt("\nEnter transaction index to delete : ", "Index", 1, transactions.Count + 1, 3, -1);
             if (selectedIndex == -1)
             {
@@ -231,7 +224,7 @@ namespace Assignment4.Views
             }
         }
 
-        private static void ViewStatsHandler(Service service)
+        private static void ViewStatsHandler(TransactionService service, Guid userId)
         {
             List<Transaction> transactions = service.GetAllTransactions();
             if (transactions.Count == 0)
@@ -240,9 +233,9 @@ namespace Assignment4.Views
                 return;
             }
 
-            decimal totalIncome = service.GetTotalIncome();
-            decimal totalExpense = service.GetTotalExpense();
-            decimal netBalance = service.GetNetBalance();
+            decimal totalIncome = service.GetTotalIncome(userId);
+            decimal totalExpense = service.GetTotalExpense(userId);
+            decimal netBalance = service.GetNetBalance(userId);
 
             ConsoleTable statsTable = new ConsoleTable("Metric", "Amount");
             statsTable.AddRow("Total Income", totalIncome.ToString("0.00"));

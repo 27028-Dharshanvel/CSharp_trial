@@ -1,4 +1,6 @@
-﻿using Assignment4.Views;
+﻿using Assignment4.Repository;
+using Assignment4.Services;
+using Assignment4.Views;
 
 namespace Assignments
 {
@@ -13,7 +15,11 @@ namespace Assignments
         /// <param name="args">Command line arguments</param>
         public static void Main(string[] args)
         {
-            MainMenu.DisplayMainMenu();
+            UserListRepository userListRepository = new UserListRepository();
+            UserService userService = new UserService(userListRepository);
+            TransactionListRepository transactionListRepository = new TransactionListRepository();
+            TransactionService transactionService = new TransactionService(transactionListRepository);
+            MainMenu.DisplayMainMenu(userService, transactionService);
         }
     }
 }
