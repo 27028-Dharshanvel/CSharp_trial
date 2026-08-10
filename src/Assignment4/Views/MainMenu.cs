@@ -1,6 +1,4 @@
-using System;
 using Assignment4.Helpers;
-using Assignment4.Models;
 using Assignment4.Services;
 
 namespace Assignment4.Views
@@ -13,12 +11,13 @@ namespace Assignment4.Views
         /// <summary>
         /// Displays Main menu.
         /// </summary>
-        public static void DisplayMainMenu()
+        /// <param name="userService">userService</param>
+        /// <param name="transactionService">transactionService</param>
+        public static void DisplayMainMenu(UserService userService, TransactionService transactionService)
         {
-            UserService userService = new UserService();
-            bool running = true;
+            bool isAppRunning = true;
 
-            while (running)
+            while (isAppRunning)
             {
                 Console.WriteLine(@"
 ================Money manager Application====================
@@ -31,50 +30,38 @@ namespace Assignment4.Views
                 {
                     case 1:
                         Console.Write("Username : ");
-                        string? username = Console.ReadLine();
-                        Console.Write("Password : ");
-                        string? password = Console.ReadLine();
+                        string username = InputReader.ReadString("Username : ", "Username", 15, 3, "@@@");
+                        Guid userId = default(Guid);
 
-                        if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password) &&
-                            userService.LoginUser(username, password, out User? user) && user != null)
+                        if (userService.LoginUser(username, out userId))
                         {
-                            InputReader.Success($"\nLogin successful! Welcome, {user.UserName}.");
-                            TransactionMenu.DisplayTransactionMenu();
+                            InputReader.Success($"\nLogin successful! Welcome, {username}.");
+                            TransactionMenu.DisplayTransactionMenu(transactionService, userId);
                         }
                         else
                         {
-                            InputReader.Error("Invalid username or password.");
+                            InputReader.Error("Invalid username .");
                         }
 
                         break;
 
                     case 2:
-                        Console.Write("Enter your username : ");
-                        string? newUsername = Console.ReadLine();
-                        Console.Write("Enter your password : ");
-                        string? newPassword = Console.ReadLine();
+                        string newUserName = InputReader.ReadString("Enter Username : ", "Username", 15, 3, "@@@");
 
-                        if (!string.IsNullOrEmpty(newUsername) && !string.IsNullOrEmpty(newPassword))
+                        if (userService.RegisterUser(newUserName, out string errorMessage))
                         {
-                            if (userService.RegisterUser(newUsername, newPassword, out string errorMessage))
-                            {
                                 InputReader.Success("Account created successfully! You can now log in.");
-                            }
-                            else
-                            {
-                                InputReader.Error(errorMessage);
-                            }
                         }
                         else
                         {
-                            InputReader.Error("Username and password cannot be empty.");
+                                InputReader.Error(errorMessage);
                         }
 
                         break;
 
                     case 3:
                         Console.WriteLine("Thank you for using Money Manager. Goodbye!");
-                        running = false;
+                        isAppRunning = false;
                         break;
                 }
             }

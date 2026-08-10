@@ -8,15 +8,15 @@ namespace Assignment4.Repository
     internal interface ITransactionRepository
     {
         /// <summary>
-        /// Save Contacts.
+        /// Save transactions.
         /// </summary>
-        /// <param name="transactions">contacts</param>
+        /// <param name="transactions">transactions</param>
         void SaveTransactions(List<Transaction> transactions);
 
         /// <summary>
         /// Loads Transactions.
         /// </summary>
-        /// <returns>List</returns>
+        /// <returns>List of transaction.</returns>
         List<Transaction> LoadTransactions();
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Assignment4.Repository
         /// <summary>
         /// Updates Transactions.
         /// </summary>
-        /// <param name="oldTransaction">oldtransaction</param>
+        /// <param name="oldTransaction">oldTransaction</param>
         /// <param name="updatedTransaction">updatedTransaction</param>
         void UpdateTransaction(Transaction oldTransaction, Transaction updatedTransaction);
     }

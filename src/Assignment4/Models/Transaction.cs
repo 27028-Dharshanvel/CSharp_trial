@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace Assignment4.Models
 {
     /// <summary>
-    /// Transaction
+    /// Represents Transaction Model.
     /// </summary>
     internal class Transaction
     {
         /// <summary>
-        /// Gets or sets id
+        /// Gets or sets transaction id.
         /// </summary>
         /// <value>Id.</value>
         public Guid TransactionId { get; set; }
@@ -30,9 +30,17 @@ namespace Assignment4.Models
         public DateOnly Date { get; set; }
 
         /// <summary>
-        /// Gets or sets Note
+        /// Gets or sets category of transaction.
         /// </summary>
         /// <value>Category.</value>
         public string? Category { get; set; }
+
+        /// <summary>
+        /// Gets or sets user id.
+        /// </summary>
+        /// <value>
+        /// User id.
+        /// </value>
+        public Guid UserId { get; set; }
     }
 }

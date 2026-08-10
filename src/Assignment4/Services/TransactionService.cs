@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Assignment4.Models;
 using Assignment4.Repository;
 
@@ -8,37 +6,39 @@ namespace Assignment4.Services
     /// <summary>
     /// Service Class for managing transactions.
     /// </summary>
-    internal class Service
+    internal class TransactionService
     {
-        private ITransactionRepository _inMemoryRepository;
+        private ITransactionRepository _inMemoryTransactionRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Service"/> class.
+        /// Initializes a new instance of the <see cref="TransactionService"/> class.
         /// </summary>
         /// <param name="repository">repository.</param>
-        public Service(ITransactionRepository repository)
+        public TransactionService(ITransactionRepository repository)
         {
-            this._inMemoryRepository = repository;
+            this._inMemoryTransactionRepository = repository;
         }
 
         /// <summary>
         /// Adds Transaction to the repository.
         /// </summary>
+        /// <param name="userId">userId</param>
         /// <param name="amount">amount</param>
         /// <param name="category">category</param>
         /// <param name="date">date</param>
         /// <returns>True if transaction is added, False if error.</returns>
-        public bool AddTransaction(decimal amount, string category, DateOnly date)
+        public bool AddTransaction(Guid userId, decimal amount, string category, DateOnly date)
         {
             Transaction transaction = new Transaction
             {
                 TransactionId = Guid.NewGuid(),
+                UserId = userId,
                 Amount = amount,
                 Category = category,
                 Date = date,
             };
 
-            this._inMemoryRepository.AddTransaction(transaction);
+            this._inMemoryTransactionRepository.AddTransaction(transaction);
             return true;
         }
 
@@ -48,7 +48,7 @@ namespace Assignment4.Services
         /// <returns>List of transactions.</returns>
         public List<Transaction> GetAllTransactions()
         {
-            return this._inMemoryRepository.LoadTransactions();
+            return this._inMemoryTransactionRepository.LoadTransactions();
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Assignment4.Services
         /// <returns>Transaction if found; otherwise null.</returns>
         public Transaction? GetTransactionById(Guid transactionId)
         {
-            List<Transaction> transactions = this._inMemoryRepository.LoadTransactions();
+            List<Transaction> transactions = this._inMemoryTransactionRepository.LoadTransactions();
             foreach (Transaction transaction in transactions)
             {
                 if (transaction.TransactionId == transactionId)
@@ -94,7 +94,7 @@ namespace Assignment4.Services
                 Date = date,
             };
 
-            this._inMemoryRepository.UpdateTransaction(oldTransaction, updatedTransaction);
+            this._inMemoryTransactionRepository.UpdateTransaction(oldTransaction, updatedTransaction);
             return true;
         }
 
@@ -111,23 +111,27 @@ namespace Assignment4.Services
                 return false;
             }
 
-            this._inMemoryRepository.DeleteTransaction(transaction);
+            this._inMemoryTransactionRepository.DeleteTransaction(transaction);
             return true;
         }
 
         /// <summary>
         /// Calculates total income.
         /// </summary>
+        /// <param name="userId">user id.</param>
         /// <returns>Total income amount.</returns>
-        public decimal GetTotalIncome()
+        public decimal GetTotalIncome(Guid userId)
         {
             decimal totalIncome = 0;
-            List<Transaction> transactions = this._inMemoryRepository.LoadTransactions();
+            List<Transaction> transactions = this._inMemoryTransactionRepository.LoadTransactions();
             foreach (Transaction transaction in transactions)
             {
-                if (transaction.Amount > 0)
+                if (transaction.UserId == userId)
                 {
-                    totalIncome += transaction.Amount;
+                    if (transaction.Amount > 0)
+                    {
+                        totalIncome += transaction.Amount;
+                    }
                 }
             }
 
@@ -137,16 +141,20 @@ namespace Assignment4.Services
         /// <summary>
         /// Calculates total expense.
         /// </summary>
+        /// <param name="userId">userId</param>
         /// <returns>Total expense amount.</returns>
-        public decimal GetTotalExpense()
+        public decimal GetTotalExpense(Guid userId)
         {
             decimal totalExpense = 0;
-            List<Transaction> transactions = this._inMemoryRepository.LoadTransactions();
+            List<Transaction> transactions = this._inMemoryTransactionRepository.LoadTransactions();
             foreach (Transaction transaction in transactions)
             {
-                if (transaction.Amount < 0)
+                if (transaction.UserId == userId)
                 {
-                    totalExpense += Math.Abs(transaction.Amount);
+                    if (transaction.Amount < 0)
+                    {
+                        totalExpense += Math.Abs(transaction.Amount);
+                    }
                 }
             }
 
@@ -156,10 +164,11 @@ namespace Assignment4.Services
         /// <summary>
         /// Calculates net balance.
         /// </summary>
+        /// <param name="userId">user Id.</param>
         /// <returns>Net balance amount.</returns>
-        public decimal GetNetBalance()
+        public decimal GetNetBalance(Guid userId)
         {
-            return this.GetTotalIncome() - this.GetTotalExpense();
+            return this.GetTotalIncome(userId) - this.GetTotalExpense(userId);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Assignment4.Repository
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TransactionListRepository"/> class.
-        /// Initializes ContactRepository.
+        /// Initializes TransactionListRepository.
         /// </summary>
         public TransactionListRepository()
         {
@@ -19,9 +19,9 @@ namespace Assignment4.Repository
         }
 
         /// <summary>
-        /// Savetransactions
+        /// Save transactions.
         /// </summary>
-        /// <param name="transactions">transactions</param>
+        /// <param name="transactions">transactions.</param>
         public void SaveTransactions(List<Transaction> transactions)
         {
             this._transactions = transactions;
@@ -39,7 +39,7 @@ namespace Assignment4.Repository
         /// <summary>
         /// Adds Transactions.
         /// </summary>
-        /// <param name="transaction">transaction</param>
+        /// <param name="transaction">transactions.</param>
         public void AddTransaction(Transaction transaction)
         {
             this._transactions.Add(transaction);
@@ -48,7 +48,7 @@ namespace Assignment4.Repository
         /// <summary>
         /// Deletes Transactions.
         /// </summary>
-        /// <param name="transaction">transaction</param>
+        /// <param name="transaction">transaction.</param>
         public void DeleteTransaction(Transaction transaction)
         {
             this._transactions.Remove(transaction);

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Assignment4.Models
 {
     /// <summary>
-    /// Transaction type
+    /// Transaction type enumerator.
     /// </summary>
     internal enum TransactionTypeEnum
     {
