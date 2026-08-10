@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Assignment4.Models
 {
     /// <summary>
-    /// User class.
+    /// Represents user model.
     /// </summary>
     internal class User
     {
@@ -22,11 +22,5 @@ namespace Assignment4.Models
         /// </summary>
         /// <value>User name.</value>
         public string? UserName { get; set; }
-
-        /// <summary>
-        /// Gets or sets Password.
-        /// </summary>
-        /// <value>Password hash.</value>
-        public string? Password { get; set; }
     }
 }
