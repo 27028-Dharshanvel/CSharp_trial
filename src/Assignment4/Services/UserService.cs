@@ -52,7 +52,7 @@ namespace Assignment4.Services
         }
 
         /// <summary>
-        /// Authenticates user credentials.
+        /// User credentials.
         /// </summary>
         /// <param name="username">User name.</param>
         /// <param name="userId">User Id.</param>

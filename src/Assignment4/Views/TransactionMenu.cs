@@ -15,7 +15,7 @@ namespace Assignment4.Views
         /// Displays Transaction Menu with specified service.
         /// </summary>
         /// <param name="service">Transaction service instance.</param>
-        /// <param name="userId">Guid for users.</param>
+        /// <param name="userId">Guid of user.</param>
         public static void DisplayTransactionMenu(TransactionService service, Guid userId)
         {
             bool inTransactionMenu = true;
