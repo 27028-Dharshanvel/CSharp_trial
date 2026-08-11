@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Assignment2.BankAccountModels;
 
 namespace Assignment2.Repository
@@ -15,27 +16,7 @@ namespace Assignment2.Repository
         /// <returns>Next unique account number.</returns>
         public long GetNextAccountNumber()
         {
-            long maxAccountNumber = 10000000;
-
-            foreach (BankAccount account in this._bankAccounts)
-            {
-                if (long.TryParse(account.AccountNumber, out long currentNumber))
-                {
-                    if (currentNumber > maxAccountNumber)
-                    {
-                        maxAccountNumber = currentNumber;
-                    }
-                }
-            }
-
-            long nextNumber = maxAccountNumber + 1;
-
-            while (this.Exists(nextNumber.ToString()))
-            {
-                nextNumber++;
-            }
-
-            return nextNumber;
+            return RandomNumberGenerator.GetInt32(10000000, 99999999);
         }
 
         /// <summary>
@@ -65,14 +46,6 @@ namespace Assignment2.Repository
         public void Create(BankAccount bankAccount)
         {
             this._bankAccounts.Add(bankAccount);
-        }
-
-        /// <summary>
-        /// Reads account details in bank repository.
-        /// </summary>
-        /// <param name="bankAccount">Bank account.</param>
-        public void Read(BankAccount bankAccount)
-        {
         }
 
         /// <summary>
