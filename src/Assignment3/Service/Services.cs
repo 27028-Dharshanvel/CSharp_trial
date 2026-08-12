@@ -104,11 +104,11 @@ namespace Assignment3.Service
         /// <returns>Product List</returns>
         public List<Product>? SortProducts(int choice)
         {
-            if (choice == (int)SortByMenu.SortByName)
+            if (choice == (int)SortOptions.SortByName)
             {
                 return this._inventory.SortByName();
             }
-            else if (choice == (int)SortByMenu.SortByPrice)
+            else if (choice == (int)SortOptions.SortByPrice)
             {
                 return this._inventory.SortByPrice();
             }
