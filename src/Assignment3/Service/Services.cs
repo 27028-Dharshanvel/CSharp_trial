@@ -8,7 +8,16 @@ namespace Assignment3.Service
     /// </summary>
     internal class Services
     {
-        private ProductInventory _inventory = new ProductInventory();
+        private ProductInventory _inventory;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Services"/> class.
+        /// </summary>
+        /// <param name="inventory">inventory</param>
+        public Services(ProductInventory inventory)
+        {
+            this._inventory = inventory;
+        }
 
         /// <summary>
         /// Adds product
@@ -55,14 +64,12 @@ namespace Assignment3.Service
         /// Edit Product
         /// </summary>
         /// <param name="productId">Product Id</param>
-        /// <param name="oldName">Existing Product Name</param>
         /// <param name="newName">New Product Name</param>
         /// <param name="newPrice">New Product Price</param>
         /// <param name="newQuantity">New Product Quantity</param>
         /// <returns>Boolean</returns>
         public bool EditProduct(
             string productId,
-            string oldName,
             string newName,
             decimal newPrice,
             double newQuantity)
@@ -74,7 +81,7 @@ namespace Assignment3.Service
             product.Price = newPrice;
             product.Quantity = newQuantity;
 
-            return this._inventory.Edit(productId, oldName, product);
+            return this._inventory.Edit(productId, product);
         }
 
         /// <summary>

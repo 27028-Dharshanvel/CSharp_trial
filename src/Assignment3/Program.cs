@@ -1,4 +1,5 @@
-﻿using Assignment3.View;
+﻿using Assignment3.Inventory;
+using Assignment3.View;
 
 namespace Assignment3
 {
@@ -13,7 +14,8 @@ namespace Assignment3
         /// <param name="args">Command Line Arguments</param>
         public static void Main(string[] args)
         {
-            ConsoleView.ConsoleOperations();
+            ProductInventory inventory = new ProductInventory();
+            ConsoleView.ConsoleOperations(inventory);
         }
     }
 }
