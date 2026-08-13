@@ -40,15 +40,12 @@ namespace Assignment3.Inventory
         /// Edit Product
         /// </summary>
         /// <param name="productId">Product Id</param>
-        /// <param name="productName">Product Name</param>
         /// <param name="product">Updated Product</param>
         /// <returns>Boolean</returns>
-        public bool Edit(string productId, string productName, Product product)
+        public bool Edit(string productId, Product product)
         {
             Product? existingProduct = this._products.FirstOrDefault(p =>
-                p.ProductId == productId &&
-                p.Name != null &&
-                p.Name.Equals(productName, StringComparison.OrdinalIgnoreCase));
+                p.ProductId == productId );
 
             if (existingProduct == null)
             {

@@ -1,4 +1,5 @@
 ﻿using Assignment3.Helpers;
+using Assignment3.Inventory;
 using Assignment3.Models;
 using Assignment3.Service;
 using ConsoleTables;
@@ -13,21 +14,22 @@ namespace Assignment3.View
         /// <summary>
         /// Console Operations
         /// </summary>
-        public static void ConsoleOperations()
+        /// <param name="inventory">inventory</param>
+        public static void ConsoleOperations(ProductInventory inventory)
         {
-            Services services = new Services();
+            Services services = new Services(inventory);
 
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("********* Inventory Management Application ************" +
-                    "\n1.Add Products" +
-                    "\n2.View Products" +
-                    "\n3.Edit Products" +
-                    "\n4.Delete Product" +
-                    "\n5.Search Product" +
-                    "\n6.Sort Products" +
-                    "\n7.Exit");
+                Console.WriteLine(@"********* Inventory Management Application ************
+1.Add Products
+2.View Products
+3.Edit Products
+4.Delete Product
+5.Search Product
+6.Sort Products
+7.Exit");
                 InventoryOperations userChoice =
                     (InventoryOperations)InputReader.ReadInt(
                         "\nSelect the operation to perform : ", "Choice", 1, 8, 3, -1);
@@ -37,26 +39,19 @@ namespace Assignment3.View
                     case InventoryOperations.AddProducts:
 
                         Console.Clear();
-                        try
-                        {
-                            Console.WriteLine("Enter Product Details :");
+                        Console.WriteLine("Enter Product Details :");
 
-                            if (services.AddProduct(
+                        if (services.AddProduct(
                                 InputReader.ReadString("\nProduct Id : ", "Product ID", 10, 3, "@@@"),
                                 InputReader.ReadString("Product Name : ", "Product name", 10, 3, "@@@"),
                                 InputReader.ReadDecimal("Product Price : ", "Price", 1, 10000000, 3, -1),
                                 InputReader.ReadDouble("Product Quantity : ", "Quantity", 0, 100000, 3, -1)))
-                            {
-                                InputReader.Success("\nProduct Added Successfully.");
-                            }
-                            else
-                            {
-                                InputReader.Error("\nProduct not added.Product ID might already exist");
-                            }
-                        }
-                        catch (Exception)
                         {
-                            InputReader.Error("\nToo many attempts .Try again later");
+                                InputReader.Success("\nProduct Added Successfully.");
+                        }
+                        else
+                        {
+                                InputReader.Error("\nProduct not added.Product ID might already exist");
                         }
 
                         Console.ReadKey();
@@ -94,7 +89,6 @@ namespace Assignment3.View
 
                         if (services.EditProduct(
                             InputReader.ReadString("Product Id : ", "Product Id", 10, 3, "@@@"),
-                            InputReader.ReadString("Existing Product Name : ", "Product name", 10, 3, "@@@"),
                             InputReader.ReadString("New Product Name : ", "Product name", 20, 3, "@@@"),
                             InputReader.ReadDecimal("New Product Price : ", "Price", 1, 1000000, 3, -1),
                             InputReader.ReadDouble("New Product Quantity : ", "Quantity", 1, 100000, 3, -1)))
@@ -157,35 +151,28 @@ namespace Assignment3.View
                     case InventoryOperations.SortBy:
 
                         Console.Clear();
-                        try
+
+                        Console.WriteLine("1.Sort By Name");
+                        Console.WriteLine("2.Sort By Price");
+
+                        int choice = InputReader.ReadInt("\nSelect Sorting Type : ", "Choice", 1, 3, 3, -1);
+
+                        List<Product>? sortedProducts =
+                        services.SortProducts(choice);
+
+                        if (sortedProducts == null)
                         {
-                            Console.WriteLine("1.Sort By Name");
-                            Console.WriteLine("2.Sort By Price");
-
-                            int choice = InputReader.ReadInt(
-                                "\nSelect Sorting Type : ", "Choice", 1, 3, 3, -1);
-
-                            List<Product>? sortedProducts =
-                                services.SortProducts(choice);
-
-                            if (sortedProducts == null)
-                            {
-                                InputReader.Error("Inventory is empty");
-                                break;
-                            }
-
-                            foreach (Product product in sortedProducts)
-                            {
-                                Console.WriteLine("--------------------------------\n");
-                                Console.WriteLine($"\nProduct Id : {product.ProductId}");
-                                Console.WriteLine($"\nName       : {product.Name}");
-                                Console.WriteLine($"\nPrice      : {product.Price}");
-                                Console.WriteLine($"\nQuantity   : {product.Quantity}");
-                            }
+                            InputReader.Error("Inventory is empty");
+                            break;
                         }
-                        catch (Exception)
+
+                        foreach (Product product in sortedProducts)
                         {
-                            InputReader.Error("\nToo many attempts! Try again later");
+                                Console.WriteLine(@$"--------------------------------
+Product Id : {product.ProductId}
+Name       : {product.Name}
+Price      : {product.Price}
+Quantity   : {product.Quantity}");
                         }
 
                         Console.ReadKey();
