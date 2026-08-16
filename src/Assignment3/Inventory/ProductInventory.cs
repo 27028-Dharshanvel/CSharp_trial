@@ -31,7 +31,7 @@ namespace Assignment3.Inventory
         /// Gets Products
         /// </summary>
         /// <returns>products</returns>
-        public List<Product> GetProduct()
+        public List<Product> GetProducts()
         {
             return this._products.Select(p => p.Clone()).ToList();
         }
