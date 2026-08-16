@@ -57,7 +57,7 @@ namespace Assignment3.Service
         /// <returns>Product List</returns>
         public List<Product> ViewProducts()
         {
-            return this._inventory.GetProduct();
+            return this._inventory.GetProducts();
         }
 
         /// <summary>

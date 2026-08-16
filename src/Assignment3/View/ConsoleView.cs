@@ -23,7 +23,7 @@ namespace Assignment3.View
             {
                 Console.Clear();
                 Console.WriteLine(@"********* Inventory Management Application ************
-1.Add Products
+1.Add Product
 2.View Products
 3.Edit Products
 4.Delete Product
@@ -31,7 +31,7 @@ namespace Assignment3.View
 6.Sort Products
 7.Exit");
                 InventoryOperations userChoice =
-                    (InventoryOperations)InputReader.ReadInt(
+                    (InventoryOperations)ConsoleInputReader.ReadInt(
                         "\nSelect the operation to perform : ", "Choice", 1, 8, 3, -1);
 
                 switch (userChoice)
@@ -42,16 +42,16 @@ namespace Assignment3.View
                         Console.WriteLine("Enter Product Details :");
 
                         if (services.AddProduct(
-                                InputReader.ReadString("\nProduct Id : ", "Product ID", 10, 3, "@@@"),
-                                InputReader.ReadString("Product Name : ", "Product name", 10, 3, "@@@"),
-                                InputReader.ReadDecimal("Product Price : ", "Price", 1, 10000000, 3, -1),
-                                InputReader.ReadDouble("Product Quantity : ", "Quantity", 0, 100000, 3, -1)))
+                                ConsoleInputReader.ReadString("\nProduct Id : ", "Product ID", 10, 3, "@@@"),
+                                ConsoleInputReader.ReadString("Product Name : ", "Product name", 10, 3, "@@@"),
+                                ConsoleInputReader.ReadDecimal("Product Price : ", "Price", 1, 10000000, 3, -1),
+                                ConsoleInputReader.ReadDouble("Product Quantity : ", "Quantity", 0, 100000, 3, -1)))
                         {
-                                InputReader.Success("\nProduct Added Successfully.");
+                                ConsoleOutputColor.Success("\nProduct Added Successfully.");
                         }
                         else
                         {
-                                InputReader.Error("\nProduct not added.Product ID might already exist");
+                                ConsoleOutputColor.Error("\nProduct not added.Product ID might already exist");
                         }
 
                         Console.ReadKey();
@@ -88,10 +88,10 @@ namespace Assignment3.View
                         Console.WriteLine("Enter Product Identification Details");
 
                         if (services.EditProduct(
-                            InputReader.ReadString("Product Id : ", "Product Id", 10, 3, "@@@"),
-                            InputReader.ReadString("New Product Name : ", "Product name", 20, 3, "@@@"),
-                            InputReader.ReadDecimal("New Product Price : ", "Price", 1, 1000000, 3, -1),
-                            InputReader.ReadDouble("New Product Quantity : ", "Quantity", 1, 100000, 3, -1)))
+                            ConsoleInputReader.ReadString("Product Id : ", "Product Id", 10, 3, "@@@"),
+                            ConsoleInputReader.ReadString("New Product Name : ", "Product name", 20, 3, "@@@"),
+                            ConsoleInputReader.ReadDecimal("New Product Price : ", "Price", 1, 1000000, 3, -1),
+                            ConsoleInputReader.ReadDouble("New Product Quantity : ", "Quantity", 1, 100000, 3, -1)))
                         {
                             Console.WriteLine("\nProduct Updated Successfully.");
                         }
@@ -108,7 +108,7 @@ namespace Assignment3.View
                         Console.Clear();
 
                         if (services.DeleteProduct(
-                            InputReader.ReadString(
+                            ConsoleInputReader.ReadString(
                                 "Enter Product Id or Product Name : ", "Product Id or name", 20, 3, "@@@")))
                         {
                             Console.WriteLine("\nProduct Deleted Successfully.");
@@ -127,7 +127,7 @@ namespace Assignment3.View
 
                         List<Product> searchedProducts =
                             services.SearchProduct(
-                                InputReader.ReadString(
+                                ConsoleInputReader.ReadString(
                                     "Enter Product Id or Product Name : ", "Input", 20, 3, "@@@"));
 
                         if (searchedProducts.Count == 0)
@@ -155,14 +155,14 @@ namespace Assignment3.View
                         Console.WriteLine("1.Sort By Name");
                         Console.WriteLine("2.Sort By Price");
 
-                        int choice = InputReader.ReadInt("\nSelect Sorting Type : ", "Choice", 1, 3, 3, -1);
+                        int choice = ConsoleInputReader.ReadInt("\nSelect Sorting Type : ", "Choice", 1, 3, 3, -1);
 
                         List<Product>? sortedProducts =
                         services.SortProducts(choice);
 
                         if (sortedProducts == null)
                         {
-                            InputReader.Error("Inventory is empty");
+                            ConsoleOutputColor.Error("Inventory is empty");
                             break;
                         }
 

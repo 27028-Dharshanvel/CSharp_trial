@@ -3,7 +3,7 @@
     /// <summary>
     /// InputReader class
     /// </summary>
-    internal class InputReader
+    internal class ConsoleInputReader
     {
         /// <summary>
         /// Reads string and validate whether it is an integer,within range and with limited tries.
@@ -37,7 +37,7 @@
                             continue;
                         }
 
-                        Warn($"{inputType} should be in range of {minValue} and {maxValue}");
+                        ConsoleOutputColor.Warn($"{inputType} should be in range of {minValue} and {maxValue}");
                         continue;
                     }
                 }
@@ -48,10 +48,10 @@
                     continue;
                 }
 
-                Warn("Please enter a valid integer.");
+                ConsoleOutputColor.Warn("Please enter a valid integer.");
             }
 
-            Error("\nToo many Attempts! Try again later");
+            ConsoleOutputColor.Error("\nToo many Attempts! Try again later");
             return defaultValue;
         }
 
@@ -87,7 +87,7 @@
                             continue;
                         }
 
-                        Warn($"{inputType} should be in range of {minValue} and {maxValue}");
+                        ConsoleOutputColor.Warn($"{inputType} should be in range of {minValue} and {maxValue}");
                         continue;
                     }
                 }
@@ -98,10 +98,10 @@
                     continue;
                 }
 
-                Warn("Please enter a valid double.");
+                ConsoleOutputColor.Warn("Please enter a valid double.");
             }
 
-            Error("\nToo many Attempts! Try again later");
+            ConsoleOutputColor.Error("\nToo many Attempts! Try again later");
             return defaultValue;
         }
 
@@ -137,7 +137,7 @@
                             continue;
                         }
 
-                        Warn($"{inputType} should be in range of {minValue} and {maxValue}");
+                        ConsoleOutputColor.Warn($"{inputType} should be in range of {minValue} and {maxValue}");
                         continue;
                     }
                 }
@@ -148,10 +148,10 @@
                     continue;
                 }
 
-                Warn("Please enter a valid decimal.");
+                ConsoleOutputColor.Warn("Please enter a valid decimal.");
             }
 
-            Error("\nToo many Attempts! Try again later");
+            ConsoleOutputColor.Error("\nToo many Attempts! Try again later");
             return defaultValue;
         }
 
@@ -177,43 +177,10 @@
                 }
 
                 maxTries--;
-                Warn($"{value} should neither be Null nor exceed {maxCharacters} characters.");
+                ConsoleOutputColor.Warn($"{value} should neither be Null nor exceed {maxCharacters} characters.");
             }
 
             return defaultValue;
-        }
-
-        /// <summary>
-        /// Display error message in red color.
-        /// </summary>
-        /// <param name="message">Message that should be displayed.</param>
-        public static void Error(string message)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"{message}");
-            Console.ResetColor();
-        }
-
-        /// <summary>
-        /// Display success message in green color.
-        /// </summary>
-        /// <param name="message">Message that should be displayed.</param>
-        public static void Success(string message)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"{message}");
-            Console.ResetColor();
-        }
-
-        /// <summary>
-        /// Display warning message in yellow color.
-        /// </summary>
-        /// <param name="message">Message that should be displayed.</param>
-        public static void Warn(string message)
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{message}");
-            Console.ResetColor();
         }
     }
 }
