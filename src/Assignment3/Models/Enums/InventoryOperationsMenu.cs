@@ -3,7 +3,7 @@
         /// <summary>
         /// InventoryOperations
         /// </summary>
-        public enum InventoryOperations
+        public enum InventoryOperationsMenu
         {
             /// <summary>
             /// Adds Products.

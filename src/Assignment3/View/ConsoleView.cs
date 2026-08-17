@@ -2,7 +2,6 @@
 using Assignment3.Inventory;
 using Assignment3.Models;
 using Assignment3.Service;
-using ConsoleTables;
 
 namespace Assignment3.View
 {
@@ -18,8 +17,9 @@ namespace Assignment3.View
         public static void ConsoleOperations(ProductInventory inventory)
         {
             Services services = new Services(inventory);
+            bool isAppRunning = true;
 
-            while (true)
+            while (isAppRunning)
             {
                 Console.Clear();
                 Console.WriteLine(@"********* Inventory Management Application ************
@@ -30,13 +30,13 @@ namespace Assignment3.View
 5.Search Product
 6.Sort Products
 7.Exit");
-                InventoryOperations userChoice =
-                    (InventoryOperations)ConsoleInputReader.ReadInt(
+                InventoryOperationsMenu userChoice =
+                    (InventoryOperationsMenu)ConsoleInputReader.ReadInt(
                         "\nSelect the operation to perform : ", "Choice", 1, 8, 3, -1);
 
                 switch (userChoice)
                 {
-                    case InventoryOperations.AddProducts:
+                    case InventoryOperationsMenu.AddProducts:
 
                         Console.Clear();
                         Console.WriteLine("Enter Product Details :");
@@ -57,7 +57,7 @@ namespace Assignment3.View
                         Console.ReadKey();
                         break;
 
-                    case InventoryOperations.ViewProducts:
+                    case InventoryOperationsMenu.ViewProducts:
 
                         Console.Clear();
 
@@ -69,19 +69,13 @@ namespace Assignment3.View
                         }
                         else
                         {
-                            var table1 = new ConsoleTable("ProductID", "ProductName", "Price", "Quantity");
-                            foreach (Product product in products)
-                            {
-                                table1.AddRow(product.ProductId,  product.Name, product.Price, product.Quantity);
-                            }
-
-                            table1.Write();
+                            DisplayTable.DisplayProductTable(products);
                         }
 
                         Console.ReadKey();
                         break;
 
-                    case InventoryOperations.EditProducts:
+                    case InventoryOperationsMenu.EditProducts:
 
                         Console.Clear();
 
@@ -103,7 +97,7 @@ namespace Assignment3.View
                         Console.ReadKey();
                         break;
 
-                    case InventoryOperations.DeleteProducts:
+                    case InventoryOperationsMenu.DeleteProducts:
 
                         Console.Clear();
 
@@ -121,7 +115,7 @@ namespace Assignment3.View
                         Console.ReadKey();
                         break;
 
-                    case InventoryOperations.SearchProducts:
+                    case InventoryOperationsMenu.SearchProducts:
 
                         Console.Clear();
 
@@ -136,56 +130,64 @@ namespace Assignment3.View
                         }
                         else
                         {
-                            var table2 = new ConsoleTable("ProductID", "ProductName", "Price", "Quantity");
-                            foreach (Product product in searchedProducts)
-                            {
-                                table2.AddRow(product.ProductId, product.Name, product.Price, product.Quantity);
-                            }
-
-                            table2.Write();
+                            DisplayTable.DisplayProductTable(searchedProducts);
                         }
 
                         Console.ReadKey();
                         break;
 
-                    case InventoryOperations.SortBy:
+                    case InventoryOperationsMenu.SortBy:
 
                         Console.Clear();
-
-                        Console.WriteLine("1.Sort By Name");
-                        Console.WriteLine("2.Sort By Price");
-
-                        int choice = ConsoleInputReader.ReadInt("\nSelect Sorting Type : ", "Choice", 1, 3, 3, -1);
-
-                        List<Product>? sortedProducts =
-                        services.SortProducts(choice);
-
-                        if (sortedProducts == null)
+                        if (services.ViewProducts().Count == 0)
                         {
-                            ConsoleOutputColor.Error("Inventory is empty");
+                            ConsoleOutputColor.Warn("Inventory is Empty!!! No products available to sort");
+                            Console.ReadKey();
                             break;
                         }
 
-                        foreach (Product product in sortedProducts)
+                        bool isSortMenuRunning = true;
+
+                        while (isSortMenuRunning)
                         {
-                                Console.WriteLine(@$"--------------------------------
-Product Id : {product.ProductId}
-Name       : {product.Name}
-Price      : {product.Price}
-Quantity   : {product.Quantity}");
+                            Console.Clear();
+                            Console.WriteLine(@"1.Sort By Name
+2.Sort By Price
+3.Back");
+
+                            SortOptionsMenu choice = (SortOptionsMenu)ConsoleInputReader.ReadInt("\nSelect Sorting Type : ", "Choice", 1, 4, 3, -1);
+
+                            switch (choice)
+                            {
+                                case SortOptionsMenu.SortByName:
+                                    DisplayTable.DisplayProductTable(services.SortByName());
+                                    Console.ReadKey();
+                                    break;
+
+                                case SortOptionsMenu.SortByPrice:
+                                    DisplayTable.DisplayProductTable(services.SortByPrice());
+                                    Console.ReadKey();
+                                    break;
+
+                                case SortOptionsMenu.Back:
+                                    isSortMenuRunning = false;
+                                    break;
+                            }
                         }
 
-                        Console.ReadKey();
                         break;
 
-                    case InventoryOperations.Exit:
+                    case InventoryOperationsMenu.Exit:
 
-                        return;
+                        Console.WriteLine("Application Exiting .....Press any key to confirm Exit");
+                        Console.ReadKey();
+                        isAppRunning = false;
+                        break;
 
                     default:
 
-                        Console.WriteLine("Invalid Choice.");
-                        Console.ReadKey();
+                        ConsoleOutputColor.Error("Application Exiting");
+                        isAppRunning = false;
                         break;
                 }
             }

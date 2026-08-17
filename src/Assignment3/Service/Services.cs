@@ -105,24 +105,21 @@ namespace Assignment3.Service
         }
 
         /// <summary>
-        /// Sort Products
+        /// Sort Products by name.
         /// </summary>
-        /// <param name="choice">Sort Choice</param>
         /// <returns>Product List</returns>
-        public List<Product>? SortProducts(int choice)
+        public List<Product>? SortByName()
         {
-            if (choice == (int)SortOptions.SortByName)
-            {
                 return this._inventory.SortByName();
-            }
-            else if (choice == (int)SortOptions.SortByPrice)
-            {
-                return this._inventory.SortByPrice();
-            }
-            else
-            {
-                return null;
-            }
+        }
+
+        /// <summary>
+        /// Sort Products by name.
+        /// </summary>
+        /// <returns>Product List</returns>
+        public List<Product>? SortByPrice()
+        {
+            return this._inventory.SortByPrice();
         }
     }
 }

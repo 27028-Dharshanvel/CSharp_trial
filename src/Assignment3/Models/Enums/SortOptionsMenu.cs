@@ -3,7 +3,7 @@
     /// <summary>
     /// enum for Sorting operations.
     /// </summary>
-    internal enum SortOptions
+    internal enum SortOptionsMenu
     {
         /// <summary>
         /// Choice for sorting by name.
@@ -14,5 +14,10 @@
         /// Choice for sorting by price.
         /// </summary>
         SortByPrice,
+
+        /// <summary>
+        /// Choice for navigating to main menu.
+        /// </summary>
+        Back,
     }
 }
