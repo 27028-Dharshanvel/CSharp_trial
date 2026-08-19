@@ -3,7 +3,7 @@
 namespace Assignment3.Inventory
 {
     /// <summary>
-    /// Inventory
+    /// Inventory class to manage products.
     /// </summary>
     internal class ProductInventory
     {
@@ -12,8 +12,8 @@ namespace Assignment3.Inventory
         /// <summary>
         /// Add Products to inventory
         /// </summary>
-        /// <param name="product">products</param>
-        /// <returns>product</returns>
+        /// <param name="product">Instance of Product.</param>
+        /// <returns>True if product is added successfully, false otherwise.</returns>
         public bool Add(Product product)
         {
             if (product == null || this.ProductIdExists(product.ProductId))
@@ -28,20 +28,20 @@ namespace Assignment3.Inventory
         }
 
         /// <summary>
-        /// Gets Products
+        /// Gets Products from inventory.
         /// </summary>
-        /// <returns>products</returns>
+        /// <returns>List of Products.</returns>
         public List<Product> GetProducts()
         {
             return this._products.Select(p => p.Clone()).ToList();
         }
 
         /// <summary>
-        /// Edit Product
+        /// Edit Product in inventory.
         /// </summary>
         /// <param name="productId">Product Id</param>
         /// <param name="product">Updated Product</param>
-        /// <returns>Boolean</returns>
+        /// <returns>True if product is edited successfully, false otherwise.</returns>
         public bool Edit(string productId, Product product)
         {
             Product? existingProduct = this._products.FirstOrDefault(p =>
@@ -60,10 +60,10 @@ namespace Assignment3.Inventory
         }
 
         /// <summary>
-        /// Delete Product
+        /// Delete Product from inventory.
         /// </summary>
         /// <param name="value">Product Id or Name</param>
-        /// <returns>Boolean</returns>
+        /// <returns>True if product is deleted successfully, false otherwise.</returns>
         public bool Delete(string value)
         {
             Product? product = this._products.FirstOrDefault(p =>
@@ -82,10 +82,10 @@ namespace Assignment3.Inventory
         }
 
         /// <summary>
-        /// Search Product
+        /// Search Product from inventory.
         /// </summary>
         /// <param name="value">Product Id or Name</param>
-        /// <returns>Products</returns>
+        /// <returns>List of Products.</returns>
         public List<Product> Search(string value)
         {
             return this._products
@@ -98,9 +98,9 @@ namespace Assignment3.Inventory
         }
 
         /// <summary>
-        /// Sort Products by Name
+        /// Sort Products by Name.
         /// </summary>
-        /// <returns>Products</returns>
+        /// <returns>List of Products.</returns>
         public List<Product> SortByName()
         {
             return this._products
@@ -110,9 +110,9 @@ namespace Assignment3.Inventory
         }
 
         /// <summary>
-        /// Sort Products by Price
+        /// Sort Products by Price.
         /// </summary>
-        /// <returns>Products</returns>
+        /// <returns>List of Products.</returns>
         public List<Product> SortByPrice()
         {
             return this._products
@@ -122,10 +122,10 @@ namespace Assignment3.Inventory
         }
 
         /// <summary>
-        /// Checks whether Product Id already exists
+        /// Checks whether Product Id already exists.
         /// </summary>
         /// <param name="productId">Product Id</param>
-        /// <returns>Boolean</returns>
+        /// <returns>True if product id exists, false otherwise.</returns>
         public bool ProductIdExists(string productId)
         {
             return this._products.Any(p =>

@@ -6,17 +6,15 @@
     internal class Product
     {
         /// <summary>
-        /// Gets or sets unique Id for product.
-        /// This is used internally by backend.
+        /// Gets or initializes unique Id for product.
         /// </summary>
         /// <value>
         /// Guid.
         /// </value>
-        public Guid Id { get; set; }
+        public Guid Id { get; init; }
 
         /// <summary>
         /// Gets or sets Product Id.
-        /// This is entered by user.
         /// </summary>
         /// <value>
         /// Product Id.
@@ -50,7 +48,7 @@
         /// <summary>
         /// Clones objects
         /// </summary>
-        /// <returns>Products</returns>
+        /// <returns>Product</returns>
         public Product Clone()
         {
             return new Product

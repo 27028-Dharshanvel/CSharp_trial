@@ -4,12 +4,12 @@ using Assignment3.View;
 namespace Assignment3
 {
     /// <summary>
-    /// Entry point of the application.
+    /// Program class.
     /// </summary>
     internal class Program
     {
         /// <summary>
-        /// Main Method
+        /// Entry point of the application. Initializes the ProductInventory and starts the console operations.
         /// </summary>
         /// <param name="args">Command Line Arguments</param>
         public static void Main(string[] args)

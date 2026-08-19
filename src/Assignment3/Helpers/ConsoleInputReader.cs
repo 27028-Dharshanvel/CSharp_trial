@@ -1,7 +1,7 @@
 ﻿namespace Assignment3.Helpers
 {
     /// <summary>
-    /// InputReader class
+    /// InputReader class for reading and validating user input from the console.
     /// </summary>
     internal class ConsoleInputReader
     {
