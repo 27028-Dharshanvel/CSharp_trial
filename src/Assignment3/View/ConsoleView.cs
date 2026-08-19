@@ -33,69 +33,129 @@ namespace Assignment3.View
                 InventoryOperationsMenu userChoice =
                     (InventoryOperationsMenu)ConsoleInputReader.ReadInt(
                         "\nSelect the operation to perform : ", "Choice", 1, 8, 3, -1);
+                if ((int)userChoice == -1)
+                {
+                    userChoice = InventoryOperationsMenu.Exit;
+                }
 
                 switch (userChoice)
                 {
                     case InventoryOperationsMenu.AddProducts:
-
-                        Console.Clear();
-                        Console.WriteLine("Enter Product Details :");
-
-                        if (services.AddProduct(
-                                ConsoleInputReader.ReadString("\nProduct Id : ", "Product ID", 10, 3, "@@@"),
-                                ConsoleInputReader.ReadString("Product Name : ", "Product name", 10, 3, "@@@"),
-                                ConsoleInputReader.ReadDecimal("Product Price : ", "Price", 1, 10000000, 3, -1),
-                                ConsoleInputReader.ReadDouble("Product Quantity : ", "Quantity", 0, 100000, 3, -1)))
                         {
+                            Console.Clear();
+                            Console.WriteLine("Enter Product Details :");
+
+                            string productId = ConsoleInputReader.ReadString("\nProduct Id : ", "Product ID", 10, 3, "@@@");
+                            if (productId == "@@@")
+                            {
+                                Console.WriteLine("Returning to Main menu...");
+                                Console.ReadKey();
+                                break;
+                            }
+
+                            string productName = ConsoleInputReader.ReadString("Product Name : ", "Product name", 10, 3, "@@@");
+                            if (productName == "@@@")
+                            {
+                                Console.WriteLine("Returning to Main menu...");
+                                Console.ReadKey();
+                                break;
+                            }
+
+                            decimal productPrice = ConsoleInputReader.ReadDecimal("Product Price : ", "Price", 1, 10000000, 3, -1);
+                            if (productPrice == -1)
+                            {
+                                Console.WriteLine("Returning to Main menu...");
+                                Console.ReadKey();
+                                break;
+                            }
+
+                            double productQuantity = ConsoleInputReader.ReadDouble("Product Quantity : ", "Quantity", 0, 100000, 3, -1);
+                            if (productQuantity == -1)
+                            {
+                                Console.WriteLine("Returning to Main menu...");
+                                Console.ReadKey();
+                                break;
+                            }
+
+                            if (services.AddProduct(productId, productName, productPrice, productQuantity))
+                            {
                                 ConsoleOutputColor.Success("\nProduct Added Successfully.");
-                        }
-                        else
-                        {
+                            }
+                            else
+                            {
                                 ConsoleOutputColor.Error("\nProduct not added.Product ID might already exist");
-                        }
+                            }
 
-                        Console.ReadKey();
-                        break;
+                            Console.ReadKey();
+                            break;
+                        }
 
                     case InventoryOperationsMenu.ViewProducts:
 
                         Console.Clear();
 
-                        List<Product> products = services.ViewProducts();
-
-                        if (products.Count == 0)
+                        if (services.IsEmptyRepository())
                         {
                             Console.WriteLine("No Products Available.");
                         }
                         else
                         {
-                            DisplayTable.DisplayProductTable(products);
+                            DisplayTable.DisplayProductTable(services.ViewProducts());
                         }
 
                         Console.ReadKey();
                         break;
 
                     case InventoryOperationsMenu.EditProducts:
-
-                        Console.Clear();
-
-                        Console.WriteLine("Enter Product Identification Details");
-
-                        if (services.EditProduct(
-                            ConsoleInputReader.ReadString("Product Id : ", "Product Id", 10, 3, "@@@"),
-                            ConsoleInputReader.ReadString("New Product Name : ", "Product name", 20, 3, "@@@"),
-                            ConsoleInputReader.ReadDecimal("New Product Price : ", "Price", 1, 1000000, 3, -1),
-                            ConsoleInputReader.ReadDouble("New Product Quantity : ", "Quantity", 1, 100000, 3, -1)))
                         {
-                            Console.WriteLine("\nProduct Updated Successfully.");
-                        }
-                        else
-                        {
-                            Console.WriteLine("\nProduct Not Found.");
-                        }
+                            Console.Clear();
 
-                        Console.ReadKey();
-                        break;
+                            Console.WriteLine("Enter Product Identification Details");
+
+                            string productId = ConsoleInputReader.ReadString("\nProduct Id : ", "Product ID", 10, 3, "@@@");
+                            if (productId == "@@@")
+                            {
+                                Console.WriteLine("Returning to Main menu...");
+                                Console.ReadKey();
+                                break;
+                            }
+
+                            string productName = ConsoleInputReader.ReadString("New product Name : ", "Product name", 10, 3, "@@@");
+                            if (productName == "@@@")
+                            {
+                                Console.WriteLine("Returning to Main menu...");
+                                Console.ReadKey();
+                                break;
+                            }
+
+                            decimal productPrice = ConsoleInputReader.ReadDecimal("New Product Price : ", "Price", 1, 10000000, 3, -1);
+                            if (productPrice == -1)
+                            {
+                                Console.WriteLine("Returning to Main menu...");
+                                Console.ReadKey();
+                                break;
+                            }
+
+                            double productQuantity = ConsoleInputReader.ReadDouble("New Product Quantity : ", "Quantity", 0, 100000, 3, -1);
+                            if (productQuantity == -1)
+                            {
+                                Console.WriteLine("Returning to Main menu...");
+                                Console.ReadKey();
+                                break;
+                            }
+
+                            if (services.EditProduct(productId, productName, productPrice, productQuantity))
+                            {
+                                Console.WriteLine("\nProduct Updated Successfully.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("\nProduct Not Found.");
+                            }
+
+                            Console.ReadKey();
+                            break;
+                        }
 
                     case InventoryOperationsMenu.DeleteProducts:
 
@@ -118,19 +178,25 @@ namespace Assignment3.View
                     case InventoryOperationsMenu.SearchProducts:
 
                         Console.Clear();
-
-                        List<Product> searchedProducts =
-                            services.SearchProduct(
-                                ConsoleInputReader.ReadString(
-                                    "Enter Product Id or Product Name : ", "Input", 20, 3, "@@@"));
-
-                        if (searchedProducts.Count == 0)
+                        if (services.IsEmptyRepository())
                         {
-                            Console.WriteLine("No Products Found.");
+                            Console.WriteLine("No Products Available.");
                         }
                         else
                         {
-                            DisplayTable.DisplayProductTable(searchedProducts);
+                            List<Product> searchedProducts =
+                                services.SearchProduct(
+                                    ConsoleInputReader.ReadString(
+                                        "Enter Product Id or Product Name : ", "Input", 20, 3, "@@@"));
+
+                            if (searchedProducts.Count == 0)
+                            {
+                                Console.WriteLine("No Products Found.");
+                            }
+                            else
+                            {
+                                DisplayTable.DisplayProductTable(searchedProducts);
+                            }
                         }
 
                         Console.ReadKey();
@@ -139,7 +205,7 @@ namespace Assignment3.View
                     case InventoryOperationsMenu.SortBy:
 
                         Console.Clear();
-                        if (services.ViewProducts().Count == 0)
+                        if (services.IsEmptyRepository())
                         {
                             ConsoleOutputColor.Warn("Inventory is Empty!!! No products available to sort");
                             Console.ReadKey();
@@ -156,7 +222,10 @@ namespace Assignment3.View
 3.Back");
 
                             SortOptionsMenu choice = (SortOptionsMenu)ConsoleInputReader.ReadInt("\nSelect Sorting Type : ", "Choice", 1, 4, 3, -1);
-
+                            if ((int)choice == -1)
+                            {
+                                choice = SortOptionsMenu.Back;
+                            }
                             switch (choice)
                             {
                                 case SortOptionsMenu.SortByName:
@@ -171,6 +240,8 @@ namespace Assignment3.View
 
                                 case SortOptionsMenu.Back:
                                     isSortMenuRunning = false;
+                                    Console.WriteLine("Returning to Main menu...");
+                                    Console.ReadKey();
                                     break;
                             }
                         }
