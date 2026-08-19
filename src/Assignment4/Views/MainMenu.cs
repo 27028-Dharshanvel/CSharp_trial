@@ -59,7 +59,7 @@ namespace Assignment4.Views
                         break;
 
                     case 3:
-                        Console.WriteLine("Thank you for using Money Manager. Goodbye!");
+                        Console.WriteLine("Thank you for using Money Manager.");
                         isAppRunning = false;
                         break;
                 }

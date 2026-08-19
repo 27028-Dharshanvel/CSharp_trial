@@ -12,7 +12,7 @@ namespace Assignment4.Views
     internal static class TransactionMenu
     {
         /// <summary>
-        /// Displays Transaction Menu with specified service.
+        /// Displays Transaction Menu.
         /// </summary>
         /// <param name="service">Transaction service instance.</param>
         /// <param name="userId">Guid of user.</param>
