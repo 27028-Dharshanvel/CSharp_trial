@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using Assignment5.Models;
 
 namespace Assignment5.Repository
@@ -9,6 +9,17 @@ namespace Assignment5.Repository
     internal class UserPersistenceRepository : IUserRepository
     {
         private readonly string _filePath = "users.json";
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserPersistenceRepository"/> class.
+        /// </summary>
+        public UserPersistenceRepository()
+        {
+            if (!File.Exists(this._filePath))
+            {
+                this.SaveUsers(new List<User>());
+            }
+        }
 
         /// <summary>
         /// Adds a new user to the repository.
@@ -40,8 +51,9 @@ namespace Assignment5.Repository
         /// <returns>list of users.</returns>
         public List<User> LoadUsers()
         {
-            if (!File.Exists(_filePath))
+            if (!File.Exists(this._filePath))
             {
+                this.SaveUsers(new List<User>());
                 return new List<User>();
             }
 
@@ -52,8 +64,20 @@ namespace Assignment5.Repository
                 return new List<User>();
             }
 
-            return JsonSerializer.Deserialize<List<User>>(json)
-                   ?? new List<User>();
+            try
+            {
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true,
+                };
+
+                return JsonSerializer.Deserialize<List<User>>(json, options)
+                       ?? new List<User>();
+            }
+            catch (JsonException)
+            {
+                return new List<User>();
+            }
         }
 
         /// <summary>
@@ -66,7 +90,7 @@ namespace Assignment5.Repository
                 users,
                 new JsonSerializerOptions
                 {
-                    WriteIndented = true
+                    WriteIndented = true,
                 });
 
             File.WriteAllText(_filePath, json);

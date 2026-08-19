@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Assignment5.Models;
 
@@ -14,6 +15,24 @@ namespace Assignment5.Repository
     internal class TransactionPersistenceRepository : ITransactionRepository
     {
         private readonly string _filePath = "transactions.json";
+
+        private readonly JsonSerializerOptions _jsonOptions = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+            WriteIndented = true,
+            Converters = { new DateOnlyJsonConverter() },
+        };
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TransactionPersistenceRepository"/> class.
+        /// </summary>
+        public TransactionPersistenceRepository()
+        {
+            if (!File.Exists(this._filePath))
+            {
+                this.SaveTransactions(new List<Transaction>());
+            }
+        }
 
         /// <summary>
         /// Add transactions.
@@ -33,7 +52,6 @@ namespace Assignment5.Repository
         /// <exception cref="NotImplementedException">Notimplemented exception.</exception>
         public void DeleteTransaction(Transaction transaction)
         {
-
             var transactions = LoadTransactions();
 
             transactions.RemoveAll(u => u.TransactionId == transaction.TransactionId);
@@ -48,8 +66,9 @@ namespace Assignment5.Repository
         /// <exception cref="NotImplementedException">notimplemented exception.</exception>
         public List<Transaction> LoadTransactions()
         {
-            if(!File.Exists(_filePath))
+            if (!File.Exists(this._filePath))
             {
+                this.SaveTransactions(new List<Transaction>());
                 return new List<Transaction>();
             }
 
@@ -60,8 +79,15 @@ namespace Assignment5.Repository
                 return new List<Transaction>();
             }
 
-            return JsonSerializer.Deserialize<List<Transaction>>(json)
-                   ?? new List<Transaction>();
+            try
+            {
+                return JsonSerializer.Deserialize<List<Transaction>>(json, this._jsonOptions)
+                       ?? new List<Transaction>();
+            }
+            catch (JsonException)
+            {
+                return new List<Transaction>();
+            }
         }
 
         /// <summary>
@@ -71,12 +97,7 @@ namespace Assignment5.Repository
         /// <exception cref="NotImplementedException">not implemented exception.</exception>
         public void SaveTransactions(List<Transaction> transactions)
         {
-            string json = JsonSerializer.Serialize(
-                transactions,
-                new JsonSerializerOptions
-                {
-                    WriteIndented = true
-                });
+            string json = JsonSerializer.Serialize(transactions, this._jsonOptions);
 
             File.WriteAllText(_filePath, json);
         }
@@ -101,6 +122,21 @@ namespace Assignment5.Repository
             transactions[index] = updatedTransaction;
 
             SaveTransactions(transactions);
+        }
+    }
+
+    internal class DateOnlyJsonConverter : JsonConverter<DateOnly>
+    {
+        private const string Format = "yyyy-MM-dd";
+
+        public override DateOnly Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            return DateOnly.Parse(reader.GetString()!);
+        }
+
+        public override void Write(Utf8JsonWriter writer, DateOnly value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value.ToString(Format));
         }
     }
 }
