@@ -11,9 +11,9 @@ namespace Assignment3.View
     internal static class ConsoleView
     {
         /// <summary>
-        /// Console Operations
+        /// Console Operations for getting input from user and displaying output to user.
         /// </summary>
-        /// <param name="inventory">inventory</param>
+        /// <param name="inventory">Instance of ProductInventory</param>
         public static void ConsoleOperations(ProductInventory inventory)
         {
             Services services = new Services(inventory);

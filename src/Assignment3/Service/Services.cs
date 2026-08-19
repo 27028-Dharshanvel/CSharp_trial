@@ -4,7 +4,7 @@ using Assignment3.Models;
 namespace Assignment3.Service
 {
     /// <summary>
-    /// Services
+    /// Services class to handle product operations.
     /// </summary>
     internal class Services
     {
@@ -13,20 +13,20 @@ namespace Assignment3.Service
         /// <summary>
         /// Initializes a new instance of the <see cref="Services"/> class.
         /// </summary>
-        /// <param name="inventory">inventory</param>
+        /// <param name="inventory">Instance of ProductInventory.</param>
         public Services(ProductInventory inventory)
         {
             this._inventory = inventory;
         }
 
         /// <summary>
-        /// Adds product
+        /// Adds product to the inventory.
         /// </summary>
         /// <param name="productId">Product Id</param>
         /// <param name="productName">Product Name</param>
         /// <param name="productPrice">Product Price</param>
         /// <param name="productQuantity">Product Quantity</param>
-        /// <returns>Boolean</returns>
+        /// <returns>True if product is added successfully, false otherwise.</returns>
         public bool AddProduct(
             string productId,
             string productName,
@@ -52,22 +52,22 @@ namespace Assignment3.Service
         }
 
         /// <summary>
-        /// Views Products
+        /// Views Products from the inventory.
         /// </summary>
-        /// <returns>Product List</returns>
+        /// <returns>List of Products.</returns>
         public List<Product> ViewProducts()
         {
             return this._inventory.GetProducts();
         }
 
         /// <summary>
-        /// Edit Product
+        /// Edit Product in the inventory.
         /// </summary>
         /// <param name="productId">Product Id</param>
         /// <param name="newName">New Product Name</param>
         /// <param name="newPrice">New Product Price</param>
         /// <param name="newQuantity">New Product Quantity</param>
-        /// <returns>Boolean</returns>
+        /// <returns>True if product is edited successfully, false otherwise.</returns>
         public bool EditProduct(
             string productId,
             string newName,
@@ -85,20 +85,20 @@ namespace Assignment3.Service
         }
 
         /// <summary>
-        /// Delete Product
+        /// Delete Product from the inventory.
         /// </summary>
         /// <param name="value">Product Id or Name</param>
-        /// <returns>Boolean</returns>
+        /// <returns>True if product is deleted successfully, false otherwise.</returns>
         public bool DeleteProduct(string value)
         {
             return this._inventory.Delete(value);
         }
 
         /// <summary>
-        /// Search Product
+        /// Search Product from the inventory.
         /// </summary>
         /// <param name="value">Product Id or Name</param>
-        /// <returns>Product List</returns>
+        /// <returns>List of Products.</returns>
         public List<Product> SearchProduct(string value)
         {
             return this._inventory.Search(value);
@@ -107,7 +107,7 @@ namespace Assignment3.Service
         /// <summary>
         /// Sort Products by name.
         /// </summary>
-        /// <returns>Product List</returns>
+        /// <returns>List of Products.</returns>
         public List<Product>? SortByName()
         {
                 return this._inventory.SortByName();
@@ -116,16 +116,16 @@ namespace Assignment3.Service
         /// <summary>
         /// Sort Products by name.
         /// </summary>
-        /// <returns>Product List</returns>
+        /// <returns>List of Products.</returns>
         public List<Product>? SortByPrice()
         {
             return this._inventory.SortByPrice();
         }
 
         /// <summary>
-        /// Checks the repository is empty.
+        /// Checks whether the repository is empty.
         /// </summary>
-        /// <returns>bool</returns>
+        /// <returns>True if the repository is empty, false otherwise.</returns>
         public bool IsEmptyRepository()
         {
             List<Product> products = this.ViewProducts();

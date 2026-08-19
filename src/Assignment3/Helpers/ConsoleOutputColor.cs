@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Assignment3.Helpers
 {
     /// <summary>
-    /// ConsoleOutputColor class for displaying messages in different colors based on the message type (error, success, warning).
+    /// ConsoleOutputColor class for displaying messages in different colors.
     /// </summary>
     internal class ConsoleOutputColor
     {
