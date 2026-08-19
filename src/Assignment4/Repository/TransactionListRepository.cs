@@ -33,7 +33,7 @@ namespace Assignment4.Repository
         /// <returns>list of transactions.</returns>
         public List<Transaction> LoadTransactions()
         {
-            return this._transactions;
+            return this._transactions.Select(p => p.Clone()).ToList();
         }
 
         /// <summary>

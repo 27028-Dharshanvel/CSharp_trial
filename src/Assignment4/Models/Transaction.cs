@@ -12,6 +12,22 @@ namespace Assignment4.Models
     internal class Transaction
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="Transaction"/> class.
+        /// </summary>
+        /// <param name="amount">The amount of the transaction.</param>
+        /// <param name="date">The date of the transaction.</param>
+        /// <param name="category">The category of the transaction.</param>
+        /// <param name="userId">The ID of the user associated with the transaction.</param>
+        public Transaction(decimal amount, DateOnly date, string? category, Guid userId)
+        {
+            this.TransactionId = Guid.NewGuid();
+            this.Amount = amount;
+            this.Date = date;
+            this.Category = category;
+            this.UserId = userId;
+        }
+
+        /// <summary>
         /// Gets or sets transaction id.
         /// </summary>
         /// <value>Id.</value>
@@ -42,5 +58,17 @@ namespace Assignment4.Models
         /// User id.
         /// </value>
         public Guid UserId { get; set; }
+
+        /// <summary>
+        /// Creates a clone of the current transaction instance.
+        /// </summary>
+        /// <returns>Transaction</returns>
+        public Transaction Clone()
+        {
+            return new Transaction(this.Amount, this.Date, this.Category, this.UserId)
+            {
+                TransactionId = this.TransactionId,
+            };
+        }
     }
 }
