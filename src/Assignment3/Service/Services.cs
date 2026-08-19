@@ -121,5 +121,20 @@ namespace Assignment3.Service
         {
             return this._inventory.SortByPrice();
         }
+
+        /// <summary>
+        /// Checks the repository is empty.
+        /// </summary>
+        /// <returns>bool</returns>
+        public bool IsEmptyRepository()
+        {
+            List<Product> products = this.ViewProducts();
+            if (products.Any())
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
