@@ -29,13 +29,9 @@ namespace Assignment5.Services
         /// <returns>True if transaction is added, False if error.</returns>
         public bool AddTransaction(Guid userId, decimal amount, string category, DateOnly date)
         {
-            Transaction transaction = new Transaction
+            Transaction transaction = new Transaction(amount, date, category, userId)
             {
                 TransactionId = Guid.NewGuid(),
-                UserId = userId,
-                Amount = amount,
-                Category = category,
-                Date = date,
             };
 
             this._inMemoryTransactionRepository.AddTransaction(transaction);
@@ -86,7 +82,7 @@ namespace Assignment5.Services
                 return false;
             }
 
-            Transaction updatedTransaction = new Transaction
+            Transaction updatedTransaction = new Transaction(amount, date, category, oldTransaction.UserId)
             {
                 TransactionId = transactionId,
                 Amount = amount,
