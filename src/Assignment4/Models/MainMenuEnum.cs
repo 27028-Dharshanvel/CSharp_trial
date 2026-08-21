@@ -7,23 +7,23 @@ using System.Threading.Tasks;
 namespace Assignment4.Models
 {
     /// <summary>
-    /// Transaction type enumerator.
+    /// Main menu enum.
     /// </summary>
-    internal enum TransactionTypeEnum
+    internal enum MainMenuEnum
     {
         /// <summary>
-        /// Add Income
+        /// Login
         /// </summary>
-        AddIncome = 1,
+        Login = 1,
 
         /// <summary>
-        /// Add Expense
+        /// Create account.
         /// </summary>
-        AddExpense,
+        CreateAccount,
 
         /// <summary>
-        /// Back
+        /// Exits.
         /// </summary>
-        Back,
+        Exit,
     }
 }
