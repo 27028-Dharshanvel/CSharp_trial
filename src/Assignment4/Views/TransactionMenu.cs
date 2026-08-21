@@ -29,15 +29,12 @@ namespace Assignment4.Views
 4.Delete transaction
 5.View Stats
 6.Log out");
-                int rawChoice = InputReader.ReadInt("\nEnter your choice : ", "Choice", 1, 7, 3, -1);
-                if (rawChoice == -1)
+                int rawChoice = 0;
+                if (!InputReader.ReadInt("\nEnter your choice : ", "Choice", 1, 7, 3, out rawChoice))
                 {
-                    continue;
-                }
-
-                if (rawChoice == 6)
-                {
-                    InputReader.Success("Logged out successfully.");
+                    inTransactionMenu = false;
+                    Console.WriteLine("Logging out");
+                    Console.ReadKey();
                     break;
                 }
 
@@ -63,6 +60,12 @@ namespace Assignment4.Views
                     case TransactionMenuEnum.ViewStats:
                         ViewStatsHandler(service, currentUserId);
                         break;
+
+                    case TransactionMenuEnum.LogOut:
+                        inTransactionMenu = false;
+                        Console.WriteLine("Logging out");
+                        Console.ReadKey();
+                        break;
                 }
             }
         }
@@ -72,26 +75,40 @@ namespace Assignment4.Views
             Console.WriteLine(@"
 1.Add Income
 2.Add expense");
-            TransactionTypeEnum userChoice = (TransactionTypeEnum)InputReader.ReadInt("\nEnter your choice : ", "Choice", 1, 3, 3, -1);
+            int rawChoice = 0;
+            if (!InputReader.ReadInt("\nEnter your choice : ", "Choice", 1, 3, 3, out rawChoice))
+            {
+                Console.WriteLine("Returning to Transaction menu...");
+                Console.ReadKey();
+                return;
+            }
+
+            TransactionTypeEnum userChoice = (TransactionTypeEnum)rawChoice;
             switch (userChoice)
             {
                 case TransactionTypeEnum.AddIncome:
-                    decimal incomeAmount = InputReader.ReadDecimal("Enter Income amount : ", "Amount", 1, 100000000, 3, -1);
-                    if (incomeAmount == -1)
+                    decimal incomeAmount;
+                    if (!InputReader.ReadDecimal("Enter Income amount : ", "Amount", 1, 100000000, 3, out incomeAmount))
                     {
-                        break;
+                        Console.WriteLine("Returning to Transaction menu...");
+                        Console.ReadKey();
+                        return;
                     }
 
-                    DateOnly incomeDate = InputReader.GetValidDate("Enter date of transaction : ", 5, 3, default(DateOnly));
-                    if (incomeDate == default(DateOnly))
+                    DateOnly incomeDate;
+                    if (!InputReader.GetValidDate("Enter date of transaction : ", 5, 3, out incomeDate))
                     {
-                        break;
+                        Console.WriteLine("Returning to Transaction menu...");
+                        Console.ReadKey();
+                        return;
                     }
 
-                    string incomeSource = InputReader.ReadString("Enter Source of Income : ", "Income Source", 15, 3, "@@@");
-                    if (incomeSource == "@@@")
+                    string incomeSource;
+                    if (!InputReader.ReadString("Enter Source of Income : ", "Income Source", 15, 3, out incomeSource))
                     {
-                        break;
+                            Console.WriteLine("Returning to Transaction menu...");
+                            Console.ReadKey();
+                            return;
                     }
 
                     service.AddTransaction(userId, incomeAmount, incomeSource, incomeDate);
@@ -99,22 +116,28 @@ namespace Assignment4.Views
                     break;
 
                 case TransactionTypeEnum.AddExpense:
-                    decimal expenseAmount = InputReader.ReadDecimal("Enter Expense amount : ", "Amount", 1, 100000000, 3, -1);
-                    if (expenseAmount == -1)
+                    decimal expenseAmount;
+                    if (!InputReader.ReadDecimal("Enter Expense amount : ", "Amount", 1, 100000000, 3, out expenseAmount))
                     {
-                        break;
+                        Console.WriteLine("Returning to Transaction menu...");
+                        Console.ReadKey();
+                        return;
                     }
 
-                    DateOnly expenseDate = InputReader.GetValidDate("Enter date of transaction : ", 5, 3, default(DateOnly));
-                    if (expenseDate == default(DateOnly))
+                    DateOnly expenseDate;
+                    if (!InputReader.GetValidDate("Enter date of transaction : ", 5, 3, out expenseDate))
                     {
-                        break;
+                        Console.WriteLine("Returning to Transaction menu...");
+                        Console.ReadKey();
+                        return;
                     }
 
-                    string expenseCategory = InputReader.ReadString("Enter Expense Category : ", "Expense Category", 15, 3, "@@@");
-                    if (expenseCategory == "@@@")
+                    string expenseCategory;
+                    if (!InputReader.ReadString("Enter Expense Category : ", "Expense Category", 15, 3, out expenseCategory))
                     {
-                        break;
+                        Console.WriteLine("Returning to Transaction menu...");
+                        Console.ReadKey();
+                        return;
                     }
 
                     service.AddTransaction(userId, -expenseAmount, expenseCategory, expenseDate);
@@ -158,9 +181,11 @@ namespace Assignment4.Views
             }
 
             ViewTransactionsHandler(service, userId);
-            int selectedIndex = InputReader.ReadInt("\nEnter transaction index to edit : ", "Index", 1, transactions.Count + 1, 3, -1);
-            if (selectedIndex == -1)
+            int selectedIndex;
+            if (!InputReader.ReadInt("\nEnter transaction index to edit : ", "Index", 1, transactions.Count + 1, 3, out selectedIndex))
             {
+                Console.WriteLine("Returning to Transaction menu...");
+                Console.ReadKey();
                 return;
             }
 
@@ -168,21 +193,27 @@ namespace Assignment4.Views
             bool isIncome = targetTransaction.Amount >= 0;
             string typeName = isIncome ? "Income" : "Expense";
 
-            decimal newAmount = InputReader.ReadDecimal($"Enter new {typeName} amount : ", "Amount", 1, 100000000, 3, -1);
-            if (newAmount == -1)
+            decimal newAmount;
+            if (!InputReader.ReadDecimal($"Enter new {typeName} amount : ", "Amount", 1, 100000000, 3, out newAmount))
             {
+                Console.WriteLine("Returning to Transaction menu...");
+                Console.ReadKey();
                 return;
             }
 
-            DateOnly newDate = InputReader.GetValidDate("Enter new date of transaction : ", 5, 3, default(DateOnly));
-            if (newDate == default(DateOnly))
+            DateOnly newDate;
+            if (!InputReader.GetValidDate("Enter new date of transaction : ", 5, 3, out newDate))
             {
+                Console.WriteLine("Returning to Transaction menu...");
+                Console.ReadKey();
                 return;
             }
 
-            string newCategory = InputReader.ReadString($"Enter new {typeName} Category/Source : ", "Category", 15, 3, "@@@");
-            if (newCategory == "@@@")
+            string newCategory;
+            if (!InputReader.ReadString($"Enter new {typeName} Category/Source : ", "Category", 15, 3, out newCategory))
             {
+                Console.WriteLine("Returning to Transaction menu...");
+                Console.ReadKey();
                 return;
             }
 
@@ -207,9 +238,11 @@ namespace Assignment4.Views
             }
 
             ViewTransactionsHandler(service, userId);
-            int selectedIndex = InputReader.ReadInt("\nEnter transaction index to delete : ", "Index", 1, transactions.Count + 1, 3, -1);
-            if (selectedIndex == -1)
+            int selectedIndex;
+            if (!InputReader.ReadInt("\nEnter transaction index to delete : ", "Index", 1, transactions.Count + 1, 3, out selectedIndex))
             {
+                Console.WriteLine("Returning to Transaction menu...");
+                Console.ReadKey();
                 return;
             }
 

@@ -29,5 +29,10 @@
         /// View stats
         /// </summary>
         ViewStats,
+
+        /// <summary>
+        /// Log out.
+        /// </summary>
+        LogOut,
     }
 }
