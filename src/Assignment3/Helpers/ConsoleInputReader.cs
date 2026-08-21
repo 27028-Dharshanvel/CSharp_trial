@@ -19,12 +19,12 @@
         /// <param name="maxTries">maxtries</param>
         /// <param name="defaultValue">defautlvalue</param>
         /// <returns>string</returns>
-        public static string ReadString(
+        public static bool ReadString(
             string message,
             string valueName,
             int maxCharacters,
             int maxTries,
-            string defaultValue)
+            out string? defaultValue)
         {
             while (maxTries > 0)
             {
@@ -35,7 +35,8 @@
                 if (!string.IsNullOrWhiteSpace(input) &&
                     input.Length <= maxCharacters)
                 {
-                    return input;
+                    defaultValue = input;
+                    return true;
                 }
 
                 maxTries--;
@@ -48,7 +49,8 @@
             }
 
             ConsoleOutputColor.Error("\nToo many Attempts! Try again later");
-            return defaultValue;
+            defaultValue = null;
+            return false;
         }
 
         /// <summary>
@@ -157,7 +159,7 @@
                 if (tryParse(input, out T value))
                 {
                     if (value.CompareTo(minValue) >= 0 &&
-                        value.CompareTo(maxValue) < 0)
+                        value.CompareTo(maxValue) <= 0)
                     {
                         return value;
                     }

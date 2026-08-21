@@ -6,6 +6,14 @@
     internal class Product
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="Product"/> class.
+        /// </summary>
+        public Product()
+        {
+            this.Id = Guid.NewGuid();
+        }
+
+        /// <summary>
         /// Gets or initializes unique Id for product.
         /// </summary>
         /// <value>
