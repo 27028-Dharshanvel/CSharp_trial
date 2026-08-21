@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Globalization;
 
 namespace Assignment4.Helpers
@@ -17,7 +18,7 @@ namespace Assignment4.Helpers
         /// <param name="maxTries">Maximum Tries user can make.</param>
         /// <param name="defaultValue">Default integer value that will be returned.</param>
         /// <returns>Integer</returns>
-        public static int ReadInt(string message, string inputType, int minValue, int maxValue, int maxTries, int defaultValue)
+        public static bool ReadInt(string message, string inputType, int minValue, int maxValue, int maxTries, out int defaultValue)
         {
             int value;
 
@@ -29,7 +30,8 @@ namespace Assignment4.Helpers
                 {
                     if (value >= minValue && value < maxValue)
                     {
-                        return value;
+                        defaultValue = value;
+                        return true;
                     }
                     else
                     {
@@ -54,7 +56,8 @@ namespace Assignment4.Helpers
             }
 
             Error("\nToo many Attempts! Try again later");
-            return defaultValue;
+            defaultValue = default(int);
+            return false;
         }
 
         /// <summary>
@@ -67,7 +70,7 @@ namespace Assignment4.Helpers
         /// <param name="maxTries">Maximum Tries user can make.</param>
         /// <param name="defaultValue">Default value that will be returned.</param>
         /// <returns>Double</returns>
-        public static double ReadDouble(string message, string inputType, double minValue, double maxValue, int maxTries, double defaultValue)
+        public static bool ReadDouble(string message, string inputType, double minValue, double maxValue, int maxTries, out double defaultValue)
         {
             double value;
 
@@ -79,7 +82,8 @@ namespace Assignment4.Helpers
                 {
                     if (value >= minValue && value < maxValue)
                     {
-                        return value;
+                        defaultValue = value;
+                        return true;
                     }
                     else
                     {
@@ -104,7 +108,8 @@ namespace Assignment4.Helpers
             }
 
             Error("\nToo many Attempts! Try again later");
-            return defaultValue;
+            defaultValue = default(double);
+            return false;
         }
 
         /// <summary>
@@ -117,7 +122,7 @@ namespace Assignment4.Helpers
         /// <param name="maxTries">Maximum Tries user can make.</param>
         /// <param name="defaultValue">Default value that will be returned.</param>
         /// <returns>Decimal</returns>
-        public static decimal ReadDecimal(string message, string inputType, decimal minValue, decimal maxValue, int maxTries, decimal defaultValue)
+        public static bool ReadDecimal(string message, string inputType, decimal minValue, decimal maxValue, int maxTries, out decimal defaultValue)
         {
             decimal value;
 
@@ -129,7 +134,8 @@ namespace Assignment4.Helpers
                 {
                     if (value >= minValue && value < maxValue)
                     {
-                        return value;
+                        defaultValue = value;
+                        return true;
                     }
                     else
                     {
@@ -154,7 +160,8 @@ namespace Assignment4.Helpers
             }
 
             Error("\nToo many Attempts! Try again later");
-            return defaultValue;
+            defaultValue = default(decimal);
+            return false;
         }
 
         /// <summary>
@@ -166,7 +173,7 @@ namespace Assignment4.Helpers
         /// <param name="maxTries">Maximum tries.</param>
         /// <param name="defaultValue">Default string that will be returned.</param>
         /// <returns>string.</returns>
-        public static string ReadString(string message, string value, int maxCharacters, int maxTries, string defaultValue)
+        public static bool ReadString(string message, string value, int maxCharacters, int maxTries, out string defaultValue)
         {
             while (maxTries > 0)
             {
@@ -175,14 +182,16 @@ namespace Assignment4.Helpers
 
                 if (!string.IsNullOrWhiteSpace(input) && input.Length <= maxCharacters)
                 {
-                    return input;
+                    defaultValue = input;
+                    return true;
                 }
 
                 maxTries--;
                 Warn($"{value} should neither be Null nor exceed {maxCharacters} characters.");
             }
 
-            return defaultValue;
+            defaultValue = default(String);
+            return false;
         }
 
         /// <summary>
@@ -193,7 +202,7 @@ namespace Assignment4.Helpers
         /// <param name="maxTries">Maximum tries user can make.</param>
         /// <param name="defaultDate">Default date that will be returned.</param>
         /// <returns>Date</returns>
-        public static DateOnly GetValidDate(string message, int maxYearsBack, int maxTries, DateOnly defaultDate)
+        public static bool GetValidDate(string message, int maxYearsBack, int maxTries, out DateOnly defaultDate)
         {
             DateOnly today = DateOnly.FromDateTime(DateTime.Today);
             DateOnly minDate = today.AddYears(-maxYearsBack);
@@ -230,11 +239,13 @@ Enter a date on or after {minDate:yyyy-MM-dd}.");
                     continue;
                 }
 
-                return date;
+                defaultDate = date;
+                return true;
             }
 
             Error("\nToo many Attempts! Try again later");
-            return defaultDate;
+            defaultDate = default(DateOnly);
+            return false;
         }
 
         /// <summary>
