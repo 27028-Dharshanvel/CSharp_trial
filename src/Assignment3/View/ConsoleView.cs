@@ -45,16 +45,16 @@ namespace Assignment3.View
                             Console.Clear();
                             Console.WriteLine("Enter Product Details :");
 
-                            string productId = ConsoleInputReader.ReadString("\nProduct Id : ", "Product ID", 10, 3, "@@@");
-                            if (productId == "@@@")
+                            string? productId;
+                            if (!ConsoleInputReader.ReadString("\nProduct Id : ", "Product ID", 10, 3, out productId))
                             {
                                 Console.WriteLine("Returning to Main menu...");
                                 Console.ReadKey();
                                 break;
                             }
 
-                            string productName = ConsoleInputReader.ReadString("Product Name : ", "Product name", 10, 3, "@@@");
-                            if (productName == "@@@")
+                            string? productName;
+                            if (!ConsoleInputReader.ReadString("Product Name : ", "Product name", 10, 3, out productName))
                             {
                                 Console.WriteLine("Returning to Main menu...");
                                 Console.ReadKey();
@@ -112,16 +112,16 @@ namespace Assignment3.View
 
                             Console.WriteLine("Enter Product Identification Details");
 
-                            string productId = ConsoleInputReader.ReadString("\nProduct Id : ", "Product ID", 10, 3, "@@@");
-                            if (productId == "@@@")
+                            string? productId;
+                            if (!ConsoleInputReader.ReadString("\nProduct Id : ", "Product ID", 10, 3, out productId))
                             {
                                 Console.WriteLine("Returning to Main menu...");
                                 Console.ReadKey();
                                 break;
                             }
 
-                            string productName = ConsoleInputReader.ReadString("New product Name : ", "Product name", 10, 3, "@@@");
-                            if (productName == "@@@")
+                            string? productName;
+                            if (!ConsoleInputReader.ReadString("Product Name : ", "Product name", 10, 3, out productName))
                             {
                                 Console.WriteLine("Returning to Main menu...");
                                 Console.ReadKey();
@@ -158,22 +158,29 @@ namespace Assignment3.View
                         }
 
                     case InventoryOperationsMenu.DeleteProducts:
-
-                        Console.Clear();
-
-                        if (services.DeleteProduct(
-                            ConsoleInputReader.ReadString(
-                                "Enter Product Id or Product Name : ", "Product Id or name", 20, 3, "@@@")))
                         {
-                            Console.WriteLine("\nProduct Deleted Successfully.");
-                        }
-                        else
-                        {
-                            Console.WriteLine("\nProduct Not Found.");
-                        }
+                            Console.Clear();
+ 
+                            string? productName;
+                            if (!ConsoleInputReader.ReadString("Product Name : ", "Product name", 10, 3, out productName))
+                            {
+                                Console.WriteLine("Returning to Main menu...");
+                                Console.ReadKey();
+                                break;
+                            }
 
-                        Console.ReadKey();
-                        break;
+                            if (services.DeleteProduct(productName))
+                            {
+                                Console.WriteLine("\nProduct Deleted Successfully.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("\nProduct Not Found.");
+                            }
+
+                            Console.ReadKey();
+                            break;
+                        }
 
                     case InventoryOperationsMenu.SearchProducts:
 
@@ -184,10 +191,16 @@ namespace Assignment3.View
                         }
                         else
                         {
+                            string? productName;
+                            if (!ConsoleInputReader.ReadString("Product Name : ", "Product name", 10, 3, out productName))
+                            {
+                                Console.WriteLine("Returning to Main menu...");
+                                Console.ReadKey();
+                                break;
+                            }
+
                             List<Product> searchedProducts =
-                                services.SearchProduct(
-                                    ConsoleInputReader.ReadString(
-                                        "Enter Product Id or Product Name : ", "Input", 20, 3, "@@@"));
+                                services.SearchProduct(productName);
 
                             if (searchedProducts.Count == 0)
                             {

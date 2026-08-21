@@ -35,20 +35,12 @@ namespace Assignment3.Service
         {
             Product product = new Product();
 
-            product.Id = Guid.NewGuid();
             product.ProductId = productId;
             product.Name = productName;
             product.Price = productPrice;
             product.Quantity = productQuantity;
 
-            if (this._inventory.Add(product))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return this._inventory.Add(product);
         }
 
         /// <summary>
