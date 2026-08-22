@@ -1,5 +1,6 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using Assignment5.Models;
+using Assignment5.Repository;
 
 namespace Assignment5.Repository
 {
@@ -35,6 +36,7 @@ namespace Assignment5.Repository
         public void AddTransaction(Transaction transaction)
         {
             var transactions = LoadTransactions();
+
             transactions.Add(transaction);
             SaveTransactions(transactions);
         }

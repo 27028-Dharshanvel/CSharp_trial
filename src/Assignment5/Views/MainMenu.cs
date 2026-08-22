@@ -1,4 +1,5 @@
 using Assignment5.Helpers;
+using Assignment5.Models;
 using Assignment5.Services;
 
 namespace Assignment5.Views
@@ -25,41 +26,61 @@ namespace Assignment5.Views
 1.Login
 2.Create new account
 3.Exit");
-                int choice = InputReader.ReadInt("\nEnter your choice : ", "Choice", 1, 4, 3, -1);
-                switch (choice)
+                int choice = 0;
+                if (!InputValidater.IsValidInt("\nEnter your choice : ", "Choice", 1, 4, 3, out choice))
                 {
-                    case 1:
-                        string username = InputReader.ReadString("Username : ", "Username", 15, 3, "@@@");
+                    choice = (int)MainMenuEnum.Exit;
+                }
+
+                MainMenuEnum choiceEnum = (MainMenuEnum)choice;
+                switch (choiceEnum)
+                {
+                    case MainMenuEnum.Login:
+                        string? username;
+                        if (!InputValidater.IsValidString("Username : ", "Username", 15, 3, out username))
+                        {
+                            Console.ReadKey();
+                            isAppRunning = false;
+                            break;
+                        }
+
                         Guid userId = default(Guid);
 
                         if (userService.LoginUser(username, out userId))
                         {
-                            InputReader.Success($"\nLogin successful! Welcome, {username}.");
+                            OutputColor.Success($"\nLogin successful! Welcome, {username}.");
                             TransactionMenu.DisplayTransactionMenu(transactionService, userId);
                         }
                         else
                         {
-                            InputReader.Error("Invalid username .");
+                            OutputColor.Error("Invalid username .");
                         }
 
                         break;
 
-                    case 2:
-                        string newUserName = InputReader.ReadString("Enter Username : ", "Username", 15, 3, "@@@");
+                    case MainMenuEnum.CreateAccount:
+                        string? newUserName;
+                        if (!InputValidater.IsValidString("Username : ", "Username", 15, 3, out newUserName))
+                        {
+                            Console.ReadKey();
+                            isAppRunning = false;
+                            break;
+                        }
 
                         if (userService.RegisterUser(newUserName, out string errorMessage))
                         {
-                                InputReader.Success("Account created successfully! You can now log in.");
+                            OutputColor.Success("Account created successfully! You can now log in.");
                         }
                         else
                         {
-                                InputReader.Error(errorMessage);
+                                OutputColor.Error(errorMessage);
                         }
 
                         break;
 
-                    case 3:
-                        Console.WriteLine("Thank you for using Money Manager. Goodbye!");
+                    case MainMenuEnum.Exit:
+                        Console.WriteLine("Thank you for using Money Manager.");
+                        Console.ReadKey();
                         isAppRunning = false;
                         break;
                 }

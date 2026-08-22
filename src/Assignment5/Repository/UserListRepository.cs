@@ -21,7 +21,7 @@ namespace Assignment5.Repository
         /// <summary>
         /// Save users.
         /// </summary>
-        /// <param name="users">users</param>
+        /// <param name="users">List of users.</param>
         public void SaveUsers(List<User> users)
         {
             this._users = users;
@@ -30,7 +30,7 @@ namespace Assignment5.Repository
         /// <summary>
         /// Loads users.
         /// </summary>
-        /// <returns>list of users.</returns>
+        /// <returns>List of users.</returns>
         public List<User> LoadUsers()
         {
             return this._users;
@@ -39,7 +39,7 @@ namespace Assignment5.Repository
         /// <summary>
         /// Adds users.
         /// </summary>
-        /// <param name="user">user</param>
+        /// <param name="user">Instance of user.</param>
         public void AddUser(User user)
         {
             this._users.Add(user);
@@ -48,7 +48,7 @@ namespace Assignment5.Repository
         /// <summary>
         /// Deletes users.
         /// </summary>
-        /// <param name="user">user</param>
+        /// <param name="user">Instance of user.</param>
         public void DeleteUser(User user)
         {
             this._users.Remove(user);
@@ -57,8 +57,8 @@ namespace Assignment5.Repository
         /// <summary>
         /// Update users.
         /// </summary>
-        /// <param name="oldUser">oldUser</param>
-        /// <param name="updatedUser">updatedUser</param>
+        /// <param name="oldUser">oldUser instance.</param>
+        /// <param name="updatedUser">updatedUser instance.</param>
         public void UpdateUser(User oldUser, User updatedUser)
         {
             oldUser.UserName = updatedUser.UserName;

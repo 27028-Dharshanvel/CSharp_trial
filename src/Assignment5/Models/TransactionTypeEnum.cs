@@ -20,5 +20,10 @@ namespace Assignment5.Models
         /// Add Expense
         /// </summary>
         AddExpense,
+
+        /// <summary>
+        /// Back
+        /// </summary>
+        Back,
     }
 }

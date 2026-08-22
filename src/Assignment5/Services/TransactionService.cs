@@ -13,7 +13,7 @@ namespace Assignment5.Services
         /// <summary>
         /// Initializes a new instance of the <see cref="TransactionService"/> class.
         /// </summary>
-        /// <param name="repository">repository.</param>
+        /// <param name="repository">Instance of transaction repository.</param>
         public TransactionService(ITransactionRepository repository)
         {
             this._inMemoryTransactionRepository = repository;
@@ -22,10 +22,10 @@ namespace Assignment5.Services
         /// <summary>
         /// Adds Transaction to the repository.
         /// </summary>
-        /// <param name="userId">userId</param>
-        /// <param name="amount">amount</param>
-        /// <param name="category">category</param>
-        /// <param name="date">date</param>
+        /// <param name="userId">UserId of user.</param>
+        /// <param name="amount">Amount to be added.</param>
+        /// <param name="category">Category of the transaction.</param>
+        /// <param name="date">Date of transaction.</param>
         /// <returns>True if transaction is added, False if error.</returns>
         public bool AddTransaction(Guid userId, decimal amount, string category, DateOnly date)
         {
@@ -50,7 +50,7 @@ namespace Assignment5.Services
         /// <summary>
         /// Gets transaction by Id.
         /// </summary>
-        /// <param name="transactionId">Transaction Id.</param>
+        /// <param name="transactionId">Id of Transaction.</param>
         /// <returns>Transaction if found; otherwise null.</returns>
         public Transaction? GetTransactionById(Guid transactionId)
         {
@@ -85,9 +85,6 @@ namespace Assignment5.Services
             Transaction updatedTransaction = new Transaction(amount, date, category, oldTransaction.UserId)
             {
                 TransactionId = transactionId,
-                Amount = amount,
-                Category = category,
-                Date = date,
             };
 
             this._inMemoryTransactionRepository.UpdateTransaction(oldTransaction, updatedTransaction);
@@ -114,7 +111,7 @@ namespace Assignment5.Services
         /// <summary>
         /// Calculates total income.
         /// </summary>
-        /// <param name="userId">user id.</param>
+        /// <param name="userId">Id of user.</param>
         /// <returns>Total income amount.</returns>
         public decimal GetTotalIncome(Guid userId)
         {
@@ -137,7 +134,7 @@ namespace Assignment5.Services
         /// <summary>
         /// Calculates total expense.
         /// </summary>
-        /// <param name="userId">userId</param>
+        /// <param name="userId">Id of user.</param>
         /// <returns>Total expense amount.</returns>
         public decimal GetTotalExpense(Guid userId)
         {
@@ -160,7 +157,7 @@ namespace Assignment5.Services
         /// <summary>
         /// Calculates net balance.
         /// </summary>
-        /// <param name="userId">user Id.</param>
+        /// <param name="userId">Id of user.</param>
         /// <returns>Net balance amount.</returns>
         public decimal GetNetBalance(Guid userId)
         {

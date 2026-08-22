@@ -3,9 +3,9 @@ using System.Globalization;
 namespace Assignment5.Helpers
 {
     /// <summary>
-    /// InputReader class
+    /// Class for validating user input.
     /// </summary>
-    internal class InputReader
+    internal class InputValidater
     {
         /// <summary>
         /// Reads string and validate whether it is an integer,within range and with limited tries.
@@ -13,11 +13,11 @@ namespace Assignment5.Helpers
         /// <param name="message">Prompt for the user.</param>
         /// <param name="inputType">Variable name of the input </param>
         /// <param name="minValue">Inclusive lower bound of the range.</param>
-        /// <param name="maxValue">Exclusive upper bound of the range.</param>
+        /// <param name="maxValue">Inclusive upper bound of the range.</param>
         /// <param name="maxTries">Maximum Tries user can make.</param>
         /// <param name="defaultValue">Default integer value that will be returned.</param>
-        /// <returns>Integer</returns>
-        public static int ReadInt(string message, string inputType, int minValue, int maxValue, int maxTries, int defaultValue)
+        /// <returns>True if valid integer, False otherwise.</returns>
+        public static bool IsValidInt(string message, string inputType, int minValue, int maxValue, int maxTries, out int defaultValue)
         {
             int value;
 
@@ -27,9 +27,10 @@ namespace Assignment5.Helpers
 
                 if (int.TryParse(Console.ReadLine(), out value))
                 {
-                    if (value >= minValue && value < maxValue)
+                    if (value >= minValue && value <= maxValue)
                     {
-                        return value;
+                        defaultValue = value;
+                        return true;
                     }
                     else
                     {
@@ -39,7 +40,7 @@ namespace Assignment5.Helpers
                             continue;
                         }
 
-                        Warn($"{inputType} should be in range of {minValue} and {maxValue}");
+                        OutputColor.Warn($"{inputType} should be in range of {minValue} and {maxValue}");
                         continue;
                     }
                 }
@@ -50,11 +51,12 @@ namespace Assignment5.Helpers
                     continue;
                 }
 
-                Warn("Please enter a valid integer.");
+                OutputColor.Warn("Please enter a valid integer.");
             }
 
-            Error("\nToo many Attempts! Try again later");
-            return defaultValue;
+            OutputColor.Error("\nToo many Attempts! Try again later");
+            defaultValue = default(int);
+            return false;
         }
 
         /// <summary>
@@ -63,11 +65,11 @@ namespace Assignment5.Helpers
         /// <param name="message">Prompt for the user.</param>
         /// <param name="inputType">Variable name of the input </param>
         /// <param name="minValue">Inclusive lower bound of the range.</param>
-        /// <param name="maxValue">Exclusive upper bound of the range.</param>
+        /// <param name="maxValue">Inclusive upper bound of the range.</param>
         /// <param name="maxTries">Maximum Tries user can make.</param>
         /// <param name="defaultValue">Default value that will be returned.</param>
-        /// <returns>Double</returns>
-        public static double ReadDouble(string message, string inputType, double minValue, double maxValue, int maxTries, double defaultValue)
+        /// <returns>True if valid double, False otherwise.</returns>
+        public static bool IsValidDouble(string message, string inputType, double minValue, double maxValue, int maxTries, out double defaultValue)
         {
             double value;
 
@@ -77,9 +79,10 @@ namespace Assignment5.Helpers
 
                 if (double.TryParse(Console.ReadLine(), out value))
                 {
-                    if (value >= minValue && value < maxValue)
+                    if (value >= minValue && value <= maxValue)
                     {
-                        return value;
+                        defaultValue = value;
+                        return true;
                     }
                     else
                     {
@@ -89,7 +92,7 @@ namespace Assignment5.Helpers
                             continue;
                         }
 
-                        Warn($"{inputType} should be in range of {minValue} and {maxValue}");
+                        OutputColor.Warn($"{inputType} should be in range of {minValue} and {maxValue}");
                         continue;
                     }
                 }
@@ -100,11 +103,12 @@ namespace Assignment5.Helpers
                     continue;
                 }
 
-                Warn("Please enter a valid double.");
+                OutputColor.Warn("Please enter a valid double.");
             }
 
-            Error("\nToo many Attempts! Try again later");
-            return defaultValue;
+            OutputColor.Error("\nToo many Attempts! Try again later");
+            defaultValue = default(double);
+            return false;
         }
 
         /// <summary>
@@ -113,11 +117,11 @@ namespace Assignment5.Helpers
         /// <param name="message">Prompt for the user.</param>
         /// <param name="inputType">Variable name of the input </param>
         /// <param name="minValue">Inclusive lower bound of the range.</param>
-        /// <param name="maxValue">Exclusive upper bound of the range.</param>
+        /// <param name="maxValue">Inclusive upper bound of the range.</param>
         /// <param name="maxTries">Maximum Tries user can make.</param>
         /// <param name="defaultValue">Default value that will be returned.</param>
-        /// <returns>Decimal</returns>
-        public static decimal ReadDecimal(string message, string inputType, decimal minValue, decimal maxValue, int maxTries, decimal defaultValue)
+        /// <returns>True if valid decimal, False otherwise.</returns>
+        public static bool IsValidDecimal(string message, string inputType, decimal minValue, decimal maxValue, int maxTries, out decimal defaultValue)
         {
             decimal value;
 
@@ -127,9 +131,10 @@ namespace Assignment5.Helpers
 
                 if (decimal.TryParse(Console.ReadLine(), out value))
                 {
-                    if (value >= minValue && value < maxValue)
+                    if (value >= minValue && value <= maxValue)
                     {
-                        return value;
+                        defaultValue = value;
+                        return true;
                     }
                     else
                     {
@@ -139,7 +144,7 @@ namespace Assignment5.Helpers
                             continue;
                         }
 
-                        Warn($"{inputType} should be in range of {minValue} and {maxValue}");
+                        OutputColor.Warn($"{inputType} should be in range of {minValue} and {maxValue}");
                         continue;
                     }
                 }
@@ -150,11 +155,12 @@ namespace Assignment5.Helpers
                     continue;
                 }
 
-                Warn("Please enter a valid decimal.");
+                OutputColor.Warn("Please enter a valid decimal.");
             }
 
-            Error("\nToo many Attempts! Try again later");
-            return defaultValue;
+            OutputColor.Error("\nToo many Attempts! Try again later");
+            defaultValue = default(decimal);
+            return false;
         }
 
         /// <summary>
@@ -165,8 +171,8 @@ namespace Assignment5.Helpers
         /// <param name="maxCharacters">Maximum characters that can be entered.</param>
         /// <param name="maxTries">Maximum tries.</param>
         /// <param name="defaultValue">Default string that will be returned.</param>
-        /// <returns>string.</returns>
-        public static string ReadString(string message, string value, int maxCharacters, int maxTries, string defaultValue)
+        /// <returns>True if valid string, False otherwise</returns>
+        public static bool IsValidString(string message, string value, int maxCharacters, int maxTries, out string defaultValue)
         {
             while (maxTries > 0)
             {
@@ -175,14 +181,16 @@ namespace Assignment5.Helpers
 
                 if (!string.IsNullOrWhiteSpace(input) && input.Length <= maxCharacters)
                 {
-                    return input;
+                    defaultValue = input;
+                    return true;
                 }
 
                 maxTries--;
-                Warn($"{value} should neither be Null nor exceed {maxCharacters} characters.");
+                OutputColor.Warn($"{value} should neither be Null nor exceed {maxCharacters} characters.");
             }
 
-            return defaultValue;
+            defaultValue = default(String);
+            return false;
         }
 
         /// <summary>
@@ -192,8 +200,8 @@ namespace Assignment5.Helpers
         /// <param name="maxYearsBack">Maximum years in past from today that can be entered.</param>
         /// <param name="maxTries">Maximum tries user can make.</param>
         /// <param name="defaultDate">Default date that will be returned.</param>
-        /// <returns>Date</returns>
-        public static DateOnly GetValidDate(string message, int maxYearsBack, int maxTries, DateOnly defaultDate)
+        /// <returns>True if valid Date, False otherwise.</returns>
+        public static bool IsValidDate(string message, int maxYearsBack, int maxTries, out DateOnly defaultDate)
         {
             DateOnly today = DateOnly.FromDateTime(DateTime.Today);
             DateOnly minDate = today.AddYears(-maxYearsBack);
@@ -210,64 +218,33 @@ namespace Assignment5.Helpers
                         DateTimeStyles.None,
                         out DateOnly date))
                 {
-                    Warn("Invalid format. Please enter date as yyyy-MM-dd.");
+                    OutputColor.Warn("Invalid format. Please enter date as yyyy-MM-dd.");
                     maxTries--;
                     continue;
                 }
 
                 if (date > today)
                 {
-                    Warn("Future dates are not allowed.");
+                    OutputColor.Warn("Future dates are not allowed.");
                     maxTries--;
                     continue;
                 }
 
                 if (date < minDate)
                 {
-                    Warn(@$"Date cannot be older than {maxYearsBack} years.
+                    OutputColor.Warn(@$"Date cannot be older than {maxYearsBack} years.
 Enter a date on or after {minDate:yyyy-MM-dd}.");
                     maxTries--;
                     continue;
                 }
 
-                return date;
+                defaultDate = date;
+                return true;
             }
 
-            Error("\nToo many Attempts! Try again later");
-            return defaultDate;
-        }
-
-        /// <summary>
-        /// Display error message in red color.
-        /// </summary>
-        /// <param name="message">Message that should be displayed.</param>
-        public static void Error(string message)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"{message}");
-            Console.ResetColor();
-        }
-
-        /// <summary>
-        /// Display success message in green color.
-        /// </summary>
-        /// <param name="message">Message that should be displayed.</param>
-        public static void Success(string message)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"{message}");
-            Console.ResetColor();
-        }
-
-        /// <summary>
-        /// Display warning message in yellow color.
-        /// </summary>
-        /// <param name="message">Message that should be displayed.</param>
-        public static void Warn(string message)
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine($"{message}");
-            Console.ResetColor();
+            OutputColor.Error("\nToo many Attempts! Try again later");
+            defaultDate = default(DateOnly);
+            return false;
         }
     }
 }
