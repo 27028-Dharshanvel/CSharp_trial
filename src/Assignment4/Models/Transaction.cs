@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assignment4.Models
+﻿namespace Assignment4.Models
 {
     /// <summary>
     /// Represents Transaction Model.
@@ -18,7 +12,7 @@ namespace Assignment4.Models
         /// <param name="date">The date of the transaction.</param>
         /// <param name="category">The category of the transaction.</param>
         /// <param name="userId">The ID of the user associated with the transaction.</param>
-        public Transaction(decimal amount, DateOnly date, string? category, Guid userId)
+        public Transaction(decimal amount, DateOnly date, string category, Guid userId)
         {
             this.TransactionId = Guid.NewGuid();
             this.Amount = amount;
@@ -28,41 +22,41 @@ namespace Assignment4.Models
         }
 
         /// <summary>
-        /// Gets or sets transaction id.
+        /// Gets transaction id.
         /// </summary>
-        /// <value>Id.</value>
-        public Guid TransactionId { get; set; }
+        /// <value>Id of transaction</value>
+        public Guid TransactionId { get; init; }
 
         /// <summary>
         /// Gets or sets amount.
         /// </summary>
-        /// <value>Amount.</value>
+        /// <value>Transaction amount</value>
         public decimal Amount { get; set; }
 
         /// <summary>
         /// Gets or sets Date of the transaction.
         /// </summary>
-        /// <value>Date.</value>
+        /// <value>Date of transaction.</value>
         public DateOnly Date { get; set; }
 
         /// <summary>
         /// Gets or sets category of transaction.
         /// </summary>
-        /// <value>Category.</value>
-        public string? Category { get; set; }
+        /// <value>Category of transaction.</value>
+        public string Category { get; set; }
 
         /// <summary>
         /// Gets or sets user id.
         /// </summary>
         /// <value>
-        /// User id.
+        /// User id of transaction.
         /// </value>
         public Guid UserId { get; set; }
 
         /// <summary>
         /// Creates a clone of the current transaction instance.
         /// </summary>
-        /// <returns>Transaction</returns>
+        /// <returns>Transaction instance</returns>
         public Transaction Clone()
         {
             return new Transaction(this.Amount, this.Date, this.Category, this.UserId)

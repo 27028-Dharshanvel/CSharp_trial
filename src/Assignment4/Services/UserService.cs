@@ -16,14 +16,14 @@ namespace Assignment4.Services
         /// <summary>
         /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
-        /// <param name="repository">repository.</param>
+        /// <param name="repository">Instance of User repository.</param>
         public UserService(IUserRepository repository)
         {
             this._inMemoryUserRepository = repository;
         }
 
         /// <summary>
-        /// Registers a new user with hashed password.
+        /// Registers a new user.
         /// </summary>
         /// <param name="username">User name.</param>
         /// <param name="errorMessage">Error message if registration fails.</param>
