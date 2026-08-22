@@ -27,7 +27,7 @@ namespace Assignment4.Views
 2.Create new account
 3.Exit");
                 int choice = 0;
-                if (!InputReader.ReadInt("\nEnter your choice : ", "Choice", 1, 4, 3, out choice))
+                if (!InputValidater.IsValidInt("\nEnter your choice : ", "Choice", 1, 4, 3, out choice))
                 {
                     choice = (int)MainMenuEnum.Exit;
                 }
@@ -37,7 +37,7 @@ namespace Assignment4.Views
                 {
                     case MainMenuEnum.Login:
                         string? username;
-                        if (!InputReader.ReadString("Username : ", "Username", 15, 3, out username))
+                        if (!InputValidater.IsValidString("Username : ", "Username", 15, 3, out username))
                         {
                             Console.ReadKey();
                             isAppRunning = false;
@@ -48,31 +48,32 @@ namespace Assignment4.Views
 
                         if (userService.LoginUser(username, out userId))
                         {
-                            InputReader.Success($"\nLogin successful! Welcome, {username}.");
+                            OutputColor.Success($"\nLogin successful! Welcome, {username}.");
                             TransactionMenu.DisplayTransactionMenu(transactionService, userId);
                         }
                         else
                         {
-                            InputReader.Error("Invalid username .");
+                            OutputColor.Error("Invalid username .");
                         }
 
                         break;
 
                     case MainMenuEnum.CreateAccount:
                         string? newUserName;
-                        if (!InputReader.ReadString("Username : ", "Username", 15, 3, out newUserName))
+                        if (!InputValidater.IsValidString("Username : ", "Username", 15, 3, out newUserName))
                         {
                             Console.ReadKey();
                             isAppRunning = false;
                             break;
                         }
+
                         if (userService.RegisterUser(newUserName, out string errorMessage))
                         {
-                                InputReader.Success("Account created successfully! You can now log in.");
+                            OutputColor.Success("Account created successfully! You can now log in.");
                         }
                         else
                         {
-                                InputReader.Error(errorMessage);
+                                OutputColor.Error(errorMessage);
                         }
 
                         break;

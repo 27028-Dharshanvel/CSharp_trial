@@ -12,15 +12,23 @@ namespace Assignment4.Models
     internal class User
     {
         /// <summary>
-        /// Gets or sets user Id.
+        /// Initializes a new instance of the <see cref="User"/> class.
+        /// </summary>
+        public User()
+        {
+            this.UserId = Guid.NewGuid();
+        }
+
+        /// <summary>
+        /// Gets user Id.
         /// </summary>
         /// <value>User Id.</value>
-        public Guid UserId { get; set; }
+        public Guid UserId { get; init; }
 
         /// <summary>
         /// Gets or sets user name.
         /// </summary>
         /// <value>User name.</value>
-        public string? UserName { get; set; }
+        public string UserName { get; set; }
     }
 }
