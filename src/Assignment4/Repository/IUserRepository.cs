@@ -10,7 +10,7 @@ namespace Assignment4.Repository
         /// <summary>
         /// Save users.
         /// </summary>
-        /// <param name="users">Users.</param>
+        /// <param name="users">List of Users.</param>
         void SaveUsers(List<User> users);
 
         /// <summary>
@@ -22,20 +22,20 @@ namespace Assignment4.Repository
         /// <summary>
         /// Adds users.
         /// </summary>
-        /// <param name="users">users.</param>
+        /// <param name="users">Instance of user.</param>
         void AddUser(User users);
 
         /// <summary>
         /// Deletes users.
         /// </summary>
-        /// <param name="users">users.</param>
+        /// <param name="users">Instance of user.</param>
         void DeleteUser(User users);
 
         /// <summary>
         /// Updates users.
         /// </summary>
-        /// <param name="oldUser">oldtUser</param>
-        /// <param name="updatedUser">updatedUser</param>
+        /// <param name="oldUser">oldtUser instance.</param>
+        /// <param name="updatedUser">updatedUser instance.</param>
         void UpdateUser(User oldUser, User updatedUser);
     }
 }
