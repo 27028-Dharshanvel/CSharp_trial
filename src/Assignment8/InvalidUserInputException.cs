@@ -1,6 +1,5 @@
 ﻿namespace Assignments
 {
-
     /// <summary>
     /// Custom exception for invalid user input.
     /// </summary>
