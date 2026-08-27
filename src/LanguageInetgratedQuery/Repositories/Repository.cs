@@ -37,17 +37,31 @@ namespace LanguageInetgratedQuery.Repository
             },
             new Product
             {
-                ProductId = "001",
+                ProductId = "004",
                 ProductName = "WaterBottle",
                 ProductCategory = "Utensils",
                 ProductPrice = 400,
             },
             new Product
             {
-                ProductId = "001",
+                ProductId = "005",
                 ProductName = "Notebook",
                 ProductCategory = "Education",
                 ProductPrice = 180,
+            },
+            new Product
+            {
+                ProductId = "006",
+                ProductName = "Heater",
+                ProductCategory = "Electronics",
+                ProductPrice = 3500,
+            },
+            new Product
+            {
+                ProductId = "007",
+                ProductName = "Extension cord",
+                ProductCategory = "Electronics",
+                ProductPrice = 400,
             },
         };
 
