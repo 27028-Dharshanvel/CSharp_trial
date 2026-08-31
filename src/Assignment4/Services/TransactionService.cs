@@ -29,10 +29,7 @@ namespace Assignment4.Services
         /// <returns>True if transaction is added, False if error.</returns>
         public bool AddTransaction(Guid userId, decimal amount, string category, DateOnly date)
         {
-            Transaction transaction = new Transaction(amount, date, category, userId)
-            {
-                TransactionId = Guid.NewGuid(),
-            };
+            Transaction transaction = new Transaction(amount, date, category, userId);
 
             this._inMemoryTransactionRepository.AddTransaction(transaction);
             return true;
@@ -55,15 +52,8 @@ namespace Assignment4.Services
         public Transaction? GetTransactionById(Guid transactionId)
         {
             List<Transaction> transactions = this._inMemoryTransactionRepository.LoadTransactions();
-            foreach (Transaction transaction in transactions)
-            {
-                if (transaction.TransactionId == transactionId)
-                {
-                    return transaction;
-                }
-            }
 
-            return null;
+            return transactions.FirstOrDefault(transaction => transaction.TransactionId == transactionId);
         }
 
         /// <summary>
@@ -82,10 +72,7 @@ namespace Assignment4.Services
                 return false;
             }
 
-            Transaction updatedTransaction = new Transaction(amount, date, category, oldTransaction.UserId)
-            {
-                TransactionId = transactionId,
-            };
+            Transaction updatedTransaction = new Transaction(amount, date, category, oldTransaction.UserId);
 
             this._inMemoryTransactionRepository.UpdateTransaction(oldTransaction, updatedTransaction);
             return true;

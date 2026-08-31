@@ -32,17 +32,15 @@ namespace Assignment4.Helpers
                         defaultValue = value;
                         return true;
                     }
-                    else
-                    {
-                        maxTries--;
-                        if (maxTries == 0)
-                        {
-                            continue;
-                        }
 
-                        OutputColor.Warn($"{inputType} should be in range of {minValue} and {maxValue}");
-                        continue;
+                    maxTries--;
+                    if (maxTries == 0)
+                    {
+                         continue;
                     }
+
+                    OutputColor.Warn($"{inputType} should be in range of {minValue} and {maxValue}");
+                    continue;
                 }
 
                 maxTries--;
@@ -84,17 +82,15 @@ namespace Assignment4.Helpers
                         defaultValue = value;
                         return true;
                     }
-                    else
-                    {
-                        maxTries--;
-                        if (maxTries == 0)
-                        {
-                            continue;
-                        }
 
-                        OutputColor.Warn($"{inputType} should be in range of {minValue} and {maxValue}");
+                    maxTries--;
+                    if (maxTries == 0)
+                    {
                         continue;
                     }
+
+                    OutputColor.Warn($"{inputType} should be in range of {minValue} and {maxValue}");
+                    continue;
                 }
 
                 maxTries--;
@@ -136,17 +132,15 @@ namespace Assignment4.Helpers
                         defaultValue = value;
                         return true;
                     }
-                    else
-                    {
-                        maxTries--;
-                        if (maxTries == 0)
-                        {
-                            continue;
-                        }
 
-                        OutputColor.Warn($"{inputType} should be in range of {minValue} and {maxValue}");
+                    maxTries--;
+                    if (maxTries == 0)
+                    {
                         continue;
                     }
+
+                    OutputColor.Warn($"{inputType} should be in range of {minValue} and {maxValue}");
+                    continue;
                 }
 
                 maxTries--;

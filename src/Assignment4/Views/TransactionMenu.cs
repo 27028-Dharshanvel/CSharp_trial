@@ -9,17 +9,30 @@ namespace Assignment4.Views
     /// <summary>
     /// Transaction Menu.
     /// </summary>
-    internal static class TransactionMenu
+    internal class TransactionMenu
     {
+        private TransactionService _transactionService;
+        private Guid _userId;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TransactionMenu"/> class.
+        /// Trans
+        /// </summary>
+        /// <param name="service">service</param>
+        /// <param name="userId">userid</param>
+        public TransactionMenu(TransactionService service, Guid userId)
+        {
+            this._transactionService = service;
+            this._userId = userId;
+        }
+
         /// <summary>
         /// Displays Transaction Menu.
         /// </summary>
-        /// <param name="service">Transaction service instance.</param>
-        /// <param name="userId">Guid of user.</param>
-        public static void DisplayTransactionMenu(TransactionService service, Guid userId)
+        public void DisplayTransactionMenu()
         {
             bool inTransactionMenu = true;
-            Guid currentUserId = userId;
+            Guid currentUserId = this._userId;
             while (inTransactionMenu)
             {
                 Console.WriteLine("\n================Transaction Menu====================");
@@ -42,23 +55,23 @@ namespace Assignment4.Views
                 switch (choice)
                 {
                     case TransactionMenuEnum.AddTransaction:
-                        AddTransactionHandler(service, currentUserId);
+                        this.AddTransactionHandler(this._transactionService, currentUserId);
                         break;
 
                     case TransactionMenuEnum.ViewTransactions:
-                        ViewTransactionsHandler(service, currentUserId);
+                        this.ViewTransactionsHandler(this._transactionService, currentUserId);
                         break;
 
                     case TransactionMenuEnum.EditTransaction:
-                        EditTransactionHandler(service, currentUserId);
+                        this.EditTransactionHandler(this._transactionService, currentUserId);
                         break;
 
                     case TransactionMenuEnum.DeleteTransaction:
-                        DeleteTransactionHandler(service, currentUserId);
+                        this.DeleteTransactionHandler(this._transactionService, currentUserId);
                         break;
 
                     case TransactionMenuEnum.ViewStats:
-                        ViewStatsHandler(service, currentUserId);
+                        this.ViewStatsHandler(this._transactionService, currentUserId);
                         break;
 
                     case TransactionMenuEnum.LogOut:
@@ -70,7 +83,7 @@ namespace Assignment4.Views
             }
         }
 
-        private static void AddTransactionHandler(TransactionService service, Guid userId)
+        private void AddTransactionHandler(TransactionService service, Guid userId)
         {
             Console.WriteLine(@"
 1.Add Income
@@ -151,7 +164,7 @@ namespace Assignment4.Views
             }
         }
 
-        private static void ViewTransactionsHandler(TransactionService service, Guid userId)
+        private void ViewTransactionsHandler(TransactionService service, Guid userId)
         {
             List<Transaction> transactions = service.GetAllTransactions();
             if (transactions.Count == 0)
@@ -176,7 +189,7 @@ namespace Assignment4.Views
             table.Write();
         }
 
-        private static void EditTransactionHandler(TransactionService service, Guid userId)
+        private void EditTransactionHandler(TransactionService service, Guid userId)
         {
             List<Transaction> transactions = service.GetAllTransactions();
             if (transactions.Count == 0)
@@ -233,7 +246,7 @@ namespace Assignment4.Views
             }
         }
 
-        private static void DeleteTransactionHandler(TransactionService service, Guid userId)
+        private void DeleteTransactionHandler(TransactionService service, Guid userId)
         {
             List<Transaction> transactions = service.GetAllTransactions();
             if (transactions.Count == 0)
@@ -262,7 +275,7 @@ namespace Assignment4.Views
             }
         }
 
-        private static void ViewStatsHandler(TransactionService service, Guid userId)
+        private void ViewStatsHandler(TransactionService service, Guid userId)
         {
             List<Transaction> transactions = service.GetAllTransactions();
             if (transactions.Count == 0)
