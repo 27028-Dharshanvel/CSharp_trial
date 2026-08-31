@@ -14,7 +14,6 @@
         /// <param name="userId">The ID of the user associated with the transaction.</param>
         public Transaction(decimal amount, DateOnly date, string category, Guid userId)
         {
-            this.TransactionId = Guid.NewGuid();
             this.Amount = amount;
             this.Date = date;
             this.Category = category;
@@ -25,7 +24,7 @@
         /// Gets transaction id.
         /// </summary>
         /// <value>Id of transaction</value>
-        public Guid TransactionId { get; init; }
+        public Guid TransactionId { get; init; } = new Guid();
 
         /// <summary>
         /// Gets or sets amount.

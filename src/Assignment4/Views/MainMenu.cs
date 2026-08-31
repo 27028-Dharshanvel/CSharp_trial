@@ -49,7 +49,8 @@ namespace Assignment4.Views
                         if (userService.LoginUser(username, out userId))
                         {
                             OutputColor.Success($"\nLogin successful! Welcome, {username}.");
-                            TransactionMenu.DisplayTransactionMenu(transactionService, userId);
+                            TransactionMenu transactionMenu = new TransactionMenu(transactionService, userId);
+                            transactionMenu.DisplayTransactionMenu();
                         }
                         else
                         {
