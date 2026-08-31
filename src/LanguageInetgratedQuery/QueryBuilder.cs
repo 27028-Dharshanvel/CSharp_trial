@@ -1,88 +1,108 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq.Expressions;
+using LanguageInetgratedQuery.Models;
 
-/// <summary>
-/// QueryBuilder
-/// </summary>
-/// <typeparam name="T">Type</typeparam>
-public class QueryBuilder<T>
+namespace LanguageInetgratedQuery
 {
-    private readonly IEnumerable<T> _query;
-
     /// <summary>
-    /// Initializes a new instance of the <see cref="QueryBuilder{T}"/> class.
-    /// Builds the query
+    /// Query Builder
     /// </summary>
-    /// <param name="source">source</param>
-    public QueryBuilder(IEnumerable<T> source)
+    internal class QueryBuilder
     {
-        _query = source;
-    }
+        private IEnumerable<Product> _products;
 
-    private QueryBuilder(IEnumerable<T> source, bool _)
-    {
-        _query = source;
-    }
+        private List<Expression<Func<Product, bool>>> _filters =
+            new List<Expression<Func<Product, bool>>>();
 
-    /// <summary>
-    /// Filters
-    /// </summary>
-    /// <param name="predicate">predicate</param>
-    /// <returns>returns</returns>
-    public QueryBuilder<T> Filter(Func<T, bool> predicate)
-    {
-        return new QueryBuilder<T>(
-            _query.Where(predicate),
-            true);
-    }
+        private Expression<Func<Product, object>> _sortExpression;
 
-    /// <summary>
-    /// Sorts by
-    /// </summary>
-    /// <typeparam name="TKey">tkey</typeparam>
-    /// <param name="keySelector">keyselctor</param>
-    /// <returns>querybuilder</returns>
-    public QueryBuilder<T> SortBy<TKey>(
-        Func<T, TKey> keySelector)
-    {
-        return new QueryBuilder<T>(
-            _query.OrderBy(keySelector),
-            true);
-    }
+        private List<Product> _joinProducts =
+            new List<Product>();
 
-    /// <summary>
-    /// Join
-    /// </summary>
-    /// <typeparam name="TOther">other</typeparam>
-    /// <typeparam name="TKey">key</typeparam>
-    /// <typeparam name="TResult">result</typeparam>
-    /// <param name="otherCollection">collection</param>
-    /// <param name="outerKeySelector">keyselector</param>
-    /// <param name="innerKeySelector">keyselctor</param>
-    /// <param name="resultSelector">selector</param>
-    /// <returns>querybuilder</returns>
-    public QueryBuilder<TResult> Join<TOther, TKey, TResult>(
-        IEnumerable<TOther> otherCollection,
-        Func<T, TKey> outerKeySelector,
-        Func<TOther, TKey> innerKeySelector,
-        Func<T, TOther, TResult> resultSelector)
-    {
-        return new QueryBuilder<TResult>(
-            _query.Join(
-                otherCollection,
-                outerKeySelector,
-                innerKeySelector,
-                resultSelector),
-            true);
-    }
+        private Expression<Func<Product, string>> _productKey;
 
-    /// <summary>
-    /// Execute
-    /// </summary>
-    /// <returns>List</returns>
-    public List<T> Execute()
-    {
-        return _query.ToList();
+        private Expression<Func<Product, string>> _joinKey;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueryBuilder"/> class.
+        /// QueryBuilder
+        /// </summary>
+        /// <param name="products">products</param>
+        public QueryBuilder(List<Product> products)
+        {
+            _products = products;
+        }
+
+        /// <summary>
+        /// Filter
+        /// </summary>
+        /// <param name="condition">condition</param>
+        /// <returns>QueryBuilder</returns>
+        public QueryBuilder Filter(Expression<Func<Product, bool>> condition)
+        {
+            _filters.Add(condition);
+
+            return this;
+        }
+
+        /// <summary>
+        /// SortBy
+        /// </summary>
+        /// <param name="property">property</param>
+        /// <returns>QueryBuilder</returns>
+        public QueryBuilder SortBy(Expression<Func<Product, object>> property)
+        {
+            _sortExpression = property;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Join
+        /// </summary>
+        /// <param name="products">products</param>
+        /// <param name="productKey">product key</param>
+        /// <param name="joinKey">join key</param>
+        /// <returns>QueryBuilder</returns>
+        public QueryBuilder Join(
+            List<Product> products,
+            Expression<Func<Product, string>> productKey,
+            Expression<Func<Product, string>> joinKey)
+        {
+            _joinProducts = products;
+            _productKey = productKey;
+            _joinKey = joinKey;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Execute
+        /// </summary>
+        /// <returns>result</returns>
+        public List<Product> Execute()
+        {
+            IEnumerable<Product> query = _products;
+
+            foreach (var filter in _filters)
+            {
+                query = query.Where(filter.Compile());
+            }
+
+            if (_joinProducts.Count > 0)
+            {
+                query = query.Join(
+                    _joinProducts,
+                    _productKey.Compile(),
+                    _joinKey.Compile(),
+                    (product, joinProduct) => product);
+            }
+
+            if (_sortExpression != null)
+            {
+                query = query.OrderBy(_sortExpression.Compile());
+            }
+
+            return query.ToList();
+        }
     }
 }
