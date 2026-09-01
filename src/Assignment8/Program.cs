@@ -11,55 +11,12 @@
         /// <param name="args">Command line arguments.</param>
         public static void Main(string[] args)
         {
-            Console.Write("Enter first number for Task 1: ");
-            int number1;
-            if (int.TryParse(Console.ReadLine(), out number1))
-            {
-                Console.WriteLine($"Index: {number1}");
-            }
-            else
-            {
-                Console.WriteLine("Invalid input");
-            }
+            Tasks.DemonstrateDivideByZeroException(10, 0);
 
-            Console.Write("Enter second number for Task 1: ");
-            int number2;
-            if (int.TryParse(Console.ReadLine(), out number2))
+            int[] numbers = new int[10]
             {
-                Console.WriteLine($"Index: {number2}");
-            }
-            else
-            {
-                Console.WriteLine("Invalid input");
-            }
-
-            Tasks.TaskOne(number1, number2);
-
-            Console.Write("\nEnter the number of elements for the array in Task 2: ");
-            int size;
-            if (int.TryParse(Console.ReadLine(), out size))
-            {
-                Console.WriteLine($"Index: {size}");
-            }
-            else
-            {
-                Console.WriteLine("Invalid input");
-            }
-
-            int[] numbers = new int[size];
-
-            for (int i = 0; i < size; i++)
-            {
-                Console.Write("Enter element " + i + ": ");
-                if (int.TryParse(Console.ReadLine(), out numbers[i]))
-                {
-                    Console.WriteLine(numbers[i]);
-                }
-                else
-                {
-                    Console.WriteLine("Invalid input");
-                }
-            }
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+            };
 
             Console.Write("Enter an index to access: ");
 
@@ -73,13 +30,13 @@
                 Console.WriteLine("Invalid input");
             }
 
-            Tasks.TaskTwo(numbers, index);
+            Tasks.DemonstrateIndexOutOfRangeException(numbers);
 
-            Tasks.TaskThree();
+            Tasks.DemonstrateInvalidUserInputException();
 
-            Tasks.TaskFour();
+            Tasks.DemonstrateUnhandledException();
 
-            Tasks.TaskFive();
+            Tasks.DemonstrateStackTrace();
         }
     }
 }

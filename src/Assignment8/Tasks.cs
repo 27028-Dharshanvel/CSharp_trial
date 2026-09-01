@@ -17,12 +17,16 @@ namespace Assignment8
         /// </summary>
         /// <param name="dividend">Dividend input number</param>
         /// <param name="divisor">Divisor input number</param>
-        public static void TaskOne(int dividend, int divisor)
+        public static void DemonstrateDivideByZeroException(int dividend, int divisor)
         {
             Console.WriteLine("\n--- Task 1 ---");
 
             try
             {
+                Console.WriteLine(@$"Demonstration of dividing a number by zero : 
+Dividend : {dividend}
+Divisor : {divisor}");
+
                 int result = dividend / divisor;
 
                 Console.WriteLine("Result: " + result);
@@ -41,14 +45,21 @@ namespace Assignment8
         /// Task to access an element from array and catch IndexOutOfRangeException.
         /// </summary>
         /// /// <param name="numbers">Input number</param>
-        /// <param name="index">index of the array</param>
-        public static void TaskTwo(int[] numbers, int index)
+        public static void DemonstrateIndexOutOfRangeException(int[] numbers)
         {
-            Console.WriteLine("\n--- Task 2 ---");
+            Console.WriteLine("\n--- Demonstration of IndexOutofBoundException---");
 
             try
             {
-                Console.WriteLine("Array value: " + numbers[index]);
+                for (int i = 0; i < 10; i++)
+                {
+                    Console.Write(numbers[i] + " ");
+                }
+
+                Console.WriteLine("Accesing value from array within its range (Sample Index - 9) : ");
+                Console.WriteLine(numbers[9]);
+                Console.WriteLine("Accesing value from array out of its range (Sample Index - 11) : ");
+                Console.WriteLine(numbers[11]);
             }
             catch (IndexOutOfRangeException)
             {
@@ -66,7 +77,7 @@ namespace Assignment8
         /// <summary>
         /// Task to prompt user to enter an integer and catch InvalidUserInputException.
         /// </summary>
-        public static void TaskThree()
+        public static void DemonstrateInvalidUserInputException()
         {
             Console.WriteLine("\n--- Task 3 ---");
 
@@ -94,7 +105,7 @@ namespace Assignment8
         /// <summary>
         /// Task to implement UnhandledException.
         /// </summary>
-        public static void TaskFour()
+        public static void DemonstrateUnhandledException()
         {
             Console.WriteLine("\n--- Task 4 ---");
 
@@ -127,7 +138,7 @@ namespace Assignment8
         /// <summary>
         /// Task to demonstrate stack trace.
         /// </summary>
-        public static void TaskFive()
+        public static void DemonstrateStackTrace()
         {
             Console.WriteLine("\n--- Task 5 ---");
 
@@ -145,5 +156,4 @@ namespace Assignment8
             }
         }
     }
-}
 }
