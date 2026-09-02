@@ -6,15 +6,15 @@ namespace Assignment3.Service
     /// <summary>
     /// Services class to handle product operations.
     /// </summary>
-    internal class Services
+    internal class ProductService
     {
         private ProductInventory _inventory;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Services"/> class.
+        /// Initializes a new instance of the <see cref="ProductService"/> class.
         /// </summary>
         /// <param name="inventory">Instance of ProductInventory.</param>
-        public Services(ProductInventory inventory)
+        public ProductService(ProductInventory inventory)
         {
             this._inventory = inventory;
         }
