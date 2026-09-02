@@ -10,7 +10,7 @@ namespace Assignment8
     /// <summary>
     /// Tasks class.
     /// </summary>
-    internal static class Tasks
+    internal static class ExceptionHandlingTasks
     {
         /// <summary>
         /// Task to perform divide operation and catch DivideByZeroException.
@@ -45,20 +45,28 @@ Divisor : {divisor}");
         /// Task to access an element from array and catch IndexOutOfRangeException.
         /// </summary>
         /// /// <param name="numbers">Input number</param>
-        public static void DemonstrateIndexOutOfRangeException(int[] numbers)
+        public static void DemonstrateIndexOutOfRangeException()
         {
-            Console.WriteLine("\n--- Demonstration of IndexOutofBoundException---");
+            Console.WriteLine("\n--- Task 2 ---");
+            Console.WriteLine(@"---- Demonstration of IndexOutofBoundException---
+
+Size of Array : 10
+Elements in the Arrray :");
 
             try
             {
+                int[] numbers = new int[10]
+                {
+                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                };
                 for (int i = 0; i < 10; i++)
                 {
                     Console.Write(numbers[i] + " ");
                 }
 
-                Console.WriteLine("Accesing value from array within its range (Sample Index - 9) : ");
+                Console.WriteLine("\nAccesing value from array within its range (Sample Index - 9) : ");
                 Console.WriteLine(numbers[9]);
-                Console.WriteLine("Accesing value from array out of its range (Sample Index - 11) : ");
+                Console.WriteLine("\nAccesing value from array out of its range (Sample Index - 11) : ");
                 Console.WriteLine(numbers[11]);
             }
             catch (IndexOutOfRangeException)
