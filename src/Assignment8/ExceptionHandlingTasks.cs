@@ -13,7 +13,7 @@ namespace Assignment8
     internal static class ExceptionHandlingTasks
     {
         /// <summary>
-        /// Task to perform divide operation and catch DivideByZeroException.
+        /// Task to perform divide operation and catch DivideByZeroException if occured.
         /// </summary>
         /// <param name="dividend">Dividend input number</param>
         /// <param name="divisor">Divisor input number</param>
@@ -42,9 +42,8 @@ Divisor : {divisor}");
         }
 
         /// <summary>
-        /// Task to access an element from array and catch IndexOutOfRangeException.
+        /// Task to access an element from array and catch IndexOutOfRangeException if occured.
         /// </summary>
-        /// /// <param name="numbers">Input number</param>
         public static void DemonstrateIndexOutOfRangeException()
         {
             Console.WriteLine("\n--- Task 2 ---");
@@ -83,7 +82,7 @@ Elements in the Arrray :");
         }
 
         /// <summary>
-        /// Task to prompt user to enter an integer and catch InvalidUserInputException.
+        /// Task to prompt user to enter an integer and catch InvalidUserInputException if occured.
         /// </summary>
         public static void DemonstrateInvalidUserInputException()
         {
@@ -99,7 +98,7 @@ Elements in the Arrray :");
                 if (int.TryParse(input, out number) == false)
                 {
                     throw new InvalidUserInputException(
-                        "Invalid user input. Please enter a valid integer.");
+                        "Invalid input. Please enter a valid integer.");
                 }
 
                 Console.WriteLine("You entered: " + number);
@@ -159,8 +158,6 @@ Elements in the Arrray :");
                 Console.WriteLine("Exception caught.");
                 Console.WriteLine("\nStack Trace:");
                 Console.WriteLine(ex.StackTrace);
-
-                Console.WriteLine("\nStack Trace Interpretation:");
             }
         }
     }
