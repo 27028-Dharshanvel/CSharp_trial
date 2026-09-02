@@ -16,7 +16,7 @@ namespace Assignment3.View
         /// <param name="inventory">Instance of ProductInventory</param>
         public static void ConsoleOperations(ProductInventory inventory)
         {
-            Services services = new Services(inventory);
+            ProductService services = new ProductService(inventory);
             bool isAppRunning = true;
 
             while (isAppRunning)

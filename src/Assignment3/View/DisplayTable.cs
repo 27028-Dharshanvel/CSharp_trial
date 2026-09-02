@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Assignment3.Models;
+﻿using Assignment3.Models;
 using ConsoleTables;
 
 namespace Assignment3.View
@@ -27,6 +22,5 @@ namespace Assignment3.View
 
             table.Write();
         }
-
     }
 }
