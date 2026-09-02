@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LanguageInetgratedQuery.Models
+﻿namespace LanguageInetgratedQuery.Models
 {
     /// <summary>
     /// Product class
@@ -12,34 +6,34 @@ namespace LanguageInetgratedQuery.Models
     internal class Product
     {
         /// <summary>
-        /// Gets or sets p
+        /// Gets or sets productID
         /// </summary>
         /// <value>
-        /// P
+        /// ProductID
         /// </value>
-        public string ProductId { get; set; }
+        public string? ProductId { get; set; }
 
         /// <summary>
-        /// Gets or sets p
+        /// Gets or sets productName
         /// </summary>
         /// <value>
-        /// P
+        /// ProductName
         /// </value>
-        public string ProductName { get; set; }
+        public string? ProductName { get; set; }
 
         /// <summary>
-        /// Gets or sets p
+        /// Gets or sets product Catgeory
         /// </summary>
         /// <value>
-        /// P
+        /// ProductCategory
         /// </value>
-        public string ProductCategory { get; set; }
+        public string? ProductCategory { get; set; }
 
         /// <summary>
-        /// Gets or sets p
+        /// Gets or sets product Price
         /// </summary>
         /// <value>
-        /// P
+        /// ProductPrice
         /// </value>
         public decimal ProductPrice { get; set; }
     }

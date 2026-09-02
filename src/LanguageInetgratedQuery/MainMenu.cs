@@ -8,14 +8,16 @@ namespace LanguageInetgratedQuery
     /// </summary>
     internal class MainMenu
     {
-        private Repository _repository = new Repository();
+        private ProductRepository _productRepository = new ProductRepository();
+        private IntegerArray _intArray = new IntegerArray();
+        private SupplierRepository _supplierRepository = new SupplierRepository();
 
         /// <summary>
         /// Displays mainmenu
         /// </summary>
         public void DisplayMainMenu()
         {
-            List<Product> products = this._repository.GetProducts();
+            List<Product> products = this._productRepository.GetProducts();
             bool isAppRunning = true;
             while (isAppRunning)
             {
@@ -45,10 +47,10 @@ Select your choice to  the corresponding LINQ :
                         LinqTasks.ExecuteBasicLinqTask(products);
                         break;
                     case UserOptions.IntermediateLINQ:
-                        LinqTasks.ExecuteIntermediateLinqTask(products, this._repository.GetSuppliers());
+                        LinqTasks.ExecuteIntermediateLinqTask(products, this._supplierRepository.GetSuppliers());
                         break;
                     case UserOptions.AdvancedLINQ:
-                        LinqTasks.ExecuteAdvancedLinqTask(this._repository.GetNumbers());
+                        LinqTasks.ExecuteAdvancedLinqTask(this._intArray.GetNumbers());
                         break;
                     case UserOptions.OptimizedLINQ:
                         LinqTasks.ExecuteOptimizedLinqTask(products);

@@ -8,9 +8,9 @@ using LanguageInetgratedQuery.Models;
 namespace LanguageInetgratedQuery.Repositories
 {
     /// <summary>
-    /// Repository
+    /// ProductRepository
     /// </summary>
-    internal class Repository
+    internal class ProductRepository
     {
         private List<Product> _products = new List<Product>
         {
@@ -86,58 +86,6 @@ namespace LanguageInetgratedQuery.Repositories
             },
         };
 
-        private List<Supplier> _suppliers = new List<Supplier>
-        {
-            new Supplier
-            {
-                SupplierId = "S001",
-                SupplierName = "ABC Electronics",
-                ProductId = "001",
-            },
-            new Supplier
-            {
-                SupplierId = "S002",
-                SupplierName = "XYZ Electronics",
-                ProductId = "002",
-            },
-            new Supplier
-            {
-                SupplierId = "S003",
-                SupplierName = "Home Appliances Supplier",
-                ProductId = "006",
-            },
-            new Supplier
-            {
-                SupplierId = "S004",
-                SupplierName = "Book World",
-                ProductId = "008",
-            },
-            new Supplier
-            {
-                SupplierId = "S005",
-                SupplierName = "Knowledge Suppliers",
-                ProductId = "009",
-            },
-            new Supplier
-            {
-                SupplierId = "S006",
-                SupplierName = "Book House",
-                ProductId = "010",
-            },
-        };
-
-        private int[] _numbers =
-        {
-            2,
-            5,
-            8,
-            3,
-            7,
-            5,
-            1,
-            9
-        };
-
         /// <summary>
         /// Get
         /// </summary>
@@ -145,24 +93,6 @@ namespace LanguageInetgratedQuery.Repositories
         public List<Product> GetProducts()
         {
             return this._products;
-        }
-
-        /// <summary>
-        /// Get Suppliers
-        /// </summary>
-        /// <returns>list</returns>
-        public List<Supplier> GetSuppliers()
-        {
-            return this._suppliers;
-        }
-
-        /// <summary>
-        /// Get Numbers
-        /// </summary>
-        /// <returns>array</returns>
-        public int[] GetNumbers()
-        {
-            return this._numbers;
         }
     }
 }
