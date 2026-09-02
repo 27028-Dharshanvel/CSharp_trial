@@ -6,100 +6,101 @@ namespace LanguageInetgratedQuery
     /// <summary>
     /// Query Builder
     /// </summary>
-    internal class QueryBuilder
+    /// <typeparam name="T">T</typeparam>
+    public class QueryBuilder<T>
     {
-        private IEnumerable<Product> _products;
+        private IEnumerable<T> _data;   
 
-        private List<Expression<Func<Product, bool>>> _filters =
-            new List<Expression<Func<Product, bool>>>();
+        private List<Expression<Func<T, bool>>> _filters =
+            new List<Expression<Func<T, bool>>>();
 
-        private Expression<Func<Product, object>> _sortExpression;
+        private Expression<Func<T, object>> _sortExpression;
 
-        private List<Product> _joinProducts =
-            new List<Product>();
+        private IEnumerable<T> _joinData =
+            new List<T>();
 
-        private Expression<Func<Product, string>> _productKey;
+        private Expression<Func<T, string>> _dataKey;
 
-        private Expression<Func<Product, string>> _joinKey;
+        private Expression<Func<T, string>> _joinKey;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="QueryBuilder"/> class.
-        /// QueryBuilder
+        /// Initializes a new instance of the <see cref="QueryBuilder{T}"/> class.
+        /// Querybuiled
         /// </summary>
-        /// <param name="products">products</param>
-        public QueryBuilder(List<Product> products)
+        /// <param name="data">data</param>
+        public QueryBuilder(IEnumerable<T> data)
         {
-            _products = products;
+            this._data = data;
         }
 
         /// <summary>
-        /// Filter
+        /// Filters
         /// </summary>
         /// <param name="condition">condition</param>
-        /// <returns>QueryBuilder</returns>
-        public QueryBuilder Filter(Expression<Func<Product, bool>> condition)
+        /// <returns>this</returns>
+        public QueryBuilder<T> Filter(Expression<Func<T, bool>> condition)
         {
-            _filters.Add(condition);
+            this._filters.Add(condition);
 
             return this;
         }
 
         /// <summary>
-        /// SortBy
+        /// Sorts
         /// </summary>
         /// <param name="property">property</param>
-        /// <returns>QueryBuilder</returns>
-        public QueryBuilder SortBy(Expression<Func<Product, object>> property)
+        /// <returns>this</returns>
+        public QueryBuilder<T> SortBy(Expression<Func<T, object>> property)
         {
-            _sortExpression = property;
+            this._sortExpression = property;
 
             return this;
         }
 
         /// <summary>
-        /// Join
+        /// Joins
         /// </summary>
-        /// <param name="products">products</param>
-        /// <param name="productKey">product key</param>
-        /// <param name="joinKey">join key</param>
-        /// <returns>QueryBuilder</returns>
-        public QueryBuilder Join(
-            List<Product> products,
-            Expression<Func<Product, string>> productKey,
-            Expression<Func<Product, string>> joinKey)
+        /// <param name="data">d</param>
+        /// <param name="dataKey">s</param>
+        /// <param name="joinKey">j</param>
+        /// <returns>this</returns>
+        public QueryBuilder<T> Join(
+            IEnumerable<T> data,
+            Expression<Func<T, string>> dataKey,
+            Expression<Func<T, string>> joinKey)
         {
-            _joinProducts = products;
-            _productKey = productKey;
-            _joinKey = joinKey;
+            this._joinData = data;
+            this._dataKey = dataKey;
+            this._joinKey = joinKey;
 
             return this;
         }
 
         /// <summary>
-        /// Execute
+        /// Executes
         /// </summary>
-        /// <returns>result</returns>
-        public List<Product> Execute()
+        /// <returns>List</returns>
+        public List<T> Execute()
         {
-            IEnumerable<Product> query = _products;
+            IEnumerable<T> query = this._data;
 
-            foreach (var filter in _filters)
+            foreach (var filter in this._filters)
             {
                 query = query.Where(filter.Compile());
             }
 
-            if (_joinProducts.Count > 0)
+            if (this._joinData.Any())
             {
                 query = query.Join(
-                    _joinProducts,
-                    _productKey.Compile(),
-                    _joinKey.Compile(),
-                    (product, joinProduct) => product);
+                    this._joinData,
+                    this._dataKey.Compile(),
+                    this._joinKey.Compile(),
+                    (item, joinedItem) => item);
             }
 
-            if (_sortExpression != null)
+            if (this._sortExpression != null)
             {
-                query = query.OrderBy(_sortExpression.Compile());
+                query = query.OrderBy(this._sortExpression.Compile());
             }
 
             return query.ToList();

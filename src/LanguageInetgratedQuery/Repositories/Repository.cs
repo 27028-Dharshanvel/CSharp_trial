@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LanguageInetgratedQuery.Models;
 
-namespace LanguageInetgratedQuery.Repository
+namespace LanguageInetgratedQuery.Repositories
 {
     /// <summary>
     /// Repository
