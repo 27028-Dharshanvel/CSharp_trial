@@ -4,7 +4,7 @@ using LanguageInetgratedQuery.Repositories;
 namespace LanguageInetgratedQuery
 {
     /// <summary>
-    /// Mainmenu
+    /// Mainmenu of the application
     /// </summary>
     internal class MainMenu
     {
@@ -13,7 +13,7 @@ namespace LanguageInetgratedQuery
         private SupplierRepository _supplierRepository = new SupplierRepository();
 
         /// <summary>
-        /// Displays mainmenu
+        /// Displays the mainmenu
         /// </summary>
         public void DisplayMainMenu()
         {
@@ -28,7 +28,8 @@ Select your choice to  the corresponding LINQ :
 2.Implementations of Intermediate LINQ Queries 
 3.Implementation of Advanced LINQ Queries
 4.Optimized LINQ Queries
-5.Implementation of Fluent API pattern.");
+5.Implementation of Fluent API pattern.
+6.Exit");
 
                 int choice;
                 if (int.TryParse(Console.ReadLine(), out choice))
@@ -41,27 +42,31 @@ Select your choice to  the corresponding LINQ :
                 }
 
                 UserOptions userChoice = (UserOptions)choice;
+                Console.Clear();
                 switch (userChoice)
                 {
                     case UserOptions.BasicLINQ:
-                        LinqTasks.ExecuteBasicLinqTask(products);
+                        LinqTask.ExecuteBasicLinqTask(products);
                         break;
                     case UserOptions.IntermediateLINQ:
-                        LinqTasks.ExecuteIntermediateLinqTask(products, this._supplierRepository.GetSuppliers());
+                        LinqTask.ExecuteIntermediateLinqTask(products, this._supplierRepository.GetSuppliers());
                         break;
                     case UserOptions.AdvancedLINQ:
-                        LinqTasks.ExecuteAdvancedLinqTask(this._intArray.GetNumbers());
+                        LinqTask.ExecuteAdvancedLinqTask(this._intArray.GetNumbers());
                         break;
                     case UserOptions.OptimizedLINQ:
-                        LinqTasks.ExecuteOptimizedLinqTask(products);
+                        LinqTask.ExecuteOptimizedLinqTask(products);
                         break;
                     case UserOptions.FluentAPI:
-                        LinqTasks.ExecuteFluentApiPattern(products);
+                        LinqTask.ExecuteFluentApiPattern(products);
                         break;
                     case UserOptions.Exit:
                         isAppRunning = false;
                         break;
                 }
+
+                Console.ReadKey();
+                Console.Clear();
             }
         }
     }

@@ -1,5 +1,4 @@
 ﻿using System.Linq.Expressions;
-using LanguageInetgratedQuery.Models;
 
 namespace LanguageInetgratedQuery
 {
@@ -9,19 +8,19 @@ namespace LanguageInetgratedQuery
     /// <typeparam name="T">T</typeparam>
     public class QueryBuilder<T>
     {
-        private IEnumerable<T> _data;   
+        private IEnumerable<T> _data;
 
-        private List<Expression<Func<T, bool>>> _filters =
+        private List<Expression<Func<T, bool>>>? _filters =
             new List<Expression<Func<T, bool>>>();
 
-        private Expression<Func<T, object>> _sortExpression;
+        private Expression<Func<T, object>>? _sortExpression;
 
         private IEnumerable<T> _joinData =
             new List<T>();
 
-        private Expression<Func<T, string>> _dataKey;
+        private Expression<Func<T, string>>? _dataKey;
 
-        private Expression<Func<T, string>> _joinKey;
+        private Expression<Func<T, string>>? _joinKey;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="QueryBuilder{T}"/> class.
@@ -34,7 +33,7 @@ namespace LanguageInetgratedQuery
         }
 
         /// <summary>
-        /// Filters
+        /// Filters method to similar where method.
         /// </summary>
         /// <param name="condition">condition</param>
         /// <returns>this</returns>
@@ -46,7 +45,7 @@ namespace LanguageInetgratedQuery
         }
 
         /// <summary>
-        /// Sorts
+        /// Sorts method similar to order by method.
         /// </summary>
         /// <param name="property">property</param>
         /// <returns>this</returns>
@@ -58,7 +57,7 @@ namespace LanguageInetgratedQuery
         }
 
         /// <summary>
-        /// Joins
+        /// Joins two or more collections via keys.
         /// </summary>
         /// <param name="data">d</param>
         /// <param name="dataKey">s</param>
@@ -77,7 +76,7 @@ namespace LanguageInetgratedQuery
         }
 
         /// <summary>
-        /// Executes
+        /// Immediate Execution of the queries.
         /// </summary>
         /// <returns>List</returns>
         public List<T> Execute()

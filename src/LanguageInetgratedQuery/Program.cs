@@ -1,5 +1,4 @@
 ﻿using LanguageInetgratedQuery;
-using LanguageInetgratedQuery.Models;
 
 namespace Assignments
 {
@@ -9,9 +8,9 @@ namespace Assignments
     internal class Program
     {
         /// <summary>
-        /// Main method
+        /// Entry point of the program.
         /// </summary>
-        /// <param name="args">cmd args</param>
+        /// <param name="args">CMD line args</param>
         public static void Main(string[] args)
         {
             MainMenu mainMenu = new MainMenu();

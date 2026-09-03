@@ -11,7 +11,7 @@
         /// <value>
         /// ProductID
         /// </value>
-        public string? ProductId { get; set; }
+        public string ProductId { get; set; }
 
         /// <summary>
         /// Gets or sets productName
@@ -19,7 +19,7 @@
         /// <value>
         /// ProductName
         /// </value>
-        public string? ProductName { get; set; }
+        public string ProductName { get; set; }
 
         /// <summary>
         /// Gets or sets product Catgeory
@@ -27,7 +27,7 @@
         /// <value>
         /// ProductCategory
         /// </value>
-        public string? ProductCategory { get; set; }
+        public string ProductCategory { get; set; }
 
         /// <summary>
         /// Gets or sets product Price

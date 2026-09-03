@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LanguageInetgratedQuery
+﻿namespace LanguageInetgratedQuery
 {
     /// <summary>
     /// UserOptions
@@ -14,7 +8,7 @@ namespace LanguageInetgratedQuery
         /// <summary>
         /// BasicLinq
         /// </summary>
-        BasicLINQ,
+        BasicLINQ = 1,
 
         /// <summary>
         /// IntermediateLinq

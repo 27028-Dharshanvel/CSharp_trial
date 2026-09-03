@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using LanguageInetgratedQuery.Models;
+﻿using LanguageInetgratedQuery.Models;
 
 namespace LanguageInetgratedQuery
 {
     /// <summary>
-    /// LinqTasks
+    /// Linq Tasks to be demonstrated.
     /// </summary>
-    internal class LinqTasks
+    internal class LinqTask
     {
         /// <summary>
-        /// BasicLinqTasks
+        /// Basic Linq Tasks such as filtering.
         /// </summary>
         /// <param name="products">products</param>
         public static void ExecuteBasicLinqTask(List<Product> products)
@@ -22,7 +17,11 @@ namespace LanguageInetgratedQuery
             Console.WriteLine("TASK 1 - BASIC LINQ QUERIES");
             Console.WriteLine();
 
-            ConsoleHelper.DisplayTable(products);
+            ConsoleHelper.DisplayTable(
+                products,
+                new[] { "ProductId", "ProductName", "ProductCategory", "ProductPrice" },
+                p => new object[] { p.ProductId, p.ProductName, p.ProductCategory, p.ProductPrice }
+            );
 
             var products1 = products
                 .Where(p => p.ProductCategory == "Electronics" && p.ProductPrice > 500)
@@ -33,13 +32,21 @@ namespace LanguageInetgratedQuery
                 })
                 .ToList();
 
-            ConsoleHelper.DisplayProductPriceTable(products1);
+            ConsoleHelper.DisplayTable(
+                products1,
+                new[] { "ProductName", "ProductPrice" },
+                p => new object[] { p.ProductName, p.ProductPrice }
+            );
 
             var products2 = products1
                 .OrderByDescending(p => p.ProductPrice)
                 .ToList();
 
-            ConsoleHelper.DisplayProductPriceTable(products2);
+            ConsoleHelper.DisplayTable(
+                products2,
+                new[] { "ProductName", "ProductPrice" },
+                p => new object[] { p.ProductName, p.ProductPrice }
+            );
 
             decimal average = products1.Average(p => p.ProductPrice);
 
@@ -48,7 +55,7 @@ namespace LanguageInetgratedQuery
         }
 
         /// <summary>
-        /// IntermediateLinqTasks
+        /// Intermediate Linq Tasks such as joining.
         /// </summary>
         /// <param name="products">products</param>
         /// <param name="suppliers">suppliers</param>
@@ -72,7 +79,11 @@ namespace LanguageInetgratedQuery
                 })
                 .ToList();
 
-            ConsoleHelper.DisplayCategoryTable(products3);
+            ConsoleHelper.DisplayTable(
+                products3,
+                new[] { "Category", "ProductCount", "MostExpensiveProduct", "Price" },
+                c => new object[] { c.Category, c.ProductCount, c.MostExpensiveProduct.ProductName, c.MostExpensiveProduct.ProductPrice }
+            );
 
             var productSuppliers = products
                 .Join(
@@ -89,11 +100,15 @@ namespace LanguageInetgratedQuery
                     })
                 .ToList();
 
-            ConsoleHelper.DisplaySupplierTable(productSuppliers);
+            ConsoleHelper.DisplayTable(
+                productSuppliers,
+                new[] { "ProductId", "ProductName", "ProductCategory", "ProductPrice", "SupplierName" },
+                ps => new object[] { ps.ProductId, ps.ProductName, ps.ProductCategory, ps.ProductPrice, ps.SupplierName }
+            );
         }
 
         /// <summary>
-        /// Advanced Linq tasks
+        /// Advanced Linq tasks involving multiple linq methods.
         /// </summary>
         /// <param name="numbers">numbers</param>
         public static void ExecuteAdvancedLinqTask(int[] numbers)
@@ -134,11 +149,15 @@ namespace LanguageInetgratedQuery
                         }))
                 .ToList();
 
-            ConsoleHelper.DisplayPairsTable(pairs);
+            ConsoleHelper.DisplayTable(
+                pairs,
+                new[] { "FirstNumber", "SecondNumber" },
+                pair => new object[] { pair.FirstNumber, pair.SecondNumber }
+            );
         }
 
         /// <summary>
-        /// Optimized Linq queries
+        /// Optimized Linq queries for better performance.
         /// </summary>
         /// <param name="products">products</param>
         public static void ExecuteOptimizedLinqTask(List<Product> products)
@@ -152,7 +171,11 @@ namespace LanguageInetgratedQuery
                 .OrderBy(p => p.ProductPrice)
                 .ToList();
 
-            ConsoleHelper.DisplayTable(books);
+            ConsoleHelper.DisplayTable(
+                books,
+                new[] { "ProductId", "ProductName", "ProductCategory", "ProductPrice" },
+                p => new object[] { p.ProductId, p.ProductName, p.ProductCategory, p.ProductPrice }
+            );
 
             var optimizedBooks = products
                 .Where(p => p.ProductCategory == "Books")
@@ -164,11 +187,15 @@ namespace LanguageInetgratedQuery
                 })
                 .ToList();
 
-            ConsoleHelper.DisplayProductPriceTable(optimizedBooks);
+            ConsoleHelper.DisplayTable(
+                optimizedBooks,
+                new[] { "ProductName", "ProductPrice" },
+                p => new object[] { p.ProductName, p.ProductPrice }
+            );
         }
 
         /// <summary>
-        /// Implementation of Fluent api pattern
+        /// Implementation of Fluent api pattern via QueryBuilder.
         /// </summary>
         /// <param name="products">products</param>
         public static void ExecuteFluentApiPattern(List<Product> products)
@@ -177,7 +204,12 @@ namespace LanguageInetgratedQuery
             var queryBuilder = new QueryBuilder<Product>(products);
 
             var result = queryBuilder.Filter(p => p.ProductPrice > 500).SortBy(p => p.ProductName).Execute();
-            ConsoleHelper.DisplayTable(result);
+
+            ConsoleHelper.DisplayTable(
+                result,
+                new[] { "ProductId", "ProductName", "ProductCategory", "ProductPrice" },
+                p => new object[] { p.ProductId, p.ProductName, p.ProductCategory, p.ProductPrice }
+            );
         }
     }
 }
