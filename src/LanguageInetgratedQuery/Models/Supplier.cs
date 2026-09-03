@@ -17,7 +17,7 @@ namespace LanguageInetgratedQuery.Models
         /// <value>
         /// SupplierId.
         /// </value>
-        public string SupplierId { get; set; }
+        public string? SupplierId { get; set; }
 
         /// <summary>
         /// Gets or sets suppliername.
@@ -25,7 +25,7 @@ namespace LanguageInetgratedQuery.Models
         /// <value>
         /// SupplierName.
         /// </value>
-        public string SupplierName { get; set; }
+        public string? SupplierName { get; set; }
 
         /// <summary>
         /// Gets or sets productId
@@ -33,6 +33,6 @@ namespace LanguageInetgratedQuery.Models
         /// <value>
         /// ProductId.
         /// </value>
-        public string ProductId { get; set; }
+        public string? ProductId { get; set; }
     }
 }
