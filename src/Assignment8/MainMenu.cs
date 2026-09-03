@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assignment8
+﻿namespace Assignment8
 {
     /// <summary>
     /// MainMenu.
@@ -39,43 +33,32 @@ Select your choice to simulate the corresponding Exception :
                 }
 
                 UserOptions userChoice = (UserOptions)choice;
-
+                Console.Clear();
                 switch (userChoice)
                 {
                     case UserOptions.ExecuteDividebyZeroException:
-                        Console.Clear();
-                        ExceptionHandlingTasks.DemonstrateDivideByZeroException(10, 0);
-                        Console.ReadKey();
-                        Console.Clear();
+
+                        ExceptionHandlingTask.DemonstrateDivideByZeroException(10, 0);
                         break;
                     case UserOptions.ExecuteIndexOutOfRangeException:
-                        Console.Clear();
-                        ExceptionHandlingTasks.DemonstrateIndexOutOfRangeException();
-                        Console.ReadKey();
-                        Console.Clear();
+                        ExceptionHandlingTask.DemonstrateIndexOutOfRangeException();
                         break;
                     case UserOptions.ExecuteInvalidUserInputException:
-                        Console.Clear();
-                        ExceptionHandlingTasks.DemonstrateInvalidUserInputException();
-                        Console.ReadKey();
-                        Console.Clear();
+                        ExceptionHandlingTask.DemonstrateInvalidUserInputException();
                         break;
                     case UserOptions.ExecuteUnhandledException:
-                        Console.Clear();
-                        ExceptionHandlingTasks.DemonstrateUnhandledException();
-                        Console.ReadKey();
-                        Console.Clear();
+                        ExceptionHandlingTask.DemonstrateUnhandledException();
                         break;
                     case UserOptions.ExecuteStackTrace:
-                        Console.Clear();
-                        ExceptionHandlingTasks.DemonstrateStackTrace();
-                        Console.ReadKey();
-                        Console.Clear();
+                        ExceptionHandlingTask.DemonstrateStackTrace();
                         break;
                     case UserOptions.Exit:
                         isAppRunning = false;
                         break;
                 }
+
+                Console.ReadKey();
+                Console.Clear();
             }
         }
     }

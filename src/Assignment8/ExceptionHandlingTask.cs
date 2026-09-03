@@ -8,9 +8,9 @@ using Assignments;
 namespace Assignment8
 {
     /// <summary>
-    /// Tasks class.
+    /// Class containing the exception handling tasks.
     /// </summary>
-    internal static class ExceptionHandlingTasks
+    internal static class ExceptionHandlingTask
     {
         /// <summary>
         /// Task to perform divide operation and catch DivideByZeroException if occured.
