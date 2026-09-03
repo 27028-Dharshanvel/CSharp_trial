@@ -1,8 +1,15 @@
-﻿namespace Assignments
+﻿namespace MathUtility
 {
+    /// <summary>
+    /// Program class
+    /// </summary>
     internal class Program
     {
-        static void Main(string[] args)
+        /// <summary>
+        /// Entry point of program
+        /// </summary>
+        /// <param name="args">CMD line args</param>
+        public static void Main(string[] args)
         {
             Console.WriteLine("Hello, World!");
         }
