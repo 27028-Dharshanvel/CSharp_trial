@@ -18,6 +18,7 @@ namespace LanguageInetgratedQuery
         public void DisplayMainMenu()
         {
             List<Product> products = this._productRepository.GetProducts();
+            List<Product> mockProducts = this._productRepository.GetMockProducts();
             bool isAppRunning = true;
             while (isAppRunning)
             {
@@ -55,7 +56,7 @@ Select your choice to  the corresponding LINQ :
                         LinqTask.ExecuteAdvancedLinqTask(this._intArray.GetNumbers());
                         break;
                     case UserOptions.OptimizedLINQ:
-                        LinqTask.ExecuteOptimizedLinqTask(products);
+                        LinqTask.ExecuteOptimizedLinqTask(mockProducts);
                         break;
                     case UserOptions.FluentAPI:
                         LinqTask.ExecuteFluentApiPattern(products);

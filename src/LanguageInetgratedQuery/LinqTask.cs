@@ -1,4 +1,5 @@
-﻿using LanguageInetgratedQuery.Models;
+﻿using System.Diagnostics;
+using LanguageInetgratedQuery.Models;
 
 namespace LanguageInetgratedQuery
 {
@@ -48,7 +49,7 @@ namespace LanguageInetgratedQuery
                 p => new object[] { p.ProductName, p.ProductPrice }
             );
 
-            decimal average = products1.Average(p => p.ProductPrice);
+            double average = products1.Average(p => p.ProductPrice);
 
             Console.WriteLine();
             Console.WriteLine("Average Price: " + average);
@@ -74,8 +75,7 @@ namespace LanguageInetgratedQuery
                     Category = group.Key,
                     ProductCount = group.Count(),
                     MostExpensiveProduct = group
-                        .OrderByDescending(p => p.ProductPrice)
-                        .First(),
+                        .MaxBy(p => p.ProductPrice),
                 })
                 .ToList();
 
@@ -130,7 +130,7 @@ namespace LanguageInetgratedQuery
                 .Distinct()
                 .OrderByDescending(number => number)
                 .Skip(1)
-                .First();
+                .FirstOrDefault();
 
             Console.WriteLine();
             Console.WriteLine("Second Highest Number: " + secondHighest);
@@ -165,19 +165,9 @@ namespace LanguageInetgratedQuery
             Console.WriteLine();
             Console.WriteLine("TASK 4 - PERFORMANCE CONSIDERATIONS WITH LINQ");
             Console.WriteLine();
-
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
             var books = products
-                .Where(p => p.ProductCategory == "Books")
-                .OrderBy(p => p.ProductPrice)
-                .ToList();
-
-            ConsoleHelper.DisplayTable(
-                books,
-                new[] { "ProductId", "ProductName", "ProductCategory", "ProductPrice" },
-                p => new object[] { p.ProductId, p.ProductName, p.ProductCategory, p.ProductPrice }
-            );
-
-            var optimizedBooks = products
                 .Where(p => p.ProductCategory == "Books")
                 .OrderBy(p => p.ProductPrice)
                 .Select(p => new
@@ -187,11 +177,15 @@ namespace LanguageInetgratedQuery
                 })
                 .ToList();
 
-            ConsoleHelper.DisplayTable(
-                optimizedBooks,
-                new[] { "ProductName", "ProductPrice" },
-                p => new object[] { p.ProductName, p.ProductPrice }
-            );
+            Console.WriteLine("Time taken for normal query : " + watch.ElapsedMilliseconds);
+            watch.Restart();
+            var optimizedBooks = products
+                .Where(p => p.ProductCategory == "Books")
+                .Select(p => new { p.ProductName, p.ProductPrice })
+                .OrderBy(p => p.ProductPrice)
+                .ToList();
+
+            Console.WriteLine("Time taken for optimized query : " + watch.ElapsedMilliseconds);
         }
 
         /// <summary>

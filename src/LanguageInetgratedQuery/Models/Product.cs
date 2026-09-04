@@ -35,6 +35,6 @@
         /// <value>
         /// ProductPrice
         /// </value>
-        public decimal ProductPrice { get; set; }
+        public double ProductPrice { get; set; }
     }
 }
