@@ -3,7 +3,7 @@
     /// <summary>
     /// Mathematic operations
     /// </summary>
-    internal class MathUtils
+    public class MathUtils
     {
         /// <summary>
         /// Addition operation of two integers.

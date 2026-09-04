@@ -1,4 +1,7 @@
-﻿namespace BasicCalculator
+﻿using System.Reflection.Metadata.Ecma335;
+using MathUtility;
+
+namespace BasicCalculator
 {
     /// <summary>
     /// Program class
@@ -22,29 +25,44 @@ Select the Arithmetic operation to perform
             int choice;
             if (int.TryParse(Console.ReadLine(), out choice))
             {
-                Console.WriteLine($"Index: {choice}");
             }
             else
             {
                 Console.WriteLine("Invalid input");
             }
 
+            Console.Write("Enter the first operand : ");
+            int operand1;
+            if (int.TryParse(Console.ReadLine(), out operand1))
+            {
+            }
+            else
+            {
+                Console.WriteLine("Invalid input");
+            }
+
+            Console.Write("Enter the second operand : ");
+            int operand2;
+            if (int.TryParse(Console.ReadLine(), out operand2))
+            {
+            }
+            else
+            {
+                Console.WriteLine("Invalid input");
+            }
             switch (choice)
             {
                 case 1:
-                    MathUtils.Add();
+                    Console.WriteLine("Sum : " + MathUtils.Add(operand1, operand2));
                     break;
                 case 2:
-                    MathUtils.Subtract();
+                    Console.WriteLine("Difference : " + MathUtils.Subtract(operand1, operand2));
                     break;
                 case 3:
-                    MathUtils.Divide();
+                    Console.WriteLine("Product : " + MathUtils.Multiply(operand1, operand2));
                     break;
                 case 4:
-                    MathUtils.Multiply();
-                    break;
-                case 5:
-                    MathUtils.Divide();
+                    Console.WriteLine("Quotient : " + MathUtils.Divide(operand1, operand2));
                     break;
             }
         }
