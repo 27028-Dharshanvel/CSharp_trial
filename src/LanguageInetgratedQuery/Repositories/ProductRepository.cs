@@ -86,26 +86,6 @@ namespace LanguageInetgratedQuery.Repositories
             },
         };
 
-        private string[] _categories = { "Books", "Electronics", "Clothing", "Home", "Beauty" };
-        private Random _rand = new Random();
-        private List<Product> _mockProducts = new List<Product>();
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ProductRepository"/> class.
-        /// </summary>
-        public ProductRepository()
-        {
-            for (int i = 0; i < this._mockProducts.Count; i++)
-            {
-                this._mockProducts[i] = new Product
-                {
-                    ProductName = $"Product {i}",
-                    ProductPrice = Math.Round((this._rand.NextDouble() * (500 - 5)) + 5, 2),
-                    ProductCategory = this._categories[this._rand.Next(this._categories.Length)],
-                };
-            }
-        }
-
         /// <summary>
         /// Gets products.
         /// </summary>
@@ -113,15 +93,6 @@ namespace LanguageInetgratedQuery.Repositories
         public List<Product> GetProducts()
         {
             return this._products;
-        }
-
-        /// <summary>
-        /// Gets products.
-        /// </summary>
-        /// <returns>list</returns>
-        public List<Product> GetMockProducts()
-        {
-            return this._mockProducts;
         }
     }
 }
