@@ -53,19 +53,13 @@ namespace IDisposableDemo
         /// <param name="disposing">boolean</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!this._disposed)
+            if (!this._disposed && disposing && this._writer != null)
             {
-                if (disposing)
-                {
-                    if (this._writer != null)
-                    {
-                        this._writer.Dispose();
-                        this._writer = null;
-                    }
-                }
-
-                this._disposed = true;
+                this._writer.Dispose();
+                this._writer = null;
             }
+
+            this._disposed = true;
         }
     }
 }

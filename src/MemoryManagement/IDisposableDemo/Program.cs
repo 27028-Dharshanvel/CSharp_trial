@@ -13,7 +13,7 @@ namespace Assignments
         /// <param name="args">CMD line args</param>
         public static void Main(string[] args)
         {
-            string path = "example_output.txt";
+            string path = "DisposableFile.txt";
 
             Console.WriteLine("Opening file and writing text...");
 

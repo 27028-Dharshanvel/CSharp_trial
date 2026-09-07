@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ValueAndReferenceTypes
+﻿namespace GarbageCollection
 {
     /// <summary>
     /// Student class
@@ -13,13 +7,20 @@ namespace ValueAndReferenceTypes
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Student"/> class.
-        /// Student
         /// </summary>
-        /// <param name="name">name</param>
-        public Student(string name)
+        /// <param name="id">id</param>
+        public Student(int id)
         {
-            Name = name;
+            this.Id = id;
         }
+
+        /// <summary>
+        /// Gets or sets id
+        /// </summary>
+        /// <value>
+        /// Id
+        /// </value>
+        public int Id { get; set; }
 
         /// <summary>
         /// Gets or sets name
