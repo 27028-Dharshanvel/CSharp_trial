@@ -11,7 +11,6 @@ namespace ValueAndReferenceTypes
     /// </summary>
     internal class Student
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Student"/> class.
         /// Student
