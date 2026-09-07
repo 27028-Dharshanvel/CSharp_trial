@@ -1,4 +1,4 @@
-﻿namespace GarbageCollection;
+﻿namespace ValueAndReferenceTypes;
 
 /// <summary>
 /// Program class
