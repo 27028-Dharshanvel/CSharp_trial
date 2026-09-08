@@ -6,17 +6,17 @@ namespace Assignment4.Services
     /// <summary>
     /// Service Class for managing transactions.
     /// </summary>
-    internal class TransactionService
+    internal class TransactionService : ITransactionService
     {
-        private ITransactionRepository _inMemoryTransactionRepository;
+        private ITransactionRepository _transactionRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TransactionService"/> class.
         /// </summary>
-        /// <param name="repository">Instance of transaction repository.</param>
-        public TransactionService(ITransactionRepository repository)
+        /// <param name="transactionRepository">Instance of transaction repository.</param>
+        public TransactionService(ITransactionRepository transactionRepository)
         {
-            this._inMemoryTransactionRepository = repository;
+            this._transactionRepository = transactionRepository;
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Assignment4.Services
         {
             Transaction transaction = new Transaction(amount, date, category, userId);
 
-            this._inMemoryTransactionRepository.AddTransaction(transaction);
+            this._transactionRepository.AddTransaction(transaction);
             return true;
         }
 
@@ -41,7 +41,7 @@ namespace Assignment4.Services
         /// <returns>List of transactions.</returns>
         public List<Transaction> GetAllTransactions()
         {
-            return this._inMemoryTransactionRepository.LoadTransactions();
+            return this._transactionRepository.LoadTransactions();
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Assignment4.Services
         /// <returns>Transaction if found; otherwise null.</returns>
         public Transaction? GetTransactionById(Guid transactionId)
         {
-            List<Transaction> transactions = this._inMemoryTransactionRepository.LoadTransactions();
+            List<Transaction> transactions = this._transactionRepository.LoadTransactions();
 
             return transactions.FirstOrDefault(transaction => transaction.TransactionId == transactionId);
         }
@@ -74,7 +74,7 @@ namespace Assignment4.Services
 
             Transaction updatedTransaction = new Transaction(amount, date, category, oldTransaction.UserId);
 
-            this._inMemoryTransactionRepository.UpdateTransaction(oldTransaction, updatedTransaction);
+            this._transactionRepository.UpdateTransaction(oldTransaction, updatedTransaction);
             return true;
         }
 
@@ -91,7 +91,7 @@ namespace Assignment4.Services
                 return false;
             }
 
-            this._inMemoryTransactionRepository.DeleteTransaction(transaction);
+            this._transactionRepository.DeleteTransaction(transaction);
             return true;
         }
 
@@ -103,7 +103,7 @@ namespace Assignment4.Services
         public decimal GetTotalIncome(Guid userId)
         {
             decimal totalIncome = 0;
-            List<Transaction> transactions = this._inMemoryTransactionRepository.LoadTransactions();
+            List<Transaction> transactions = this._transactionRepository.LoadTransactions();
             foreach (Transaction transaction in transactions)
             {
                 if (transaction.UserId == userId)
@@ -126,7 +126,7 @@ namespace Assignment4.Services
         public decimal GetTotalExpense(Guid userId)
         {
             decimal totalExpense = 0;
-            List<Transaction> transactions = this._inMemoryTransactionRepository.LoadTransactions();
+            List<Transaction> transactions = this._transactionRepository.LoadTransactions();
             foreach (Transaction transaction in transactions)
             {
                 if (transaction.UserId == userId)

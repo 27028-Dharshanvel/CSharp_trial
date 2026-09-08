@@ -11,7 +11,7 @@ namespace Assignment4.Views
     /// </summary>
     internal class TransactionMenu
     {
-        private TransactionService _transactionService;
+        private ITransactionService _transactionService;
         private Guid _userId;
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace Assignment4.Views
         /// </summary>
         /// <param name="service">service</param>
         /// <param name="userId">userid</param>
-        public TransactionMenu(TransactionService service, Guid userId)
+        public TransactionMenu(ITransactionService service, Guid userId)
         {
             this._transactionService = service;
             this._userId = userId;
@@ -83,7 +83,7 @@ namespace Assignment4.Views
             }
         }
 
-        private void AddTransactionHandler(TransactionService service, Guid userId)
+        private void AddTransactionHandler(ITransactionService service, Guid userId)
         {
             Console.WriteLine(@"
 1.Add Income
@@ -164,7 +164,7 @@ namespace Assignment4.Views
             }
         }
 
-        private void ViewTransactionsHandler(TransactionService service, Guid userId)
+        private void ViewTransactionsHandler(ITransactionService service, Guid userId)
         {
             List<Transaction> transactions = service.GetAllTransactions();
             if (transactions.Count == 0)
@@ -189,7 +189,7 @@ namespace Assignment4.Views
             table.Write();
         }
 
-        private void EditTransactionHandler(TransactionService service, Guid userId)
+        private void EditTransactionHandler(ITransactionService service, Guid userId)
         {
             List<Transaction> transactions = service.GetAllTransactions();
             if (transactions.Count == 0)
@@ -198,7 +198,7 @@ namespace Assignment4.Views
                 return;
             }
 
-            ViewTransactionsHandler(service, userId);
+            this.ViewTransactionsHandler(service, userId);
             int selectedIndex;
             if (!InputValidater.IsValidInt("\nEnter transaction index to edit : ", "Index", 1, transactions.Count + 1, 3, out selectedIndex))
             {
@@ -246,7 +246,7 @@ namespace Assignment4.Views
             }
         }
 
-        private void DeleteTransactionHandler(TransactionService service, Guid userId)
+        private void DeleteTransactionHandler(ITransactionService service, Guid userId)
         {
             List<Transaction> transactions = service.GetAllTransactions();
             if (transactions.Count == 0)
@@ -255,7 +255,7 @@ namespace Assignment4.Views
                 return;
             }
 
-            ViewTransactionsHandler(service, userId);
+            this.ViewTransactionsHandler(service, userId);
             int selectedIndex;
             if (!InputValidater.IsValidInt("\nEnter transaction index to delete : ", "Index", 1, transactions.Count + 1, 3, out selectedIndex))
             {
@@ -275,7 +275,7 @@ namespace Assignment4.Views
             }
         }
 
-        private void ViewStatsHandler(TransactionService service, Guid userId)
+        private void ViewStatsHandler(ITransactionService service, Guid userId)
         {
             List<Transaction> transactions = service.GetAllTransactions();
             if (transactions.Count == 0)

@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Assignment4.Helpers;
 using Assignment4.Models;
 using Assignment4.Repository;
 
@@ -9,9 +6,9 @@ namespace Assignment4.Services
     /// <summary>
     /// Service for managing user accounts.
     /// </summary>
-    internal class UserService
+    internal class UserService : IUserService
     {
-        private IUserRepository _inMemoryUserRepository;
+        private IUserRepository _userRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserService"/> class.
@@ -19,7 +16,7 @@ namespace Assignment4.Services
         /// <param name="repository">Instance of User repository.</param>
         public UserService(IUserRepository repository)
         {
-            this._inMemoryUserRepository = repository;
+            this._userRepository = repository;
         }
 
         /// <summary>
@@ -32,7 +29,7 @@ namespace Assignment4.Services
         {
             errorMessage = string.Empty;
 
-            foreach (User existingUser in this._inMemoryUserRepository.LoadUsers())
+            foreach (User existingUser in this._userRepository.LoadUsers())
             {
                 if (string.Equals(existingUser.UserName, username, StringComparison.OrdinalIgnoreCase))
                 {
@@ -47,7 +44,7 @@ namespace Assignment4.Services
                 UserName = username,
             };
 
-            this._inMemoryUserRepository.AddUser(newUser);
+            this._userRepository.AddUser(newUser);
             return true;
         }
 
@@ -59,7 +56,7 @@ namespace Assignment4.Services
         /// <returns>True if login is successful; otherwise false.</returns>
         public bool LoginUser(string username, out Guid userId)
         {
-            foreach (User existingUser in this._inMemoryUserRepository.LoadUsers())
+            foreach (User existingUser in this._userRepository.LoadUsers())
             {
                 if (string.Equals(existingUser.UserName, username, StringComparison.OrdinalIgnoreCase))
                 {
