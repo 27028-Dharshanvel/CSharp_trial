@@ -18,10 +18,11 @@ namespace Assignment4.Services
         public bool AddTransaction(Guid userId, decimal amount, string category, DateOnly date);
 
         /// <summary>
-        /// Gets all transactions.
+        /// Gets all transactions of a specific user
         /// </summary>
+        /// <param name="userId">current user id.</param>
         /// <returns>List of transactions.</returns>
-        public List<Transaction> GetAllTransactions();
+        public List<Transaction> GetAllTransactionsByUser(Guid userId);
 
         /// <summary>
         /// Gets transaction by Id.
@@ -46,6 +47,13 @@ namespace Assignment4.Services
         /// <param name="transactionId">Transaction Id to delete.</param>
         /// <returns>True if deleted successfully; otherwise false.</returns>
         public bool DeleteTransaction(Guid transactionId);
+
+        /// <summary>
+        /// Checks whether the transaction repository is emtpy.
+        /// </summary>
+        /// <param name="userId">user id</param>
+        /// <returns>True if empty, false otherwise.</returns>
+        public bool IsEmptyRepository(Guid userId);
 
         /// <summary>
         /// Calculates total income.

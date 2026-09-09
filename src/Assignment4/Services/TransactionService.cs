@@ -38,10 +38,11 @@ namespace Assignment4.Services
         /// <summary>
         /// Gets all transactions.
         /// </summary>
+        /// <param name="userId">Current user id.</param>
         /// <returns>List of transactions.</returns>
-        public List<Transaction> GetAllTransactions()
+        public List<Transaction> GetAllTransactionsByUser(Guid userId)
         {
-            return this._transactionRepository.LoadTransactions();
+            return this._transactionRepository.LoadTransactions().Where(p => p.UserId == userId).ToList();
         }
 
         /// <summary>
@@ -93,6 +94,16 @@ namespace Assignment4.Services
 
             this._transactionRepository.DeleteTransaction(transaction);
             return true;
+        }
+
+        /// <summary>
+        /// Checks whether the transaction repository of the user is empty.
+        /// </summary>
+        /// <param name="userId">user id.</param>
+        /// <returns>True if empty, false otherwise.</returns>
+        public bool IsEmptyRepository(Guid userId)
+        {
+            return this.GetAllTransactionsByUser(userId).Count() == 0;
         }
 
         /// <summary>

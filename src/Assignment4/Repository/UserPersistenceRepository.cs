@@ -27,9 +27,9 @@ namespace Assignment4.Repository
         /// <param name="user">user</param>
         public void AddUser(User user)
         {
-            var users = LoadUsers();
+            var users = this.LoadUsers();
             users.Add(user);
-            SaveUsers(users);
+            this.SaveUsers(users);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Assignment4.Repository
         /// <param name="user">user</param>
         public void DeleteUser(User user)
         {
-            var users = LoadUsers();
+            var users = this.LoadUsers();
 
             users.RemoveAll(u => u.UserId == user.UserId);
 
@@ -57,7 +57,7 @@ namespace Assignment4.Repository
                 return new List<User>();
             }
 
-            string json = File.ReadAllText(_filePath);
+            string json = File.ReadAllText(this._filePath);
 
             if (string.IsNullOrWhiteSpace(json))
             {
@@ -93,7 +93,7 @@ namespace Assignment4.Repository
                     WriteIndented = true,
                 });
 
-            File.WriteAllText(_filePath, json);
+            File.WriteAllText(this._filePath, json);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Assignment4.Repository
         /// <exception cref="InvalidOperationException">InvalidOperationException.</exception>
         public void UpdateUser(User oldUser, User updatedUser)
         {
-            var users = LoadUsers();
+            var users = this.LoadUsers();
 
             int index = users.FindIndex(u => u.UserId == oldUser.UserId);
 
@@ -115,7 +115,7 @@ namespace Assignment4.Repository
 
             users[index] = updatedUser;
 
-            SaveUsers(users);
+            this.SaveUsers(users);
         }
     }
 }
