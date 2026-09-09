@@ -30,5 +30,18 @@ namespace Assignment4.Models
         /// </summary>
         /// <value>User name.</value>
         public string UserName { get; set; }
+
+        /// <summary>
+        /// Creates a clone of the current transaction instance.
+        /// </summary>
+        /// <returns>Transaction instance</returns>
+        public User Clone()
+        {
+            return new User()
+            {
+                UserId = this.UserId,
+                UserName = this.UserName,
+            };
+        }
     }
 }

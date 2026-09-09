@@ -33,7 +33,7 @@ namespace Assignment4.Repository
         /// <returns>List of users.</returns>
         public List<User> LoadUsers()
         {
-            return this._users;
+            return this._users.Select(p => p.Clone()).ToList();
         }
 
         /// <summary>

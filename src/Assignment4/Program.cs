@@ -17,10 +17,11 @@ namespace Assignments
         public static void Main(string[] args)
         {
             IUserRepository userListRepository = new UserListRepository();
-            UserService userService = new UserService(userListRepository);
+            IUserService userService = new UserService(userListRepository);
             ITransactionRepository transactionListRepository = new TransactionListRepository();
-            TransactionService transactionService = new TransactionService(transactionListRepository);
-            MainMenu.DisplayMainMenu(userService, transactionService);
+            ITransactionService transactionService = new TransactionService(transactionListRepository);
+            MainMenu mainMenu = new MainMenu(userService, transactionService);
+            mainMenu.DisplayMainMenu();
         }
     }
 }
