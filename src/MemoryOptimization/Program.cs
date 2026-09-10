@@ -13,7 +13,9 @@ namespace Assignments
         /// <param name="args">CMD line args</param>
         public static void Main(string[] args)
         {
-            MainMenu mainMenu = new MainMenu();
+            MemoryEater me = new MemoryEater();
+            OptimizedMemoryEater optim = new OptimizedMemoryEater();
+            MainMenu mainMenu = new MainMenu(me, optim);
             mainMenu.DisplayMainMenu();
         }
     }

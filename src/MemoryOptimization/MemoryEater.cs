@@ -23,14 +23,14 @@ namespace Assignments
         }
 
         /// <summary>
-        /// Allocate method
+        /// Allocate method.
         /// </summary>
         public void AllocateWithOptimization()
         {
             while (true)
             {
                 this._memAlloc.Add(new int[1000]);
-                Thread.Sleep(10);
+                Thread.Sleep(1);
             }
         }
     }
