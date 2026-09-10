@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Assignment4.Models
 {
     /// <summary>
@@ -30,5 +24,18 @@ namespace Assignment4.Models
         /// </summary>
         /// <value>User name.</value>
         public string UserName { get; set; }
+
+        /// <summary>
+        /// Clone method to copy and return users.
+        /// </summary>
+        /// <returns>User</returns>
+        public User Clone()
+        {
+            return new User()
+            {
+                UserName = this.UserName,
+                UserId = this.UserId,
+            };
+        }
     }
 }
