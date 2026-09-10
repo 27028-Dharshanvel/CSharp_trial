@@ -54,14 +54,5 @@ namespace Assignment4.Repository
         {
             oldUser.UserName = updatedUser.UserName;
         }
-
-        /// <summary>
-        /// Saves user list in memory
-        /// </summary>
-        /// <param name="users">users</param>
-        public void SaveUsers(List<User> users)
-        {
-            this._users = users.Select(p => p.Clone()).ToList();
-        }
     }
 }

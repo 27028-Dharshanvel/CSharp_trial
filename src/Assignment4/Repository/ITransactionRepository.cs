@@ -8,12 +8,6 @@ namespace Assignment4.Repository
     internal interface ITransactionRepository
     {
         /// <summary>
-        /// Save transactions.
-        /// </summary>
-        /// <param name="transactions">List of transactions.</param>
-        void SaveTransactions(List<Transaction> transactions);
-
-        /// <summary>
         /// Loads Transactions.
         /// </summary>
         /// <returns>List of transactions.</returns>
