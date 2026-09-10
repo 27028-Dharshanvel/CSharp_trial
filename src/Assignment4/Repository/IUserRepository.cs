@@ -8,12 +8,6 @@ namespace Assignment4.Repository
     internal interface IUserRepository
     {
         /// <summary>
-        /// Save users.
-        /// </summary>
-        /// <param name="users">List of Users.</param>
-        void SaveUsers(List<User> users);
-
-        /// <summary>
         /// Loads users.
         /// </summary>
         /// <returns>List of users.</returns>

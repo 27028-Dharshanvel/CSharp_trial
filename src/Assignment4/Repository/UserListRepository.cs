@@ -19,15 +19,6 @@ namespace Assignment4.Repository
         }
 
         /// <summary>
-        /// Save users.
-        /// </summary>
-        /// <param name="users">List of users.</param>
-        public void SaveUsers(List<User> users)
-        {
-            this._users = users;
-        }
-
-        /// <summary>
         /// Loads users.
         /// </summary>
         /// <returns>List of users.</returns>
