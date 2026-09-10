@@ -18,15 +18,6 @@ namespace Assignment4.Repository
         }
 
         /// <summary>
-        /// Save transactions.
-        /// </summary>
-        /// <param name="transactions">List of transactions.</param>
-        public void SaveTransactions(List<Transaction> transactions)
-        {
-            this._transactions = transactions;
-        }
-
-        /// <summary>
         /// Loads Transactions.
         /// </summary>
         /// <returns>List of transactions.</returns>
