@@ -46,6 +46,10 @@ Key Features :
 Garbage Collection is an automatic memory manager that handles the allocation and release of memory for applications.
 
 * Advantages: It prevents memory leaks, dangling pointers, and manual deallocation errors by periodically sweeping the managed heap to destroy objects that are no longer referenced by the application.
+* Objects are classified into different generations based on their life time.  
+* **G0 - In generation 0 , objects are short lived and are frequently collected by GC.
+* **G1 - In generation 1 , objects that survived G0 are promoted here. Acts as a buffer zone between short-lived and long-lived objects.
+* **G2 - In generation 2 , objects are long-lived mostly static . These survived multiple Gc collections and scanning them is expensive.
 
 ## 6. Globalization and Localization
 
@@ -53,6 +57,6 @@ Garbage Collection is an automatic memory manager that handles the allocation an
 * Localization: The subsequent process of translating and adapting that globalized application's resources (such as UI text and images) for a specific target culture or locale.
 
 ## 7. CIL and JIT Compilation
-CIL (Common Intermediate Language) is the CPU-independent machine language bytecode into which source code is initially compiled. During execution, the JIT (Just-In-Time) compiler translates this CIL bytecode into native, machine-specific CPU instructions right before the code runs.
+CIL (Common Intermediate Language) is the CPU-independent machine language bytecode into which source code is initially compiled. During execution, the JIT (Just-In-Time) compiler translates this CIL bytecode into native, machine-specific CPU instructions right before the code runs.This makes it plaform independent, allowing us to run the .exe .dll files in different Operating system . Just In Time compiler compiles the CIL to native machine code only when a method is called , the next time the same method is called, it gets loaded from cache.
 
 
