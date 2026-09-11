@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanguageInetgratedQuery", "src\LanguageInetgratedQuery\LanguageInetgratedQuery.csproj", "{FA31330D-A428-4FEB-80CF-118E73697466}"
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assignment8", "src\Assignment8\Assignment8.csproj", "{3DF0676A-1635-CF91-7AEA-7B268E2BC317}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assignment4", "src\Assignment4\Assignment4.csproj", "{FE73EA30-AF45-4BFF-BFA4-117BCBD0852A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,16 @@ Global
 		{3DF0676A-1635-CF91-7AEA-7B268E2BC317}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DF0676A-1635-CF91-7AEA-7B268E2BC317}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DF0676A-1635-CF91-7AEA-7B268E2BC317}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE73EA30-AF45-4BFF-BFA4-117BCBD0852A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE73EA30-AF45-4BFF-BFA4-117BCBD0852A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE73EA30-AF45-4BFF-BFA4-117BCBD0852A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE73EA30-AF45-4BFF-BFA4-117BCBD0852A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
