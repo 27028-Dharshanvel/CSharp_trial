@@ -12,6 +12,7 @@ namespace Assignment4.Views
     {
         private ITransactionService _transactionService;
         private Guid _userId;
+        private bool _isSuccess;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TransactionMenu"/> class.
@@ -155,13 +156,13 @@ namespace Assignment4.Views
 
         private void ViewTransactionsHandler(ITransactionService service, Guid userId)
         {
-            if (service.IsEmptyRepository(userId))
+            List<Transaction> transactions = service.GetAllTransactionsByUser(userId, out this._isSuccess);
+            if (!this._isSuccess)
             {
                 OutputColor.Warn("No transactions found.");
                 return;
             }
-
-            List<Transaction> transactions = service.GetAllTransactionsByUser(userId);
+ 
             ConsoleTable table = new ConsoleTable("Index", "Type", "Amount", "Category", "Date");
             int index = 1;
             foreach (Transaction transaction in transactions)
@@ -180,13 +181,13 @@ namespace Assignment4.Views
 
         private void EditTransactionHandler(ITransactionService service, Guid userId)
         {
-            if (service.IsEmptyRepository(userId))
+            List<Transaction> transactions = service.GetAllTransactionsByUser(userId, out this._isSuccess);
+            if (!this._isSuccess)
             {
-                OutputColor.Warn("No transactions found to edit.");
+                OutputColor.Warn("No transactions found.");
                 return;
             }
 
-            List<Transaction> transactions = service.GetAllTransactionsByUser(userId);
             this.ViewTransactionsHandler(service, userId);
             int selectedIndex;
             if (!InputValidater.IsValidInt("\nEnter transaction index to edit : ", "Index", 1, transactions.Count + 1, 3, out selectedIndex))
@@ -233,13 +234,13 @@ namespace Assignment4.Views
 
         private void DeleteTransactionHandler(ITransactionService service, Guid userId)
         {
-            if (service.IsEmptyRepository(userId))
+            List<Transaction> transactions = service.GetAllTransactionsByUser(userId, out this._isSuccess);
+            if (!this._isSuccess)
             {
-                OutputColor.Warn("No transactions found to delete.");
+                OutputColor.Warn("No transactions found.");
                 return;
             }
 
-            List<Transaction> transactions = service.GetAllTransactionsByUser(userId);
             this.ViewTransactionsHandler(service, userId);
             int selectedIndex;
             if (!InputValidater.IsValidInt("\nEnter transaction index to delete : ", "Index", 1, transactions.Count + 1, 3, out selectedIndex))
@@ -261,13 +262,12 @@ namespace Assignment4.Views
 
         private void ViewStatsHandler(ITransactionService service, Guid userId)
         {
-            if (service.IsEmptyRepository(userId))
+            List<Transaction> transactions = service.GetAllTransactionsByUser(userId, out this._isSuccess);
+            if (!this._isSuccess)
             {
-                OutputColor.Warn("No transactions found to edit.");
+                OutputColor.Warn("No transactions found.");
                 return;
             }
-
-            List<Transaction> transactions = service.GetAllTransactionsByUser(userId);
 
             decimal totalIncome = service.GetTotalIncome(userId);
             decimal totalExpense = service.GetTotalExpense(userId);

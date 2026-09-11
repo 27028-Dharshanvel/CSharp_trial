@@ -39,10 +39,20 @@ namespace Assignment4.Services
         /// Gets all transactions.
         /// </summary>
         /// <param name="userId">Current user id.</param>
+        /// <param name="isSuccess">Out value.True if transaction count is greater than zero, False otherwise</param>
         /// <returns>List of transactions.</returns>
-        public List<Transaction> GetAllTransactionsByUser(Guid userId)
+        public List<Transaction> GetAllTransactionsByUser(Guid userId, out bool isSuccess)
         {
-            return this._transactionRepository.LoadTransactions().Where(p => p.UserId == userId).ToList();
+            if (this._transactionRepository.LoadTransactions().Count == 0)
+            {
+                isSuccess = false;
+                return new List<Transaction>();
+            }
+            else
+            {
+                isSuccess = true;
+                return this._transactionRepository.LoadTransactions().Where(p => p.UserId == userId).ToList();
+            }
         }
 
         /// <summary>
@@ -94,16 +104,6 @@ namespace Assignment4.Services
 
             this._transactionRepository.DeleteTransaction(transaction);
             return true;
-        }
-
-        /// <summary>
-        /// Checks whether the transaction repository of the user is empty.
-        /// </summary>
-        /// <param name="userId">user id.</param>
-        /// <returns>True if empty, false otherwise.</returns>
-        public bool IsEmptyRepository(Guid userId)
-        {
-            return this.GetAllTransactionsByUser(userId).Count() == 0;
         }
 
         /// <summary>
