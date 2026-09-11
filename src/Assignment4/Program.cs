@@ -16,10 +16,10 @@ namespace Assignments
         /// <param name="args">Command line arguments</param>
         public static void Main(string[] args)
         {
-            IUserRepository userListRepository = new UserListRepository();
-            IUserService userService = new UserService(userListRepository);
-            ITransactionRepository transactionListRepository = new TransactionListRepository();
-            ITransactionService transactionService = new TransactionService(transactionListRepository);
+            IUserRepository userPersistenceRepository = new UserPersistenceRepository();
+            IUserService userService = new UserService(userPersistenceRepository);
+            ITransactionRepository transactionPersistenceRepository = new TransactionPersistenceRepository();
+            ITransactionService transactionService = new TransactionService(transactionPersistenceRepository);
             MainMenu mainMenu = new MainMenu(userService, transactionService);
             mainMenu.DisplayMainMenu();
         }

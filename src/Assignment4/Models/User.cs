@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Assignment4.Models
 {
     /// <summary>
@@ -32,9 +26,9 @@ namespace Assignment4.Models
         public string UserName { get; set; }
 
         /// <summary>
-        /// Creates a clone of the current transaction instance.
+        /// Clone method to copy and return users.
         /// </summary>
-        /// <returns>Transaction instance</returns>
+        /// <returns>User</returns>
         public User Clone()
         {
             return new User()
