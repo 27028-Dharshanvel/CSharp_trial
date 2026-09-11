@@ -33,8 +33,8 @@ namespace Assignment4.Models
         {
             return new User()
             {
-                UserName = this.UserName,
                 UserId = this.UserId,
+                UserName = this.UserName,
             };
         }
     }
