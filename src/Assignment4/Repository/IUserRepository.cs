@@ -1,0 +1,35 @@
+﻿using Assignment4.Models;
+
+namespace Assignment4.Repository
+{
+    /// <summary>
+    /// Interface for user repository.
+    /// </summary>
+    internal interface IUserRepository
+    {
+        /// <summary>
+        /// Loads users.
+        /// </summary>
+        /// <returns>List of users.</returns>
+        List<User> LoadUsers();
+
+        /// <summary>
+        /// Adds users.
+        /// </summary>
+        /// <param name="users">Instance of user.</param>
+        void AddUser(User users);
+
+        /// <summary>
+        /// Deletes users.
+        /// </summary>
+        /// <param name="users">Instance of user.</param>
+        void DeleteUser(User users);
+
+        /// <summary>
+        /// Updates users.
+        /// </summary>
+        /// <param name="oldUser">oldtUser instance.</param>
+        /// <param name="updatedUser">updatedUser instance.</param>
+        void UpdateUser(User oldUser, User updatedUser);
+    }
+}
