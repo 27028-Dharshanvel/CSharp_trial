@@ -18,7 +18,7 @@ namespace GarbageCollection
         }
 
         /// <summary>
-        /// Simulate Objects count
+        /// Simulate Objects count.
         /// </summary>
         /// <param name="iterationCount">count</param>
         public static void SimulateObjectChurn(int iterationCount)

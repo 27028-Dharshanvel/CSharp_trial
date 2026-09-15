@@ -11,11 +11,62 @@ internal class Program
     /// <param name="args">CMD line args</param>
     public static void Main(string[] args)
     {
-        int sampleInteger = 10;
-        Student student = new Student("Dharshan");
-        ModifyInputs(sampleInteger, student);
-        Console.WriteLine(@$"Integer is not modified : {sampleInteger}
-String is Modified : {student.Name}");
+        bool isAppRunning = true;
+        while (isAppRunning)
+        {
+            Console.Write(@"------------Value and Refernce types-----------
+
+1.Demonstrate modification of a value and refernce type.
+2.Perform allocation of a large array of integers.
+3.Perform calculation with a large number of local variables.
+4.Exit application.
+
+Enter your choice : ");
+            if (!int.TryParse(Console.ReadLine(), out int choice))
+            {
+                Console.WriteLine("Please enter a valid choice");
+            }
+
+            switch (choice)
+            {
+                case 1:
+                    int sampleInteger = 10;
+                    Student student = new Student("Dharshan");
+                    Console.WriteLine(@$"Before Modification : 
+Integer (Value type) = {sampleInteger}
+student.Name (Refernce type) = {student.Name}");
+
+                    ModifyInputs(sampleInteger, student);
+
+                    Console.WriteLine($@"
+After Modification : 
+Value type is not modified is not modified : {sampleInteger}
+Refernce type is Modified : {student.Name}");
+                    break;
+
+                case 2:
+                    Console.WriteLine(@"Performs allocation of a large array of inetegers.
+View diagnostic tools to analyze memory usage");
+                    Console.WriteLine(AllocateLargeArray(100));
+                    Console.ReadKey();
+                    break;
+
+                case 3:
+                    Console.WriteLine(@"Performs calculation of many local variables.
+View diagnostic tools to analyze memory usage");
+                    Console.WriteLine(CalculateWithManyLocals());
+                    Console.ReadKey();
+                    break;
+
+                case 4:
+                    Console.WriteLine("Application Exiting");
+                    isAppRunning = false;
+                    break;
+            }
+
+            Console.ReadKey();
+            Console.Clear();
+        }
     }
 
     /// <summary>
@@ -26,7 +77,7 @@ String is Modified : {student.Name}");
     public static void ModifyInputs(int sampleInteger, Student student)
     {
         sampleInteger = 20;
-        student.Name = "vel";
+        student.Name = "D vel";
     }
 
     /// <summary>
