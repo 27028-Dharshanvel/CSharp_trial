@@ -13,7 +13,8 @@ namespace GarbageCollection
         /// <param name="args">Cmd Line args</param>
         public static void Main(string[] args)
         {
-            SimulateObjectChurn(1000);
+            Console.WriteLine(@"Simulation of large number of objects.");
+            SimulateObjectChurn(10000000);
             Console.ReadKey();
         }
 
@@ -30,21 +31,17 @@ namespace GarbageCollection
             int gc1Before = GC.CollectionCount(1);
             int gc2Before = GC.CollectionCount(2);
 
-            List<Student> students = new List<Student>();
-
             for (int i = 0; i < iterationCount; i++)
             {
-                // Student student = new Student(i);
-                students.Add(new Student(i));
+                Student student = new Student(i);
 
-                if (students[i].Id == -1)
+                if (student.Id == -1)
                 {
                     Console.WriteLine("This will never hit, but keeps the object alive for the scope.");
                 }
-
-                GC.Collect();
             }
 
+            GC.Collect();
             stopWatch.Stop();
 
             int gc0After = GC.CollectionCount(0);

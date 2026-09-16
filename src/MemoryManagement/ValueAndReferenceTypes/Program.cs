@@ -47,7 +47,7 @@ Refernce type is Modified : {student.Name}");
                 case 2:
                     Console.WriteLine(@"Performs allocation of a large array of inetegers.
 View diagnostic tools to analyze memory usage");
-                    Console.WriteLine(AllocateLargeArray(100));
+                    Console.WriteLine(AllocateLargeArray(10000000));
                     Console.ReadKey();
                     break;
 
