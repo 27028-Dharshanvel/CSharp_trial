@@ -2,7 +2,6 @@
 
 namespace Assignments
 {
-
     /// <summary>
     /// Memory eater class
     /// </summary>
@@ -17,20 +16,8 @@ namespace Assignments
         {
             while (true)
             {
-                this._memAlloc.Add(new int[1000]);
+                this._memAlloc.Add(new int[10000]);
                 Thread.Sleep(10);
-            }
-        }
-
-        /// <summary>
-        /// Allocate method.
-        /// </summary>
-        public void AllocateWithOptimization()
-        {
-            while (true)
-            {
-                this._memAlloc.Add(new int[1000]);
-                Thread.Sleep(1);
             }
         }
     }

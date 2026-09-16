@@ -1,26 +1,34 @@
 ﻿namespace MemoryOptimization
 {
     /// <summary>
-    /// MemoryEater that implements IDisposable
+    /// MemoryEater that implements IDisposable safely and supports cancellation.
     /// </summary>
     internal class OptimizedMemoryEater : IDisposable
     {
         private List<int[]> _memAlloc = new List<int[]>();
         private bool _disposed = false;
+        private readonly object _lock = new object();
 
         /// <summary>
-        /// Allocates memory with a limit.
+        /// Allocates memory safely until disposed or memory runs out.
         /// </summary>
-        /// <param name="iterations">iterations of allocation</param>
-        public void Allocate(int iterations)
+        /// <param name="iterationCount">iterationCount</param>
+        public void Allocate(int iterationCount)
         {
-            for (int i = 0; i < iterations; i++)
+            for(int i = 0; i < iterationCount; i++)
             {
-                this._memAlloc.Add(new int[1000]);
+                lock (_lock)
+                {
+                    if (_disposed || _memAlloc == null)
+                    {
+                        break;
+                    }
+
+                    this._memAlloc.Add(new int[1000]);
+                }
+
                 Thread.Sleep(10);
             }
-
-            Console.WriteLine($"Allocated {this._memAlloc.Count} arrays.");
         }
 
         /// <summary>
@@ -38,18 +46,23 @@
         /// <param name="disposing">disposing</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!this._disposed)
+            if (this._disposed)
             {
-                if (disposing)
+                return;
+            }
+
+            if (disposing)
+            {
+                lock (_lock)
                 {
-                    // 2. Clear the managed list to release references to the large int arrays
                     Console.WriteLine("Disposing MemoryEater: Clearing references...");
-                    this._memAlloc.Clear();
+
+                    this._memAlloc?.Clear();
                     this._memAlloc = null;
                 }
-
-                this._disposed = true;
             }
+
+            this._disposed = true;
         }
     }
 }
