@@ -1,49 +1,75 @@
-﻿using System.Text;
+﻿using System;
+using System.Threading.Tasks;
 
-namespace Assignments
+namespace FileStreams
 {
     /// <summary>
-    /// Program class
+    /// Entry point for the FileStreams assignment application.
+    /// Provides an interactive console menu to execute and evaluate each task.
     /// </summary>
     internal class Program
     {
         /// <summary>
-        /// Entry point of the program
+        /// Main application entry point.
         /// </summary>
-        /// <param name="args">Command-Line args</param>
-        public static void Main(string[] args)
+        /// <param name="args">Command-line arguments.</param>
+        /// <returns>Task</returns>
+        public static async Task Main(string[] args)
         {
+            Console.Title = "C# Files and Streams Assignment Solution";
+
+            bool exit = false;
+            while (!exit)
             {
-                string filePath = "large_1gb_file.txt";
+                Console.Clear();
+                Console.Write(@"------------Working with Files and Streams in C#----------------
 
-                // 1 GB target size in bytes
-                long targetSizeBytes = 1L * 1024 * 1024 * 1024;
+1. File Data Processor (Synchronous)
+2. File Data Processor (Asynchronous)
+3. Investigate Basic File Usage & Fixes
+4. Multi-User Logger & Load Testing
+5. Exit
 
-                // Define a chunk of sample text to repeat (roughly 1 KB per line block)
-                string sampleLine = "This is a line of sample text used to efficiently fill a large file on the disk block by block.\n";
-                byte[] sampleBytes = Encoding.UTF8.GetBytes(sampleLine);
+Select an operation to perform : ");
 
-                Console.WriteLine("Generating 1 GB file... Please wait.");
-                var watch = System.Diagnostics.Stopwatch.StartNew();
+                string? input = Console.ReadLine();
+                Console.WriteLine();
 
-                // 1. Open FileStream with a custom 64 KB buffer size for optimized disk I/O
-                // 2. Wrap it in a StreamWriter for smooth text operations
-                using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 64 * 1024))
-                using (StreamWriter writer = new StreamWriter(fs, Encoding.UTF8))
+                switch (input?.Trim())
                 {
-                    long currentBytesWritten = 0;
-
-                    while (currentBytesWritten < targetSizeBytes)
-                    {
-                        writer.Write(sampleLine);
-                        currentBytesWritten += sampleBytes.Length;
-                    }
+                    case "1":
+                        FileProcessor fileprocessor = new FileProcessor();
+                        fileprocessor.DeomstrateFileDataProcessing();
+                        PressAnyKeyToContinue();
+                        break;
+                    case "2":
+                        await AsyncFileProcessor.DemonstrateAsynchronousFileProcessing();
+                        PressAnyKeyToContinue();
+                        break;
+                    case "3":
+                        BasicFileUsage.RunDemo();
+                        PressAnyKeyToContinue();
+                        break;
+                    case "4":
+                        Logger.RunDemo();
+                        PressAnyKeyToContinue();
+                        break;
+                    case "0":
+                        exit = true;
+                        Console.WriteLine("Exiting application. Goodbye!");
+                        break;
+                    default:
+                        Console.WriteLine("Invalid option. Please try again.");
+                        PressAnyKeyToContinue();
+                        break;
                 }
-
-                watch.Stop();
-                Console.WriteLine($"Success! File created at: {Path.GetFullPath(filePath)}");
-                Console.WriteLine($"Time elapsed: {watch.Elapsed.TotalSeconds:F2} seconds");
             }
+        }
+
+        private static void PressAnyKeyToContinue()
+        {
+            Console.WriteLine("\nPress Enter to return to the main menu...");
+            Console.ReadLine();
         }
     }
 }
