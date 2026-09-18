@@ -144,6 +144,8 @@ namespace FileStreams
         {
             try
             {
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
                 Console.WriteLine($"Streaming and transforming data from {inputPath} to {outputPath} in chunks...");
 
                 // Open input file for streaming chunks in
@@ -169,7 +171,9 @@ namespace FileStreams
                     }
                 }
 
-                Console.WriteLine("Large file streaming and processing completed successfully.");
+                stopwatch.Stop();
+                Console.WriteLine($@"Large file streaming and processing completed successfully.
+Time taken for the read and write process : {stopwatch.ElapsedMilliseconds}");
             }
             catch (Exception ex)
             {
@@ -184,8 +188,7 @@ namespace FileStreams
         {
             Console.WriteLine(@" File Data Processor Demonstration 
 1.If running for first time, generate a sample text file for 1GB . (Ignore if already generated) 
-2.Read the file using Filestream and print the elapsed time 
-3.Read the file using Bufferedstream and print the elapsed time
+2.Read the file using Filestream and BufferedStream and compare the performance:
 4.Read the file and convert all text to uppercase and write to file using memorystream");
 
             if (!int.TryParse(Console.ReadLine(), out int choice))
@@ -204,11 +207,12 @@ namespace FileStreams
                     Console.WriteLine("Demonstration of reading a file using Filestream:");
                     long fileStreamTime = this.ReadFileWithFileStream(this._sampleFile);
                     Console.WriteLine($"FileStream: {fileStreamTime} ms ");
-                    break;
-                case 3:
-                    Console.WriteLine("Demonstration of reading a file using bufferedstream:");
+
+                    Console.WriteLine("\nDemonstration of reading a file using bufferedstream:");
                     long bufferedStreamTime = this.ReadFileWithBufferedStream(this._sampleFile);
                     Console.WriteLine($"BufferedStream: {bufferedStreamTime} ms");
+                    break;
+                case 3:
                     break;
                 case 4:
                     Console.WriteLine("Demostration of file reading and process data and write to a new file using MemoryStream");
