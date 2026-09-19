@@ -70,10 +70,10 @@ View diagnostic tools to analyze memory usage");
     }
 
     /// <summary>
-    /// Modifies inputs
+    /// Modifies a sample value type and reference type.
     /// </summary>
-    /// <param name="sampleInteger">sample Integer</param>
-    /// <param name="student">sample string</param>
+    /// <param name="sampleInteger">Value type to be modified.</param>
+    /// <param name="student">Reference type to be modified.</param>
     public static void ModifyInputs(int sampleInteger, Student student)
     {
         sampleInteger = 20;
@@ -81,7 +81,7 @@ View diagnostic tools to analyze memory usage");
     }
 
     /// <summary>
-    /// Creates a large array
+    /// Creates a large array of integer
     /// </summary>
     /// <param name="size">size of array</param>
     /// <returns>long value</returns>
@@ -104,9 +104,9 @@ View diagnostic tools to analyze memory usage");
     }
 
     /// <summary>
-    /// Calculates many local variables
+    /// Calculates many local variables.
     /// </summary>
-    /// <returns>int</returns>
+    /// <returns>Result integer</returns>
     public static int CalculateWithManyLocals()
     {
         int v1 = 10, v2 = 20, v3 = 30, v4 = 40, v5 = 50;

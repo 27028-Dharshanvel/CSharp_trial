@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ValueAndReferenceTypes
+﻿namespace ValueAndReferenceTypes
 {
     /// <summary>
     /// Student class
@@ -13,19 +7,18 @@ namespace ValueAndReferenceTypes
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Student"/> class.
-        /// Student
         /// </summary>
-        /// <param name="name">name</param>
+        /// <param name="name">Name of the student</param>
         public Student(string name)
         {
-            Name = name;
+            this.Name = name;
         }
 
         /// <summary>
         /// Gets or sets name
         /// </summary>
         /// <value>
-        /// Name
+        /// Name of the student
         /// </value>
         public string? Name { get; set; }
     }

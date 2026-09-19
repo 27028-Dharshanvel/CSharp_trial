@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IDisposableDemo
+﻿namespace IDisposableDemo
 {
     /// <summary>
-    /// Simple file writer
+    /// Simple file writer class which implements IDisposable interface.
     /// </summary>
     internal class SimpleFileWriter : IDisposable
     {
@@ -24,10 +18,10 @@ namespace IDisposableDemo
         }
 
         /// <summary>
-        /// Writes a line
+        /// Writes a line on the file.
         /// </summary>
         /// <param name="text">text</param>
-        /// <exception cref="ObjectDisposedException">exception</exception>
+        /// <exception cref="ObjectDisposedException">Exception, that might be thrown if object was disposed.</exception>
         public void WriteLine(string text)
         {
             if (this._disposed)
@@ -39,7 +33,7 @@ namespace IDisposableDemo
         }
 
         /// <summary>
-        /// Dispose
+        /// Dispose method to clean up the resources.
         /// </summary>
         public void Dispose()
         {
@@ -48,9 +42,9 @@ namespace IDisposableDemo
         }
 
         /// <summary>
-        /// Dispose
+        /// Dispose method to called by user.
         /// </summary>
-        /// <param name="disposing">boolean</param>
+        /// <param name="disposing">True when called user , False otherwise.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this._disposed && disposing && this._writer != null)

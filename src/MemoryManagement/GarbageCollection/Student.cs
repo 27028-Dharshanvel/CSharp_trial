@@ -15,19 +15,11 @@
         }
 
         /// <summary>
-        /// Gets or sets id
+        /// Gets or sets id of student
         /// </summary>
         /// <value>
-        /// Id
+        /// Id of the Student
         /// </value>
         public int Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets name
-        /// </summary>
-        /// <value>
-        /// Name
-        /// </value>
-        public string? Name { get; set; }
     }
 }

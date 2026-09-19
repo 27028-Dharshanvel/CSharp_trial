@@ -19,9 +19,9 @@ namespace GarbageCollection
         }
 
         /// <summary>
-        /// Simulate Objects count.
+        /// Simulate Objects creation and analyze GC collections.
         /// </summary>
-        /// <param name="iterationCount">count</param>
+        /// <param name="iterationCount">Count of iteration for creating objects</param>
         public static void SimulateObjectChurn(int iterationCount)
         {
             Console.WriteLine($"Starting allocation of {iterationCount:N0} objects...\n");
