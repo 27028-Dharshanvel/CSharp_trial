@@ -3,50 +3,50 @@
     /// <summary>
     /// Mathematic operations
     /// </summary>
-    public class MathUtils
+    public static class MathUtils
     {
         /// <summary>
         /// Addition operation of two integers.
         /// </summary>
-        /// <param name="addend1">addend1</param>
-        /// <param name="addend2">addend2</param>
-        /// <returns>sum of the addends</returns>
-        public static int Add(int addend1, int addend2)
+        /// <param name="firstAddend">firstAddend</param>
+        /// <param name="secondAddend">secondAddend</param>
+        /// <returns>Sum of the input values.</returns>
+        public static int Add(int firstAddend, int secondAddend)
         {
-            return addend1 + addend2;
+            return checked(firstAddend + secondAddend);
         }
 
         /// <summary>
-        /// Addition operation of two integers.
+        /// Subtraction operation of two integers.
         /// </summary>
-        /// <param name="minuend">addend1</param>
-        /// <param name="subtrahend">addend2</param>
-        /// <returns>sum of the addends</returns>
+        /// <param name="minuend">minuend</param>
+        /// <param name="subtrahend">subtrahend</param>
+        /// <returns>Difference of the input values</returns>
         public static int Subtract(int minuend, int subtrahend)
         {
-            return minuend - subtrahend;
+            return checked(minuend - subtrahend);
         }
 
         /// <summary>
-        /// Addition operation of two integers.
+        /// Multiplication operation of two integers.
         /// </summary>
-        /// <param name="multiplicand">addend1</param>
-        /// <param name="multiplier">addend2</param>
-        /// <returns>sum of the addends</returns>
+        /// <param name="multiplicand">multiplicand</param>
+        /// <param name="multiplier">multiplier</param>
+        /// <returns>Product of the input values.</returns>
         public static int Multiply(int multiplicand, int multiplier)
         {
-            return multiplicand * multiplier;
+            return checked(multiplicand * multiplier);
         }
 
         /// <summary>
-        /// Addition operation of two integers.
+        /// Division operation of two integers.
         /// </summary>
-        /// <param name="dividend">addend1</param>
-        /// <param name="divisor">addend2</param>
-        /// <returns>sum of the addends</returns>
+        /// <param name="dividend">Dividend</param>
+        /// <param name="divisor">Divisor</param>
+        /// <returns>Quotient by dividing the input values.</returns>
         public static int Divide(int dividend, int divisor)
         {
-            return dividend / divisor;
+            return checked(dividend / divisor);
         }
     }
 }

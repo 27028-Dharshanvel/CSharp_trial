@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using System.Transactions;
-using MathUtility;
+﻿using MathUtility;
 
 namespace BasicCalculator
 {
@@ -30,52 +28,127 @@ Select the Arithmetic operation to perform
                 if (!InputValidator.IsValidInt(Console.ReadLine(), out int choice))
                 {
                     Console.WriteLine("Enter a valid choice : ");
-                    return;
+                    continue;
                 }
 
                 if (!InputValidator.IsIntWithinRange(choice, 1, 5))
                 {
                     Console.WriteLine("Select a valid choice between 1 - 5 : ");
-                    return;
+                    continue;
                 }
 
                 ArithmeticOperationChoices userChoice = (ArithmeticOperationChoices)choice;
-                Console.Write("Enter the first operand : ");
-                if (!InputValidator.IsValidInt(Console.ReadLine(), out int firstOperand))
-                {
-                    Console.WriteLine("Enter a valid choice : ");
-                    return;
-                }
-
-                Console.Write("Enter the second operand : ");
-                if (!InputValidator.IsValidInt(Console.ReadLine(), out int secondOperand))
-                {
-                    Console.WriteLine("Enter a valid choice : ");
-                    return;
-                }
 
                 switch (userChoice)
                 {
                     case ArithmeticOperationChoices.Add:
+                        Console.Write("Enter the first addend : ");
+                        if (!InputValidator.IsValidInt(Console.ReadLine(), out int firstOperand))
+                        {
+                            Console.WriteLine("Enter a valid integer : ");
+                            break;
+                        }
+
+                        Console.Write("Enter the second addend : ");
+                        if (!InputValidator.IsValidInt(Console.ReadLine(), out int secondOperand))
+                        {
+                            Console.WriteLine("Enter a valid integer : ");
+                            break;
+                        }
+
+                        try
+                        {
                         Console.WriteLine("Sum : " + MathUtils.Add(firstOperand, secondOperand));
+                        }
+                        catch (OverflowException)
+                        {
+                            Console.WriteLine($"The result falls out of range for a 32 bit integer : Range({int.MinValue}, {int.MaxValue})");
+                        }
+
                         break;
+
                     case ArithmeticOperationChoices.Subtract:
-                        Console.WriteLine("Difference : " + MathUtils.Subtract(firstOperand, secondOperand));
+                        Console.Write("Enter the Minuend : ");
+                        if (!InputValidator.IsValidInt(Console.ReadLine(), out int minuend))
+                        {
+                            Console.WriteLine("Enter a valid integer : ");
+                            break;
+                        }
+
+                        Console.Write("Enter the Subtrahend : ");
+                        if (!InputValidator.IsValidInt(Console.ReadLine(), out int subtrahend))
+                        {
+                            Console.WriteLine("Enter a valid integer : ");
+                            break;
+                        }
+
+                        try
+                        {
+                            Console.WriteLine("Difference : " + MathUtils.Subtract(minuend, subtrahend));
+                        }
+                        catch (OverflowException)
+                        {
+                            Console.WriteLine($"The result falls out of range for a 32 bit integer : Range({int.MinValue}, {int.MaxValue})");
+                        }
+
                         break;
+
                     case ArithmeticOperationChoices.Multiply:
-                        Console.WriteLine("Product : " + MathUtils.Multiply(firstOperand, secondOperand));
+                        Console.Write("Enter the Multiplicand : ");
+                        if (!InputValidator.IsValidInt(Console.ReadLine(), out int multiplicand))
+                        {
+                            Console.WriteLine("Enter a valid integer : ");
+                            break;
+                        }
+
+                        Console.Write("Enter the Multiplier : ");
+                        if (!InputValidator.IsValidInt(Console.ReadLine(), out int multiplier))
+                        {
+                            Console.WriteLine("Enter a valid integer : ");
+                            break;
+                        }
+
+                        try
+                        {
+                            Console.WriteLine("Product : " + MathUtils.Multiply(multiplicand, multiplier));
+                        }
+                        catch
+                        {
+                            Console.WriteLine($"The result falls out of range for a 32 bit integer : Range({int.MinValue}, {int.MaxValue})");
+                        }
+
                         break;
+
                     case ArithmeticOperationChoices.Divide:
                         try
                         {
-                            Console.WriteLine("Quotient : " + MathUtils.Divide(firstOperand, secondOperand));
+                            Console.Write("Enter the Dividend : ");
+                            if (!InputValidator.IsValidInt(Console.ReadLine(), out int dividend))
+                            {
+                                Console.WriteLine("Enter a valid integer : ");
+                                break;
+                            }
+
+                            Console.Write("Enter the Divisor : ");
+                            if (!InputValidator.IsValidInt(Console.ReadLine(), out int divisor))
+                            {
+                                Console.WriteLine("Enter a valid integer : ");
+                                break;
+                            }
+
+                            Console.WriteLine("Quotient : " + MathUtils.Divide(dividend, divisor));
                         }
                         catch (DivideByZeroException)
                         {
                             Console.WriteLine("Cannot divide a number by 0");
                         }
+                        catch (OverflowException)
+                        {
+                            Console.WriteLine($"The result falls out of range for a 32 bit integer : Range({int.MinValue}, {int.MaxValue})");
+                        }
 
                         break;
+
                     case ArithmeticOperationChoices.Exit:
                         isAppRunning = false;
                         break;

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BasicCalculator
+﻿namespace BasicCalculator
 {
     /// <summary>
     /// InputValidator class
@@ -12,9 +6,9 @@ namespace BasicCalculator
     internal static class InputValidator
     {
         /// <summary>
-        /// Validates whether a input string in an integer.
+        /// Validates whether a input string is an integer.
         /// </summary>
-        /// <param name="input">input value</param>
+        /// <param name="input">Input value</param>
         /// <param name="result">out integer result</param>
         /// <returns>True if within range, False otherwise.</returns>
         public static bool IsValidInt(string input, out int result)
@@ -25,9 +19,9 @@ namespace BasicCalculator
         /// <summary>
         /// Validates whether input integer is within range
         /// </summary>
-        /// <param name="value">input value</param>
-        /// <param name="min">minimum value</param>
-        /// <param name="max">maximum value</param>
+        /// <param name="value">Input value</param>
+        /// <param name="min">Minimum value</param>
+        /// <param name="max">Maximum value</param>
         /// <returns>True if within range, False otherwise.</returns>
         public static bool IsIntWithinRange(int value, int min, int max)
         {
