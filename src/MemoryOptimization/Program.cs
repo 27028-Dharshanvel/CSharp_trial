@@ -17,18 +17,25 @@ namespace Assignments
 
             while (isAppRunning)
             {
-                Console.WriteLine(@"---------Memory Optimaztion--------------
+                Console.Clear();
+                Console.WriteLine(@"---------Memory Optimization--------------
 
-1.Diagnose memory issues in the code
+1.Diagnose memory issues in the memory consuming code 
 2.Fix and implement memory management best practices
 3.Exit
 
 Choose a task to demonstrate : ");
 
-                int choice;
-                if (!int.TryParse(Console.ReadLine(), out choice))
+                if (!int.TryParse(Console.ReadLine(), out int choice))
                 {
-                    Console.WriteLine("Invalid input");
+                    Console.WriteLine("Invalid input! Enter a valid choice");
+                    continue;
+                }
+
+                if (!InputValidator.IsIntWithinRange(choice, 1, 3))
+                {
+                    Console.WriteLine("Select a choice between 1-3");
+                    continue;
                 }
 
                 switch (choice)
@@ -41,7 +48,7 @@ Choose a task to demonstrate : ");
                     case 2:
                         using (OptimizedMemoryEater optimizedMemoryEater = new OptimizedMemoryEater())
                         {
-                            Task.Run(() => optimizedMemoryEater.Allocate(1000));
+                            optimizedMemoryEater.Allocate(10000);
                         }
 
                         break;
@@ -49,6 +56,8 @@ Choose a task to demonstrate : ");
                         isAppRunning = false;
                         break;
                 }
+
+                Console.ReadKey();
             }
         }
     }
