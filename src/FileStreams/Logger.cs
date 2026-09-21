@@ -1,26 +1,22 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
+﻿using System.Diagnostics;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace FileStreams
 {
     /// <summary>
-    /// Task 4 runner and performance load testing suite.
+    /// Logger class
     /// </summary>
     public class Logger
     {
         /// <summary>
-        /// Subtask 5: Load testing to simulate multiple users logging errors simultaneously.
+        /// Load testing to simulate multiple users logging errors simultaneously.
         /// </summary>
         /// <param name="userCount">Number of concurrent user threads.</param>
         /// <param name="logsPerUser">Number of log messages per user.</param>
         public static void RunLoadTest(int userCount = 10, int logsPerUser = 50)
         {
-            Console.WriteLine($"\n[Task 4] Running Load Test with {userCount} concurrent users ({logsPerUser} logs each)...");
+            Console.WriteLine($"\nRunning Load Test with {userCount} concurrent users ({logsPerUser} logs each)...");
 
-            // 1. Test Initial Logger under concurrent load
             Stopwatch swInitial = Stopwatch.StartNew();
             Parallel.For(0, userCount, userId =>
             {
@@ -32,7 +28,6 @@ namespace FileStreams
             swInitial.Stop();
             Console.WriteLine($"[Task 4 Load Test] Initial Logger completed in: {swInitial.ElapsedMilliseconds} ms (with potential locked file drop errors)");
 
-            // 2. Test Improved Single-File Logger (Thread-Safe)
             Stopwatch swImproved = Stopwatch.StartNew();
             Parallel.For(0, userCount, userId =>
             {
@@ -42,9 +37,8 @@ namespace FileStreams
                 }
             });
             swImproved.Stop();
-            Console.WriteLine($"[Task 4 Load Test] Improved Thread-Safe Logger completed in: {swImproved.ElapsedMilliseconds} ms (0 errors)");
+            Console.WriteLine($"Improved Thread-Safe Logger completed in: {swImproved.ElapsedMilliseconds} ms (0 errors)");
 
-            // 3. Test Independent User File Logger
             Stopwatch swUserFiles = Stopwatch.StartNew();
             Parallel.For(0, userCount, userId =>
             {
@@ -54,7 +48,7 @@ namespace FileStreams
                 }
             });
             swUserFiles.Stop();
-            Console.WriteLine($"[Task 4 Load Test] Independent User Log Files completed in: {swUserFiles.ElapsedMilliseconds} ms (0 errors)");
+            Console.WriteLine($"Independent User Log Files completed in: {swUserFiles.ElapsedMilliseconds} ms (0 errors)");
         }
 
         /// <summary>
@@ -80,9 +74,7 @@ namespace FileStreams
         /// </summary>
         public static void RunDemo()
         {
-            Console.WriteLine("==========================================");
-            Console.WriteLine("   Task 4: Logger System & Load Testing   ");
-            Console.WriteLine("==========================================");
+            Console.WriteLine("------------------   Task 4: Logger System & Load Testing  -----------------------");
 
             PrintSubtask1Analysis();
             RunLoadTest();
@@ -119,14 +111,13 @@ namespace FileStreams
             }
             catch (Exception ex)
             {
-                // Silence file lock race condition exceptions during high-concurrency test
                 _ = ex.Message;
             }
         }
     }
 
     /// <summary>
-    /// Improved Logger addressing Subtasks 2, 3, and 4.
+    /// Improved Logger addressing.
     /// </summary>
     public class LoggerImproved
     {
@@ -134,7 +125,7 @@ namespace FileStreams
         private static string logFilePath = "log_improved.txt";
 
         /// <summary>
-        /// Subtask 2 & 3: Direct file writing with thread-safe locking mechanism.
+        /// Direct file writing with thread-safe locking mechanism.
         /// </summary>
         /// <param name="errorMessage">Error message text.</param>
         public static void LogError(string errorMessage)
@@ -151,7 +142,7 @@ namespace FileStreams
         }
 
         /// <summary>
-        /// Subtask 4: Independent error files per user to eliminate single-file lock contention.
+        /// Independent error files per user to eliminate single-file lock contention.
         /// </summary>
         /// <param name="userId">User identifier.</param>
         /// <param name="errorMessage">Error message text.</param>
@@ -160,7 +151,6 @@ namespace FileStreams
             string userLogPath = $"log_user_{userId}.txt";
             byte[] errorBytes = Encoding.UTF8.GetBytes($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] User {userId}: {errorMessage}{Environment.NewLine}");
 
-            // Write directly to user-specific file
             using (FileStream fileStream = new FileStream(userLogPath, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
             {
                 fileStream.Write(errorBytes, 0, errorBytes.Length);

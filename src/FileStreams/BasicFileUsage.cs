@@ -3,7 +3,7 @@
 namespace FileStreams
 {
     /// <summary>
-    /// Task 3: Investigates memory and performance inefficiencies in basic file usage
+    /// Investigates memory and performance inefficiencies in basic file usage
     /// and provides an optimized fix.
     /// </summary>
     public class BasicFileUsage
@@ -17,28 +17,24 @@ namespace FileStreams
             Console.WriteLine("Executing Original Starter Code...");
             string data = "This is some test data for Task 3.";
 
-            // Writing to file using MemoryStream (Inefficient allocation)
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 byte[] buffer = Encoding.ASCII.GetBytes(data);
                 memoryStream.Write(buffer, 0, buffer.Length);
 
-                // Write from MemoryStream to file
                 using (FileStream fileStream = new FileStream(path, FileMode.Create))
                 {
-                    byte[] writeBuffer = memoryStream.ToArray(); // Allocates duplicate byte array in memory
+                    byte[] writeBuffer = memoryStream.ToArray();
                     fileStream.Write(writeBuffer, 0, writeBuffer.Length);
                 }
             }
 
-            // Reading from file using FileStream (Inefficient byte-by-byte console output)
             using (FileStream fileStream = new FileStream(path, FileMode.Open))
             {
                 byte[] buffer = new byte[1024];
                 int bytesRead;
                 while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
                 {
-                    // Simulate memory inefficiency - character by character console writing
                     for (int i = 0; i < bytesRead; i++)
                     {
                         Console.Write((char)buffer[i]);
@@ -58,14 +54,12 @@ namespace FileStreams
             Console.WriteLine("\n[Task 3] Executing Optimized Code...");
             string data = "This is some test data for Task 3.";
 
-            // 1. Direct File Writing without redundant MemoryStream allocations
             using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None))
             {
                 byte[] buffer = Encoding.UTF8.GetBytes(data);
                 fileStream.Write(buffer, 0, buffer.Length);
             }
 
-            // 2. Efficient Reading using StreamReader / string decoding without character-by-character loops
             using (FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
             using (StreamReader reader = new StreamReader(fileStream, Encoding.UTF8))
             {
@@ -96,11 +90,11 @@ namespace FileStreams
         }
 
         /// <summary>
-        /// Runs Task 3 demonstration.
+        /// Demonstration of Basic file usage
         /// </summary>
         public static void RunDemo()
         {
-            Console.WriteLine("   Task 3: Investigate Basic File Usage   ");
+            Console.WriteLine(" -------------- Investigate Basic File Usage ----------------  ");
 
             string path = "task3_test.txt";
             OriginalStarterCode(path);
