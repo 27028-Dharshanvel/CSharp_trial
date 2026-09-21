@@ -225,7 +225,7 @@ namespace GenericsAndCollections
             PrintDictionary(dictionary);
 
             Console.WriteLine(
-                @"\nThe dictionary cannot be modified through
+                @"The dictionary cannot be modified through
 IReadOnlyDictionary.");
         }
     }
