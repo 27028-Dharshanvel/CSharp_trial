@@ -16,7 +16,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assignment2", "src\Assignment2\Assignment2.csproj", "{02B0E8BF-0C59-4FDC-9725-5090253681BA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LanguageInetgratedQuery", "src\LanguageInetgratedQuery\LanguageInetgratedQuery.csproj", "{FA31330D-A428-4FEB-80CF-118E73697466}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assignment8", "src\Assignment8\Assignment8.csproj", "{3DF0676A-1635-CF91-7AEA-7B268E2BC317}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericsAndCollections", "src\GenericsAndCollections\GenericsAndCollections.csproj", "{DC218A10-8536-CD16-ABBB-E06EA63C3E8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +43,10 @@ Global
 		{3DF0676A-1635-CF91-7AEA-7B268E2BC317}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DF0676A-1635-CF91-7AEA-7B268E2BC317}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DF0676A-1635-CF91-7AEA-7B268E2BC317}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC218A10-8536-CD16-ABBB-E06EA63C3E8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC218A10-8536-CD16-ABBB-E06EA63C3E8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC218A10-8536-CD16-ABBB-E06EA63C3E8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC218A10-8536-CD16-ABBB-E06EA63C3E8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,9 +58,10 @@ Global
 		{02B0E8BF-0C59-4FDC-9725-5090253681BA} = {DCAA095E-2796-41FA-A1D0-1134E29309E7}
 		{FA31330D-A428-4FEB-80CF-118E73697466} = {DCAA095E-2796-41FA-A1D0-1134E29309E7}
 		{3DF0676A-1635-CF91-7AEA-7B268E2BC317} = {DCAA095E-2796-41FA-A1D0-1134E29309E7}
+		{DC218A10-8536-CD16-ABBB-E06EA63C3E8D} = {DCAA095E-2796-41FA-A1D0-1134E29309E7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {CF8DA0A6-D1FC-4D8A-B343-63449FBFBB34}
 		        SolutionGuid = {D4CECB66-8E11-49D9-AA1E-464EE0231450}
+		SolutionGuid = {CF8DA0A6-D1FC-4D8A-B343-63449FBFBB34}
 	EndGlobalSection
 EndGlobal
