@@ -38,9 +38,10 @@ Enter your choice : ");
                 continue;
             }
 
-            switch (choice)
+            MenuOptions userChoice = (MenuOptions)choice;
+            switch (userChoice)
             {
-                case 1:
+                case MenuOptions.ModifyTypes:
                     int sampleInteger = 10;
                     Student student = new Student("Dharshan");
                     Console.WriteLine(@$"Before Modification : 
@@ -51,25 +52,25 @@ student.Name (Reference type) = {student.Name}");
 
                     Console.WriteLine($@"
 After Modification : 
-Value type is not modified is not modified : {sampleInteger}
+Value type is not modified : {sampleInteger}
 Refernce type is Modified : {student.Name}");
                     break;
 
-                case 2:
+                case MenuOptions.AllocateHeap:
                     Console.WriteLine(@"Performs allocation of a large array of inetegers.
 View diagnostic tools to analyze memory usage");
                     Console.WriteLine(AllocateLargeArray(100000));
                     Console.ReadKey();
                     break;
 
-                case 3:
+                case MenuOptions.AllocateStack:
                     Console.WriteLine(@"Performs calculation of many local variables.
 View diagnostic tools to analyze memory usage");
                     Console.WriteLine(CalculateWithManyLocals());
                     Console.ReadKey();
                     break;
 
-                case 4:
+                case MenuOptions.Exit:
                     Console.WriteLine("Application Exiting");
                     isAppRunning = false;
                     break;

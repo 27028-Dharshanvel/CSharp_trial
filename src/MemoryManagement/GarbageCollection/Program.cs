@@ -48,10 +48,10 @@ namespace GarbageCollection
             int gc1After = GC.CollectionCount(1);
             int gc2After = GC.CollectionCount(2);
 
-            Console.WriteLine($"Allocation completed in: {stopWatch.ElapsedMilliseconds} ms");
-            Console.WriteLine($"Gen 0 Collections: {gc0After - gc0Before}");
-            Console.WriteLine($"Gen 1 Collections: {gc1After - gc1Before}");
-            Console.WriteLine($"Gen 2 Collections: {gc2After - gc2Before}");
+            Console.WriteLine(@$"Allocation completed in: {stopWatch.ElapsedMilliseconds} ms
+Gen 0 Collections: {gc0After - gc0Before}
+Gen 1 Collections: {gc1After - gc1Before}
+Gen 2 Collections: {gc2After - gc2Before}");
         }
     }
 }
