@@ -14,17 +14,28 @@ internal class Program
         bool isAppRunning = true;
         while (isAppRunning)
         {
-            Console.Write(@"------------Value and Refernce types-----------
+            Console.Clear();
+            Console.Write(@"------------Value and Reference types-----------
 
-1.Demonstrate modification of a value and refernce type.
+1.Demonstrate modification of a value and reference type.
 2.Perform allocation of a large array of integers.
 3.Perform calculation with a large number of local variables.
 4.Exit application.
 
 Enter your choice : ");
-            if (!int.TryParse(Console.ReadLine(), out int choice))
+
+            if (!InputValidator.IsValidInt(Console.ReadLine(), out int choice))
             {
                 Console.WriteLine("Please enter a valid choice");
+                Console.ReadKey();
+                continue;
+            }
+
+            if (!InputValidator.IsIntWithinRange(choice, 1, 4))
+            {
+                Console.WriteLine("Select a choice btween 1-4");
+                Console.ReadKey();
+                continue;
             }
 
             switch (choice)
@@ -34,7 +45,7 @@ Enter your choice : ");
                     Student student = new Student("Dharshan");
                     Console.WriteLine(@$"Before Modification : 
 Integer (Value type) = {sampleInteger}
-student.Name (Refernce type) = {student.Name}");
+student.Name (Reference type) = {student.Name}");
 
                     ModifyInputs(sampleInteger, student);
 
@@ -47,7 +58,7 @@ Refernce type is Modified : {student.Name}");
                 case 2:
                     Console.WriteLine(@"Performs allocation of a large array of inetegers.
 View diagnostic tools to analyze memory usage");
-                    Console.WriteLine(AllocateLargeArray(10000000));
+                    Console.WriteLine(AllocateLargeArray(100000));
                     Console.ReadKey();
                     break;
 
@@ -65,7 +76,6 @@ View diagnostic tools to analyze memory usage");
             }
 
             Console.ReadKey();
-            Console.Clear();
         }
     }
 
