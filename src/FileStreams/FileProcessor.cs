@@ -1,6 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
+﻿using System.Diagnostics;
 using System.Text;
 
 namespace FileStreams
@@ -10,8 +8,8 @@ namespace FileStreams
     /// </summary>
     public class FileProcessor
     {
-        private string _sampleFile = "task1_sample.txt";
-        private string _outputFile = "task1_output.txt";
+        private string _sampleFile = "SampleFile.txt";
+        private string _outputFile = "OutputFile.txt";
 
         /// <summary>
         /// Generates a sample text file of a specified size in megabytes.
@@ -130,12 +128,12 @@ namespace FileStreams
             {
                 return string.Empty;
             }
+
             return input.ToUpperInvariant();
         }
 
         /// <summary>
-        /// Stream-based alternative processing method that reads, converts to uppercase,
-        /// and outputs text in small chunks to prevent high memory usage.
+        /// Processes and outputs text in Uppercase and in small chunks to prevent high memory usage.
         /// </summary>
         /// <param name="inputPath">inputpath</param>
         /// <param name="outputPath">outpath</param>
@@ -148,25 +146,20 @@ namespace FileStreams
                 stopwatch.Start();
                 Console.WriteLine($"Streaming and transforming data from {inputPath} to {outputPath} in chunks...");
 
-                // Open input file for streaming chunks in
                 using (FileStream fsInput = new FileStream(inputPath, FileMode.Open, FileAccess.Read, FileShare.Read))
                 using (StreamReader reader = new StreamReader(fsInput, Encoding.UTF8))
 
-                // Open output file for streaming chunks out
                 using (FileStream fsOutput = new FileStream(outputPath, FileMode.Create, FileAccess.Write, FileShare.None))
                 using (StreamWriter writer = new StreamWriter(fsOutput, Encoding.UTF8))
                 {
                     char[] buffer = new char[bufferSize];
                     int charsRead;
 
-                    // Read only a fixed-size character block at a time
                     while ((charsRead = reader.Read(buffer, 0, buffer.Length)) > 0)
                     {
-                        // Convert block array slice to a string to call uppercase logic safely
                         string chunkText = new string(buffer, 0, charsRead);
                         string processedChunk = ProcessData(chunkText);
 
-                        // Stream the processed string immediately out to disk
                         writer.Write(processedChunk);
                     }
                 }

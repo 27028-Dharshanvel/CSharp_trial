@@ -47,11 +47,11 @@ Select an operation to perform : ");
                         PressAnyKeyToContinue();
                         break;
                     case "3":
-                        BasicFileUsage.RunDemo();
+                        BasicFileUsage.DemonstrateBasicFileUsage();
                         PressAnyKeyToContinue();
                         break;
                     case "4":
-                        Logger.RunDemo();
+                        Logger.DemonstrateLogger();
                         PressAnyKeyToContinue();
                         break;
                     case "0":

@@ -52,31 +52,12 @@ namespace FileStreams
         }
 
         /// <summary>
-        /// Subtask 1 Analysis display.
-        /// </summary>
-        public static void PrintSubtask1Analysis()
-        {
-            Console.WriteLine(" Task 4: Subtask 1 - Identification of Issues         ");
-            Console.WriteLine(@"
-1. Inefficient Memory Usage:
-   - Creating a new MemoryStream for every single log operation allocates heap memory unnecessarily.
-   - Encoding error bytes and copying them from MemoryStream to FileStream produces GC pressure under high logging volume.
-
-2. File Access Concurrency & Race Conditions:
-   - Multiple threads calling LogError simultaneously try to open `log.txt` in FileMode.Append without synchronization.
-   - FileStream attempts to lock the disk file exclusively. Concurrent attempts throw IOException:
-     'The process cannot access the file because it is being used by another process.'
-");
-        }
-
-        /// <summary>
         /// Runs complete Task 4 demonstration.
         /// </summary>
-        public static void RunDemo()
+        public static void DemonstrateLogger()
         {
-            Console.WriteLine("------------------   Task 4: Logger System & Load Testing  -----------------------");
+            Console.WriteLine("------------------  Logger System & Load Testing  -----------------------");
 
-            PrintSubtask1Analysis();
             RunLoadTest();
 
             Console.WriteLine("[Task 4 Demo Complete]\n");
@@ -84,7 +65,6 @@ namespace FileStreams
     }
 
     /// <summary>
-    /// Initial Logger implementation provided in starter code (Task 4).
     /// Suffers from MemoryStream allocations and concurrency contention errors.
     /// </summary>
     public class LoggerInitial

@@ -4,8 +4,7 @@ using System.Text;
 namespace FileStreams
 {
     /// <summary>
-    /// Implements asynchronous methods for FileStream, BufferedStream, and MemoryStream,
-    /// enabling non-blocking I/O and concurrent file processing.
+    /// Implements asynchronous methods for FileStream, BufferedStream, and MemoryStream.
     /// </summary>
     public class AsyncFileProcessor
     {
@@ -22,18 +21,18 @@ namespace FileStreams
                 Console.WriteLine($"Async reading FileStream: {Path.GetFileName(filePath)}...");
                 Stopwatch stopwatch = Stopwatch.StartNew();
 
-                using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize, useAsync: true))
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize, useAsync: true))
                 {
                     byte[] buffer = new byte[bufferSize];
                     int bytesRead;
                     long totalBytesRead = 0;
 
-                    while ((bytesRead = await fs.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                    while ((bytesRead = await fileStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
                     {
                         totalBytesRead += bytesRead;
                     }
                 }
-
+                Console.WriteLine("This will print after");
                 stopwatch.Stop();
                 Console.WriteLine($"Async FileStream read completed for {Path.GetFileName(filePath)} in {stopwatch.ElapsedMilliseconds} ms");
                 return stopwatch.ElapsedMilliseconds;
