@@ -2,23 +2,33 @@
 
 namespace AdvancedFeatures
 {
+    /// <summary>
+    /// Represents a book model using C# records.
+    /// </summary>
+    /// <param name="title">The title of the book.</param>
+    /// <param name="author">The author of the book.</param>
+    /// <param name="iSBN">The ISBN identifier of the book.</param>
     record Book(string title, string author, string iSBN);
 
     /// <summary>
-    /// TaskDemonstration class
+    /// Demonstrates various advanced C# features including delegates, events,
+    /// dynamic types, anonymous methods, LINQ expressions, records, and pattern matching.
     /// </summary>
     internal class TaskDemonstration
     {
         /// <summary>
-        /// Sortsdelegate
+        /// Delegate definition for comparing two <see cref="Product"/> instances for sorting.
         /// </summary>
-        /// <param name="product1">prduct1</param>
-        /// <param name="product2">product2</param>
-        /// <returns>int</returns>
+        /// <param name="product1">The first product to compare.</param>
+        /// <param name="product2">The second product to compare.</param>
+        /// <returns>
+        /// A signed integer indicating relative order: less than zero if product1 precedes product2,
+        /// zero if equal, or greater than zero if product1 follows product2.
+        /// </returns>
         public delegate int SortDelegate(Product product1, Product product2);
 
         /// <summary>
-        /// Demonstrates notification delegate
+        /// Demonstrates how to subscribe to and trigger custom event notifications.
         /// </summary>
         public void DemonstrateNotificationEvent()
         {
@@ -32,16 +42,17 @@ namespace AdvancedFeatures
         }
 
         /// <summary>
-        /// Display the message
+        /// Displays a string message to the standard output console.
         /// </summary>
-        /// <param name="message">message </param>
+        /// <param name="message">The text message to print.</param>
         public static void DisplayMessage(string message)
         {
             Console.WriteLine(message);
         }
 
         /// <summary>
-        /// Demonstrates var and dynamic keywords
+        /// Demonstrates the operational differences between strong static typing with <c>var</c>
+        /// and dynamic resolution with <c>dynamic</c>.
         /// </summary>
         public void DemonstrateVarAndDynamic()
         {
@@ -66,7 +77,7 @@ namespace AdvancedFeatures
         }
 
         /// <summary>
-        /// Demonstrates sort anonymous method
+        /// Demonstrates sorting an array using an inline anonymous delegate method.
         /// </summary>
         public void DemonstrateAnonymousSort()
         {
@@ -97,18 +108,11 @@ namespace AdvancedFeatures
         }
 
         /// <summary>
-        /// Demonstrates Lambda expressions
+        /// Demonstrates LINQ filtering and projection using lambda expressions.
         /// </summary>
         public void DemonstrateLambdaExpressions()
         {
-            List<int> numbers = new List<int>();
-
-            numbers.Add(1);
-            numbers.Add(2);
-            numbers.Add(3);
-            numbers.Add(4);
-            numbers.Add(5);
-            numbers.Add(6);
+            List<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6 };
 
             // Filter odd numbers
             var oddNumbers = numbers.Where(number => number % 2 != 0);
@@ -128,39 +132,17 @@ namespace AdvancedFeatures
         }
 
         /// <summary>
-        /// Demonstrates sort delegate
+        /// Demonstrates pass-by-delegate sorting strategies over a list of products.
         /// </summary>
         public void DemonstrateSortDel()
         {
-            List<Product> products = new List<Product>();
-
-            products.Add(new Product
+            List<Product> products = new List<Product>
             {
-                Name = "Laptop",
-                Category = "Electronics",
-                Price = 75000
-            });
-
-            products.Add(new Product
-            {
-                Name = "Phone",
-                Category = "Electronics",
-                Price = 30000
-            });
-
-            products.Add(new Product
-            {
-                Name = "Chair",
-                Category = "Furniture",
-                Price = 5000
-            });
-
-            products.Add(new Product
-            {
-                Name = "Table",
-                Category = "Furniture",
-                Price = 10000
-            });
+                new Product { Name = "Laptop", Category = "Electronics", Price = 75000 },
+                new Product { Name = "Phone", Category = "Electronics", Price = 30000 },
+                new Product { Name = "Chair", Category = "Furniture", Price = 5000 },
+                new Product { Name = "Table", Category = "Furniture", Price = 10000 }
+            };
 
             // Create delegates
             SortDelegate sortByName = SortByName;
@@ -182,57 +164,47 @@ namespace AdvancedFeatures
         }
 
         /// <summary>
-        /// Sorts by name
+        /// Compares two products by their <see cref="Product.Name"/> property alphabetically.
         /// </summary>
-        /// <param name="product1">first product</param>
-        /// <param name="product2">second product</param>
-        /// <returns>int</returns>
+        /// <param name="product1">The first product to compare.</param>
+        /// <param name="product2">The second product to compare.</param>
+        /// <returns>An integer indicating relative alphabetical order.</returns>
         public int SortByName(Product product1, Product product2)
         {
             return string.Compare(product1.Name, product2.Name);
         }
 
         /// <summary>
-        /// Sorts by category
+        /// Compares two products by their <see cref="Product.Category"/> property alphabetically.
         /// </summary>
-        /// <param name="product1">firstproduct</param>
-        /// <param name="product2">secondproduct</param>
-        /// <returns>int</returns>
+        /// <param name="product1">The first product to compare.</param>
+        /// <param name="product2">The second product to compare.</param>
+        /// <returns>An integer indicating relative alphabetical order.</returns>
         public int SortByCategory(Product product1, Product product2)
         {
             return string.Compare(product1.Category, product2.Category);
         }
 
         /// <summary>
-        /// Sorts by category
+        /// Compares two products by their numerical <see cref="Product.Price"/>.
         /// </summary>
-        /// <param name="product1">firstproduct</param>
-        /// <param name="product2">secondproduct</param>
-        /// <returns>int</returns>
+        /// <param name="product1">The first product to compare.</param>
+        /// <param name="product2">The second product to compare.</param>
+        /// <returns>An integer indicating relative price comparison.</returns>
         public int SortByPrice(Product product1, Product product2)
         {
-            if (product1.Price < product2.Price)
-            {
-                return -1;
-            }
-            else if (product1.Price > product2.Price)
-            {
-                return 1;
-            }
-            else
-            {
-                return 0;
-            }
+            return product1.Price.CompareTo(product2.Price);
         }
 
         /// <summary>
-        /// Sorts by category
+        /// Sorts a collection of products using a custom comparison delegate and prints them to the console.
         /// </summary>
-        /// <param name="products">firstproduct</param>
-        /// <param name="sortDelegate">secondproduct</param>
+        /// <param name="products">The list of products to sort and display.</param>
+        /// <param name="sortDelegate">The comparison delegate used to define sorting logic.</param>
         public void SortAndDisplay(List<Product> products, SortDelegate sortDelegate)
         {
-            //products.Sort(sortDelegate);
+            // Fixed Bug: Uncommented and converted custom delegate to Comparison<Product>
+            products.Sort((p1, p2) => sortDelegate(p1, p2));
 
             foreach (Product product in products)
             {
@@ -244,7 +216,7 @@ namespace AdvancedFeatures
         }
 
         /// <summary>
-        /// Demonstrates Record
+        /// Demonstrates record creation, value equality, non-destructive mutation via <c>with</c> expressions, and deconstruction.
         /// </summary>
         public void DemonstrateRecords()
         {
@@ -280,10 +252,6 @@ namespace AdvancedFeatures
 
             Console.WriteLine();
 
-            // Records are immutable
-            // This is not allowed:
-            // book1.Title = "New Title";
-
             Console.WriteLine("Records are immutable.");
 
             Console.WriteLine();
@@ -309,9 +277,9 @@ namespace AdvancedFeatures
         }
 
         /// <summary>
-        /// Displays book
+        /// Deconstructs a <see cref="Book"/> record into its component fields and outputs them to the console.
         /// </summary>
-        /// <param name="book">book</param>
+        /// <param name="book">The book record to deconstruct and display.</param>
         public void DisplayBook(Book book)
         {
             var (title, author, isbn) = book;
@@ -323,7 +291,7 @@ namespace AdvancedFeatures
         }
 
         /// <summary>
-        /// Demonstrates Pattern matching
+        /// Demonstrates type-based pattern matching over various <see cref="Shape"/> derived instances.
         /// </summary>
         public void DemonstratePatternMatching()
         {
@@ -358,9 +326,10 @@ namespace AdvancedFeatures
         }
 
         /// <summary>
-        /// Displays shape details
+        /// Inspects the concrete type of a given <see cref="Shape"/> using switch pattern matching
+        /// and displays type-specific metadata and calculated area.
         /// </summary>
-        /// <param name="shape">shape</param>
+        /// <param name="shape">The shape instance to inspect, or <c>null</c>.</param>
         public void DisplayShapeDetails(Shape shape)
         {
             switch (shape)
@@ -396,4 +365,3 @@ namespace AdvancedFeatures
         }
     }
 }
-
