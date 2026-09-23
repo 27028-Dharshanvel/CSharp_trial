@@ -5,7 +5,6 @@ namespace FileStreams
 {
     /// <summary>
     /// Entry point for the FileStreams assignment application.
-    /// Provides an interactive console menu to execute and evaluate each task.
     /// </summary>
     internal class Program
     {
@@ -16,47 +15,46 @@ namespace FileStreams
         /// <returns>Task</returns>
         public static async Task Main(string[] args)
         {
-            Console.Title = "C# Files and Streams Assignment Solution";
-
             bool exit = false;
             while (!exit)
             {
                 Console.Clear();
-                Console.Write(@"------------Working with Files and Streams in C#----------------
+                Console.Write(@"------------ Working with Files and Streams ----------------
 
 1. File Data Processor (Synchronous)
 2. File Data Processor (Asynchronous)
 3. Investigate Basic File Usage & Fixes
-4. Multi-User Logger & Load Testing
+4. Demonstrate Logger & Load Testing
 5. Exit
 
 Select an operation to perform : ");
 
                 string? input = Console.ReadLine();
                 Console.WriteLine();
-
+                Console.Clear();
                 switch (input?.Trim())
                 {
                     case "1":
                         FileProcessor fileprocessor = new FileProcessor();
-                        fileprocessor.DeomstrateFileDataProcessing();
+                        fileprocessor.DemonstrateFileDataProcessing();
                         PressAnyKeyToContinue();
                         break;
                     case "2":
-                        await AsyncFileProcessor.DemonstrateAsynchronousFileProcessing();
+                        AsyncFileProcessor asyncFileProcessor = new AsyncFileProcessor();
+                        await asyncFileProcessor.DemonstrateAsyncFileProcessing();
                         PressAnyKeyToContinue();
                         break;
                     case "3":
-                        BasicFileUsage.DemonstrateBasicFileUsage();
+                        BasicFileUsage.DemonstrateFileUsage();
                         PressAnyKeyToContinue();
                         break;
                     case "4":
-                        Logger.DemonstrateLogger();
+                        Logger.PerformanceTest();
                         PressAnyKeyToContinue();
                         break;
-                    case "0":
+                    case "5":
                         exit = true;
-                        Console.WriteLine("Exiting application. Goodbye!");
+                        Console.WriteLine("Exiting application.");
                         break;
                     default:
                         Console.WriteLine("Invalid option. Please try again.");

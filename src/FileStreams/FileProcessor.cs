@@ -4,224 +4,173 @@ using System.Text;
 namespace FileStreams
 {
     /// <summary>
-    /// File processing with FileStream, MemoryStream, and Stream-based chunking
+    /// File processing implementation using FileStream, BufferedStream, and MemoryStream chunking.
     /// </summary>
     public class FileProcessor
     {
-        private string _sampleFile = "SampleFile.txt";
-        private string _outputFile = "OutputFile.txt";
+        private const string SampleFile = "SampleFile.txt";
+        private const string OutputFile = "OutputFile.txt";
 
         /// <summary>
-        /// Generates a sample text file of a specified size in megabytes.
+        /// Generates a sample text file of specified size in megabytes.
         /// </summary>
-        /// <param name="filePath">filepath</param>
-        /// <param name="sizeInMb">size in megabytes</param>
-        public void GenerateSampleFile(string filePath, int sizeInMb)
+        /// <param name="filePath">Target path for the sample file.</param>
+        /// <param name="sizeInMb">File size target in megabytes.</param>
+        public void GenerateSampleFile(string filePath = SampleFile, int sizeInMb = 1024)
         {
-            try
-            {
-                Console.WriteLine($"Generating sample file of size {sizeInMb} MB at: {filePath}");
-                long targetBytes = (long)sizeInMb * 1024 * 1024;
-                string sampleLine = @"This is a sample text to write on a file : The text could be repetitive , written only for demonstration purpose.
-";
-                byte[] lineBytes = Encoding.UTF8.GetBytes(sampleLine);
+            Console.WriteLine($"Generating {sizeInMb} MB sample file at: {filePath}");
+            byte[] lineBytes = Encoding.UTF8.GetBytes("Sample data for stream processing performance tests.\n");
+            long targetBytes = (long)sizeInMb * 1024 * 1024;
 
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
-                {
-                    long written = 0;
-                    while (written < targetBytes)
-                    {
-                        fileStream.Write(lineBytes, 0, lineBytes.Length);
-                        written += lineBytes.Length;
-                    }
-                }
-
-                Console.WriteLine("Sample file generation completed successfully.");
-            }
-            catch (Exception ex)
+            using FileStream fs = new (filePath, FileMode.Create, FileAccess.Write, FileShare.None);
+            for (long written = 0; written < targetBytes; written += lineBytes.Length)
             {
-                Console.WriteLine($"Error generating sample file: {ex.Message}");
+                fs.Write(lineBytes, 0, lineBytes.Length);
             }
+
+            Console.WriteLine("Sample file generated successfully.");
         }
 
         /// <summary>
-        /// Reads a file in chunks using standard FileStream and measures performance.
+        /// Reads a file in chunks using standard FileStream and measures execution time.
         /// </summary>
-        /// <param name="filePath">filepath</param>
-        /// <param name="bufferSize">buffersize</param>
-        /// <returns>long</returns>
-        public long ReadFileWithFileStream(string filePath, int bufferSize = 64 * 1024)
+        /// <param name="filePath">Path of the target file.</param>
+        /// <param name="bufferSize">Buffer size in bytes.</param>
+        /// <returns>Elapsed time in milliseconds.</returns>
+        public long ReadFileWithFileStream(string filePath = SampleFile, int bufferSize = 64 * 1024)
         {
-            try
+            Stopwatch sw = Stopwatch.StartNew();
+            using FileStream fs = new (filePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize);
+            byte[] buffer = new byte[bufferSize];
+            while (fs.Read(buffer, 0, buffer.Length) > 0)
             {
-                Console.WriteLine($"Reading with FileStream (Buffer: {bufferSize / 1024} KB)...");
-                Stopwatch stopwatch = Stopwatch.StartNew();
-
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize))
-                {
-                    byte[] buffer = new byte[bufferSize];
-                    int bytesRead;
-                    long totalBytesRead = 0;
-
-                    while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
-                    {
-                        totalBytesRead += bytesRead;
-                    }
-                }
-
-                stopwatch.Stop();
-                Console.WriteLine($"FileStream read completed. Time: {stopwatch.ElapsedMilliseconds} ms");
-                return stopwatch.ElapsedMilliseconds;
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"FileStream read error: {ex.Message}");
-                return -1;
-            }
+
+            sw.Stop();
+            Console.WriteLine($"FileStream Read ({bufferSize / 1024} KB buffer): {sw.ElapsedMilliseconds} ms");
+            return sw.ElapsedMilliseconds;
         }
 
         /// <summary>
         /// Reads a file using BufferedStream wrapping a FileStream and measures performance.
         /// </summary>
-        /// <param name="filePath">filepath</param>
-        /// <param name="bufferSize">buffersize</param>
-        /// <returns>long</returns>
-        public long ReadFileWithBufferedStream(string filePath, int bufferSize = 64 * 1024)
+        /// <param name="filePath">Path of the target file.</param>
+        /// <param name="bufferSize">Buffer size in bytes.</param>
+        /// <returns>Elapsed time in milliseconds.</returns>
+        public long ReadFileWithBufferedStream(string filePath = SampleFile, int bufferSize = 64 * 1024)
         {
-            try
+            Stopwatch sw = Stopwatch.StartNew();
+            using FileStream fs = new (filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            using BufferedStream bs = new(fs, bufferSize);
+            byte[] buffer = new byte[bufferSize];
+            while (bs.Read(buffer, 0, buffer.Length) > 0)
             {
-                Console.WriteLine($"Reading with BufferedStream (Buffer: {bufferSize / 1024} KB)...");
-                Stopwatch stopwatch = Stopwatch.StartNew();
+            }
 
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-                using (BufferedStream bufferedStream = new BufferedStream(fileStream, bufferSize))
+            sw.Stop();
+            Console.WriteLine($"BufferedStream Read ({bufferSize / 1024} KB buffer): {sw.ElapsedMilliseconds} ms");
+            return sw.ElapsedMilliseconds;
+        }
+
+        /// <summary>
+        /// Processes input string data by converting characters to uppercase.
+        /// </summary>
+        /// <param name="input">Input text fragment.</param>
+        /// <returns>Uppercase converted text.</returns>
+        public string ProcessData(string input) => string.IsNullOrEmpty(input) ? string.Empty : input.ToUpperInvariant();
+
+        /// <summary>
+        /// Reads, transforms data, buffers output through a MemoryStream chunk, and writes to disk.
+        /// </summary>
+        /// <param name="inputPath">Source file path.</param>
+        /// <param name="outputPath">Destination file path.</param>
+        /// <param name="chunkSize">Chunk buffer size in bytes.</param>
+        public void ProcessAndWriteLargeFile(string inputPath = SampleFile, string outputPath = OutputFile, int chunkSize = 64 * 1024)
+        {
+            if (!File.Exists(inputPath))
+            {
+                Console.WriteLine($"Error: {inputPath} does not exist. Generate it first.");
+                return;
+            }
+
+            Console.WriteLine($"Processing {inputPath} -> {outputPath}...");
+            Stopwatch sw = Stopwatch.StartNew();
+
+            using FileStream inputFs = new (inputPath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            using FileStream outputFs = new (outputPath, FileMode.Create, FileAccess.Write, FileShare.None);
+
+            byte[] readBuffer = new byte[chunkSize];
+            int bytesRead;
+
+            while ((bytesRead = inputFs.Read(readBuffer, 0, readBuffer.Length)) > 0)
+            {
+                string chunkText = Encoding.UTF8.GetString(readBuffer, 0, bytesRead);
+                byte[] processedBytes = Encoding.UTF8.GetBytes(this.ProcessData(chunkText));
+
+                using MemoryStream memStream = new (processedBytes.Length);
+                memStream.Write(processedBytes, 0, processedBytes.Length);
+                memStream.Position = 0;
+                memStream.CopyTo(outputFs);
+            }
+
+            sw.Stop();
+            Console.WriteLine($"Processing completed in {sw.ElapsedMilliseconds} ms.");
+        }
+
+        /// <summary>
+        /// Demonstrates file generation, benchmark comparison, and MemoryStream file processing.
+        /// </summary>
+        public void DemonstrateFileDataProcessing()
+        {
+            bool isFileMenuOpen = true;
+            while (isFileMenuOpen)
+            {
+                Console.Clear();
+                Console.Write(@"--- Large File Stream Processor ---
+
+1. Generate 1 GB Sample File (Ignore if already exists)
+2. Compare FileStream vs BufferedStream Performance
+3. Process Data & Write Output (using MemoryStream)
+4. Back to Main Menu
+
+    Select a choice :");
+
+                if (!int.TryParse(Console.ReadLine(), out int choice))
                 {
-                    byte[] buffer = new byte[bufferSize];
-                    int bytesRead;
-                    long totalBytesRead = 0;
-
-                    while ((bytesRead = bufferedStream.Read(buffer, 0, buffer.Length)) > 0)
-                    {
-                        totalBytesRead += bytesRead;
-                    }
+                    continue;
                 }
 
-                stopwatch.Stop();
-                Console.WriteLine($"BufferedStream read completed. Time: {stopwatch.ElapsedMilliseconds} ms");
-                return stopwatch.ElapsedMilliseconds;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"BufferedStream read error: {ex.Message}");
-                return -1;
-            }
-        }
-
-        /// <summary>
-        /// Processes string data by converting all text to uppercase.
-        /// </summary>
-        /// <param name="input">input</param>
-        /// <returns>string</returns>
-        public string ProcessData(string input)
-        {
-            if (string.IsNullOrEmpty(input))
-            {
-                return string.Empty;
-            }
-
-            return input.ToUpperInvariant();
-        }
-
-        /// <summary>
-        /// Processes and outputs text in Uppercase and in small chunks to prevent high memory usage.
-        /// </summary>
-        /// <param name="inputPath">inputpath</param>
-        /// <param name="outputPath">outpath</param>
-        /// <param name="bufferSize">buffersize</param>
-        public void ProcessAndWriteLargeFile(string inputPath, string outputPath, int bufferSize = 64 * 1024)
-        {
-            try
-            {
-                Stopwatch stopwatch = new Stopwatch();
-                stopwatch.Start();
-                Console.WriteLine($"Streaming and transforming data from {inputPath} to {outputPath} in chunks...");
-
-                using (FileStream fsInput = new FileStream(inputPath, FileMode.Open, FileAccess.Read, FileShare.Read))
-                using (StreamReader reader = new StreamReader(fsInput, Encoding.UTF8))
-
-                using (FileStream fsOutput = new FileStream(outputPath, FileMode.Create, FileAccess.Write, FileShare.None))
-                using (StreamWriter writer = new StreamWriter(fsOutput, Encoding.UTF8))
+                Console.Clear();
+                switch (choice)
                 {
-                    char[] buffer = new char[bufferSize];
-                    int charsRead;
+                    case 1:
+                        Console.WriteLine("Press Enter to confirm generation of 1GB file");
+                        ConsoleKeyInfo keyInfo = Console.ReadKey();
+                        if (keyInfo.Key != ConsoleKey.Enter)
+                        {
+                            Console.WriteLine("Back to menu...");
+                            continue;
+                        }
 
-                    while ((charsRead = reader.Read(buffer, 0, buffer.Length)) > 0)
-                    {
-                        string chunkText = new string(buffer, 0, charsRead);
-                        string processedChunk = ProcessData(chunkText);
-
-                        writer.Write(processedChunk);
-                    }
+                        this.GenerateSampleFile(SampleFile, 1024);
+                        break;
+                    case 2:
+                        this.ReadFileWithFileStream();
+                        this.ReadFileWithBufferedStream();
+                        break;
+                    case 3:
+                        this.ProcessAndWriteLargeFile();
+                        break;
+                    case 4:
+                        isFileMenuOpen = false;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid option.");
+                        break;
                 }
 
-                stopwatch.Stop();
-                Console.WriteLine($@"Large file streaming and processing completed successfully.
-Time taken for the read and write process : {stopwatch.ElapsedMilliseconds}");
+                Console.ReadKey();
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Streaming error: {ex.Message}");
-            }
-        }
-
-        /// <summary>
-        /// Runs a complete demonstration.
-        /// </summary>
-        public void DeomstrateFileDataProcessing()
-        {
-            Console.WriteLine(@" File Data Processor Demonstration 
-1.If running for first time, generate a sample text file for 1GB . (Ignore if already generated) 
-2.Read the file using Filestream and BufferedStream and compare the performance:
-4.Read the file and convert all text to uppercase and write to file using memorystream");
-
-            if (!int.TryParse(Console.ReadLine(), out int choice))
-            {
-                Console.WriteLine("Invalid choice");
-            }
-
-            switch (choice)
-            {
-                case 1:
-                    Console.WriteLine("Confirm to generate a file for 1GB.");
-                    Console.ReadKey();
-                    this.GenerateSampleFile(this._sampleFile, 1024);
-                    break;
-                case 2:
-                    Console.WriteLine("Demonstration of reading a file using Filestream:");
-                    long fileStreamTime = this.ReadFileWithFileStream(this._sampleFile);
-                    Console.WriteLine($"FileStream: {fileStreamTime} ms ");
-
-                    Console.WriteLine("\nDemonstration of reading a file using bufferedstream:");
-                    long bufferedStreamTime = this.ReadFileWithBufferedStream(this._sampleFile);
-                    Console.WriteLine($"BufferedStream: {bufferedStreamTime} ms");
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    Console.WriteLine("Demostration of file reading and process data and write to a new file using MemoryStream");
-                    if (File.Exists(this._sampleFile))
-                    {
-                        this.ProcessAndWriteLargeFile(this._sampleFile, this._outputFile);
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Error: {this._sampleFile} not found. Please run Option 1 first to generate it.");
-                    }
-
-                    break;
-            }
-
-            Console.ReadKey();
         }
     }
 }

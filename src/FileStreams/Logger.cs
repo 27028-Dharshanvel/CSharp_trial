@@ -1,140 +1,106 @@
 ﻿using System.Diagnostics;
 using System.Text;
 
-namespace FileStreams
+/// <summary>
+/// Logger class
+/// </summary>
+public class Logger
 {
-    /// <summary>
-    /// Logger class
-    /// </summary>
-    public class Logger
-    {
-        /// <summary>
-        /// Load testing to simulate multiple users logging errors simultaneously.
-        /// </summary>
-        /// <param name="userCount">Number of concurrent user threads.</param>
-        /// <param name="logsPerUser">Number of log messages per user.</param>
-        public static void RunLoadTest(int userCount = 10, int logsPerUser = 50)
-        {
-            Console.WriteLine($"\nRunning Load Test with {userCount} concurrent users ({logsPerUser} logs each)...");
-
-            Stopwatch swInitial = Stopwatch.StartNew();
-            Parallel.For(0, userCount, userId =>
-            {
-                for (int j = 0; j < logsPerUser; j++)
-                {
-                    LoggerInitial.LogError($"User {userId} error message #{j}");
-                }
-            });
-            swInitial.Stop();
-            Console.WriteLine($"[Task 4 Load Test] Initial Logger completed in: {swInitial.ElapsedMilliseconds} ms (with potential locked file drop errors)");
-
-            Stopwatch swImproved = Stopwatch.StartNew();
-            Parallel.For(0, userCount, userId =>
-            {
-                for (int j = 0; j < logsPerUser; j++)
-                {
-                    LoggerImproved.LogError($"User {userId} error message #{j}");
-                }
-            });
-            swImproved.Stop();
-            Console.WriteLine($"Improved Thread-Safe Logger completed in: {swImproved.ElapsedMilliseconds} ms (0 errors)");
-
-            Stopwatch swUserFiles = Stopwatch.StartNew();
-            Parallel.For(0, userCount, userId =>
-            {
-                for (int j = 0; j < logsPerUser; j++)
-                {
-                    LoggerImproved.LogUserError($"User_{userId}", $"error message #{j}");
-                }
-            });
-            swUserFiles.Stop();
-            Console.WriteLine($"Independent User Log Files completed in: {swUserFiles.ElapsedMilliseconds} ms (0 errors)");
-        }
-
-        /// <summary>
-        /// Runs complete Task 4 demonstration.
-        /// </summary>
-        public static void DemonstrateLogger()
-        {
-            Console.WriteLine("------------------  Logger System & Load Testing  -----------------------");
-
-            RunLoadTest();
-
-            Console.WriteLine("[Task 4 Demo Complete]\n");
-        }
-    }
+    private static readonly object _lock = new object();
 
     /// <summary>
-    /// Suffers from MemoryStream allocations and concurrency contention errors.
+    /// Logs an error using the original implementation.
     /// </summary>
-    public class LoggerInitial
+    /// <param name="errorMessage">The error message to log.</param>
+    public static void LogError(string errorMessage)
     {
-        private static string logFilePath = "log_initial.txt";
-
-        /// <summary>
-        /// Logs error using MemoryStream and un-synchronized FileStream write.
-        /// </summary>
-        /// <param name="errorMessage">Error message string.</param>
-        public static void LogError(string errorMessage)
+        using (MemoryStream memoryStream = new MemoryStream())
         {
-            try
+            byte[] errorBytes = Encoding.UTF8.GetBytes(errorMessage);
+            memoryStream.Write(errorBytes, 0, errorBytes.Length);
+
+            using (FileStream fileStream = new FileStream(
+                "log.txt",
+                FileMode.Append))
             {
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-                    byte[] errorBytes = Encoding.UTF8.GetBytes(errorMessage + Environment.NewLine);
-                    memoryStream.Write(errorBytes, 0, errorBytes.Length);
-                    using (FileStream fileStream = new FileStream(logFilePath, FileMode.Append, FileAccess.Write))
-                    {
-                        memoryStream.WriteTo(fileStream);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                _ = ex.Message;
+                memoryStream.WriteTo(fileStream);
             }
         }
     }
 
     /// <summary>
-    /// Improved Logger addressing.
+    /// Logs an error directly to a unique file for each user.
     /// </summary>
-    public class LoggerImproved
+    /// <param name="userId">ID of the user.</param>
+    /// <param name="errorMessage">error message to log.</param>
+    public static void OptimizedLogError(string userId, string errorMessage)
     {
-        private static readonly object LockObj = new object();
-        private static string logFilePath = "log_improved.txt";
+        string filePath = $"log_{userId}.txt";
 
-        /// <summary>
-        /// Direct file writing with thread-safe locking mechanism.
-        /// </summary>
-        /// <param name="errorMessage">Error message text.</param>
-        public static void LogError(string errorMessage)
+        lock (_lock)
         {
-            byte[] errorBytes = Encoding.UTF8.GetBytes(errorMessage + Environment.NewLine);
-
-            lock (LockObj)
+            using (FileStream fileStream = new FileStream(
+                filePath,
+                FileMode.Append))
             {
-                using (FileStream fileStream = new FileStream(logFilePath, FileMode.Append, FileAccess.Write, FileShare.Read))
-                {
-                    fileStream.Write(errorBytes, 0, errorBytes.Length);
-                }
-            }
-        }
+                byte[] errorBytes =
+                    Encoding.UTF8.GetBytes(errorMessage + Environment.NewLine);
 
-        /// <summary>
-        /// Independent error files per user to eliminate single-file lock contention.
-        /// </summary>
-        /// <param name="userId">User identifier.</param>
-        /// <param name="errorMessage">Error message text.</param>
-        public static void LogUserError(string userId, string errorMessage)
-        {
-            string userLogPath = $"log_user_{userId}.txt";
-            byte[] errorBytes = Encoding.UTF8.GetBytes($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] User {userId}: {errorMessage}{Environment.NewLine}");
-
-            using (FileStream fileStream = new FileStream(userLogPath, FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
-            {
                 fileStream.Write(errorBytes, 0, errorBytes.Length);
             }
         }
+    }
+
+    /// <summary>
+    /// Compares the performance of the original and improved logging methods.
+    /// </summary>
+    public static void PerformanceTest()
+    {
+        int userCount = 100;
+        Stopwatch stopwatch = new Stopwatch();
+
+        stopwatch.Start();
+
+        Task[] oldTasks = new Task[userCount];
+
+        for (int i = 0; i < userCount; i++)
+        {
+            int userId = i;
+
+            oldTasks[i] = Task.Run(() =>
+            {
+                LogError("Error from user " + userId);
+            });
+        }
+
+        Task.WaitAll(oldTasks);
+
+        stopwatch.Stop();
+
+        Console.WriteLine(
+            "Original: " + stopwatch.ElapsedMilliseconds + " ms");
+
+        stopwatch.Restart();
+
+        Task[] newTasks = new Task[userCount];
+
+        for (int i = 0; i < userCount; i++)
+        {
+            int userId = i;
+
+            newTasks[i] = Task.Run(() =>
+            {
+                OptimizedLogError(
+                    userId.ToString(),
+                    "Error from user " + userId);
+            });
+        }
+
+        Task.WaitAll(newTasks);
+
+        stopwatch.Stop();
+
+        Console.WriteLine(
+            "Improved: " + stopwatch.ElapsedMilliseconds + " ms");
     }
 }
