@@ -6,9 +6,10 @@
     internal class MainMenu
     {
         /// <summary>
-        /// Displays the main menu
+        /// Displays the main menu and handles user selection asynchronously.
         /// </summary>
-        public static void DisplayMainMenu()
+        /// <returns>Task representing the asynchronous operation.</returns>
+        public static async Task DisplayMainMenu()
         {
             bool isAppRunning = true;
             while (isAppRunning)
@@ -35,7 +36,7 @@
                 switch (choice)
                 {
                     case 1:
-                        AsyncTaskDemonstration.TaskOne();
+                        await AsyncTaskDemonstration.TaskOne();
                         break;
 
                     case 2:
@@ -47,19 +48,19 @@
                         break;
 
                     case 4:
-                        AsyncTaskDemonstration.TaskFour();
+                        await AsyncTaskDemonstration.TaskFour();
                         break;
 
                     case 5:
-                        AsyncTaskDemonstration.TaskFive();
+                        await AsyncTaskDemonstration.TaskFive();
                         break;
 
                     case 6:
-                        AsyncTaskDemonstration.TaskSix();
+                        await AsyncTaskDemonstration.TaskSix();
                         break;
 
                     case 7:
-                        AsyncTaskDemonstration.TaskSeven();
+                        await AsyncTaskDemonstration.TaskSeven();
                         break;
 
                     case 8:

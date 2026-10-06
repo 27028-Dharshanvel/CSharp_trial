@@ -1,26 +1,23 @@
 ﻿namespace AsyncProgramming
 {
     /// <summary>
-    /// Asynchronous tasks
+    /// Demonstrates various asynchronous programming, TPL, and multithreading concepts.
     /// </summary>
     public static class AsyncTaskDemonstration
     {
         /// <summary>
-        /// Gets Http Contents
+        /// Downloads content from a URL asynchronously using HttpClient.
         /// </summary>
-        /// <returns>Task</returns>
+        /// <returns>Task returning string content.</returns>
         public static async Task<string> GetHttpContent()
         {
-            HttpClient client = new HttpClient();
+            using HttpClient client = new HttpClient();
             try
             {
-                // 1. Send the HTTP GET request
                 HttpResponseMessage response = await client.GetAsync("https://www.solitontech.com/dot-net-development-services");
 
-                // 2. Throw an exception if the status code is not 2xx
                 response.EnsureSuccessStatusCode();
 
-                // 3. Read the content as a string
                 string responseBody = await response.Content.ReadAsStringAsync();
 
                 return responseBody;
@@ -33,57 +30,50 @@
         }
 
         /// <summary>
-        /// Generates array
+        /// Generates an integer array from 1 to 10000.
         /// </summary>
-        /// <returns>array</returns>
+        /// <returns>Integer array.</returns>
         public static int[] ArrayGenerate()
         {
-            int[] array = new int[1000];
+            int[] array = new int[10000];
 
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 10000; i++)
             {
-                array[i] = i;
+                array[i] = i + 1;
             }
 
             return array;
         }
 
         /// <summary>
-        /// Sorts array
+        /// Uses Parallel.ForEach from TPL to square each number in the array.
         /// </summary>
-        /// <param name="array">array</param>
+        /// <param name="array">Integer array.</param>
         public static void SquareArray(int[] array)
         {
             Parallel.ForEach(array, value =>
             {
-                lock (Console.Out)
-                {
-                    Console.WriteLine(value * value);
-                }
+                Console.WriteLine($"Value: {value}, Square: {(long)value * value}");
             });
         }
 
         /// <summary>
-        /// Sorts array
+        /// Sorts an array using bubble sort algorithm.
         /// </summary>
-        /// <param name="array">array</param>
+        /// <param name="array">Integer array.</param>
         public static void SortsArray(int[] array)
         {
             int n = array.Length;
             bool swapped;
 
-            // Outer loop for the number of passes
             for (int i = 0; i < n - 1; i++)
             {
                 swapped = false;
 
-                // Inner loop compares adjacent elements
-                // 'n - i - 1' ensures we ignore the elements that have already bubbled up
                 for (int j = 0; j < n - i - 1; j++)
                 {
                     if (array[j] > array[j + 1])
                     {
-                        // Swap elements using a temporary variable
                         int temp = array[j];
                         array[j] = array[j + 1];
                         array[j + 1] = temp;
@@ -92,7 +82,6 @@
                     }
                 }
 
-                // Optimization: If no elements were swapped, the array is already sorted
                 if (!swapped)
                 {
                     break;
@@ -101,9 +90,9 @@
         }
 
         /// <summary>
-        /// MAthtask
+        /// Performs mathematical calculations.
         /// </summary>
-        /// <returns>int</returns>
+        /// <returns>Integer math result.</returns>
         public static int MathTask()
         {
             int x = 123, y = 20, z = 2343, a = 45346, b = 76362, c = 53698423;
@@ -114,160 +103,195 @@
         }
 
         /// <summary>
-        /// Method A
+        /// Simulates a CPU-bound operation started with Task.Run().
         /// </summary>
-        /// <returns>Task</returns>
-        public static async Task<int> MethodA()
+        /// <returns>Task returning an integer result.</returns>
+        public static Task<int> MethodA()
         {
-            int x = 123, y = 20, z = 2343, a = 45346, b = 76362, c = 53698423;
-
-            int result = x - b + (a * z * c) + (y * x * y) + (z * z);
-
-            return result;
+            return Task.Run(() =>
+            {
+                int x = 123, y = 20, z = 2343, a = 45346, b = 76362, c = 53698423;
+                int result = Math.Abs((x - b + (a * z * c) + (y * x * y) + (z * z)) % 100);
+                return result;
+            });
         }
 
         /// <summary>
-        /// Method B
+        /// Simulates an async web service call using HttpClient, using the result from MethodA to construct the request.
         /// </summary>
-        /// <returns>Task</returns>
-        public static async Task MethodB()
+        /// <returns>Task returning the web service response string.</returns>
+        public static async Task<string> MethodB()
         {
-            HttpClient client = new HttpClient();
-            int result = await MethodA();
-            await client.GetAsync("https://www.solitontech.com/dot-net-development-services");
+            using HttpClient client = new HttpClient();
+            int calculationResult = await MethodA();
+            string url = $"https://jsonplaceholder.typicode.com/todos/{calculationResult + 1}";
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+                return await response.Content.ReadAsStringAsync();
+            }
+            catch (Exception ex)
+            {
+                return $"{{\"id\": {calculationResult + 1}, \"status\": \"simulated_fallback\", \"error\": \"{ex.Message}\"}}";
+            }
         }
 
         /// <summary>
-        /// Method C
+        /// Calls MethodB, awaits its result, and processes the JSON response.
         /// </summary>
-        /// <returns>Task</returns>
-        public static async Task MethodC()
+        /// <returns>Task returning the processed string result.</returns>
+        public static async Task<string> MethodC()
         {
-            await MethodB();
+            string jsonResponse = await MethodB();
+            int keyCount = jsonResponse.Split(':').Length - 1;
+            return $"Processed Response (Length: {jsonResponse.Length} chars, Extracted key count: {keyCount}):\n{jsonResponse}";
         }
 
         /// <summary>
-        /// Simulates Complex Operations A
+        /// Simulates a long-running operation using Task.Delay with ConfigureAwait(false) and thread tracking.
         /// </summary>
-        /// <returns>Task</returns>
-        public static async Task SimulateComplexOperationA()
+        /// <returns>Task returning status message.</returns>
+        public static async Task<string> SimulateComplexOperationA()
         {
-            await Task.Delay(5000).ConfigureAwait(false);
+            Console.WriteLine($"MethodA before await - Managed Thread ID: {Thread.CurrentThread.ManagedThreadId}");
+            await Task.Delay(2000).ConfigureAwait(false);
+            Console.WriteLine($"MethodA after await - Managed Thread ID: {Thread.CurrentThread.ManagedThreadId}");
+            return "Operation A finished.";
         }
 
         /// <summary>
-        /// Simulates Complex operations
+        /// Calls SimulateComplexOperationA, awaits its result, and performs further processing.
         /// </summary>
-        /// <returns>Task</returns>
-        public static async Task SimulateComplexOperationB()
+        /// <returns>Task returning processing result.</returns>
+        public static async Task<string> SimulateComplexOperationB()
         {
-            await SimulateComplexOperationA();
-            await Task.Delay(7000);
+            Console.WriteLine($"MethodB before calling MethodA - Managed Thread ID: {Thread.CurrentThread.ManagedThreadId}");
+            string resultA = await SimulateComplexOperationA();
+            Console.WriteLine($"MethodB after awaiting MethodA - Managed Thread ID: {Thread.CurrentThread.ManagedThreadId}");
+            return $"{resultA} -> MethodB further processing complete.";
         }
 
         /// <summary>
-        /// Async void method
+        /// Async void method that throws an exception.
         /// </summary>
-        /// <exception cref="NotImplementedException">Sample exception</exception>
         public static async void VoidMethod()
         {
-            await Task.Delay(2000);
-            throw new Exception();
+            await Task.Delay(500);
+            throw new InvalidOperationException("Exception thrown from async void method!");
         }
 
         /// <summary>
-        /// Task method that implements tasks.
+        /// Async Task method that throws an exception.
         /// </summary>
-        /// <returns>Task</returns>
+        /// <returns>Task.</returns>
         public static async Task TaskMethod()
         {
-            await Task.Delay(2000);
-            throw new Exception();
+            await Task.Delay(500);
+            throw new InvalidOperationException("Exception thrown from async Task method!");
         }
 
         /// <summary>
-        /// GetsHttpContent
+        /// Downloads content from URL asynchronously and displays it.
         /// </summary>
-        public static void TaskOne()
+        /// <returns>Task</returns>
+        public static async Task TaskOne()
         {
-            GetHttpContent();
+            Console.WriteLine("Task 1: Downloading content...");
+            string content = await GetHttpContent();
+            Console.WriteLine($"Downloaded Content:\n{content}");
         }
 
         /// <summary>
-        /// GetsHttpContent
+        /// Demonstrates Parallel.ForEach from TPL.
         /// </summary>
         public static void TaskTwo()
         {
+            Console.WriteLine("Task 2: Squaring array elements using TPL Parallel.ForEach...");
             int[] array = ArrayGenerate();
             SquareArray(array);
         }
 
         /// <summary>
-        /// GetsHttpContent
+        /// Demonstrates multi-threading using Thread class and Join, then combining results.
         /// </summary>
         public static void TaskThree()
         {
+            Console.WriteLine("Task 3: Running multi-threaded operations and combining results...");
             int mathResult = 0;
             int[] array = ArrayGenerate();
             Thread t1 = new Thread(() => SortsArray(array));
             Thread t2 = new Thread(() => { mathResult = MathTask(); });
 
-            // 2. Start the threads (Capital 'S')
             t1.Start();
             t2.Start();
 
-            // 3. Wait for both threads to complete (Capital 'J' on the instances)
             t1.Join();
             t2.Join();
 
-            Console.WriteLine(mathResult);
+            Console.WriteLine($"Combined Multithreading Results:\n- Math Task Result: {mathResult}\n- Sorted Array First Element: {array[0]}, Last Element: {array[array.Length - 1]}");
         }
 
         /// <summary>
-        /// GetsHttpContent
+        /// Multi-layered async/await operations with root Task.Run().
         /// </summary>
-        public static void TaskFour()
+        /// <returns>Task</returns>
+        public static async Task TaskFour()
         {
-            MethodC();
+            Console.WriteLine("Task 4: Running multi-layered async operations...");
+            string result = await MethodC();
+            Console.WriteLine($"Final Output from MethodC:\n{result}");
         }
 
         /// <summary>
-        /// GetsHttpContent
+        /// Debugging and fixing deadlock condition.
         /// </summary>
-        public static void TaskFive()
+        /// <returns>Task</returns>
+        public static async Task TaskFive()
         {
-            DeadLock.DeadlockMethod();
+            Console.WriteLine("Task 5: Running non-deadlocking async operation...");
+            string result = await DeadLock.DeadlockMethod();
+            Console.WriteLine($"Output: {result}");
         }
 
         /// <summary>
-        /// GetsHttpContent
+        /// ConfigureAwait(false) application with thread tracking.
         /// </summary>
-        public static void TaskSix()
+        /// <returns>Task</returns>
+        public static async Task TaskSix()
         {
-            SimulateComplexOperationB();
+            Console.WriteLine("Task 6: Testing ConfigureAwait(false) with thread tracking...");
+            string result = await SimulateComplexOperationB();
+            Console.WriteLine($"Final Output: {result}");
         }
 
         /// <summary>
-        /// GetsHttpContent
+        /// Task 7: Async void vs Async Task error handling demonstration.
         /// </summary>
-        public static void TaskSeven()
+        /// <returns>Task</returns>
+        public static async Task TaskSeven()
         {
+            Console.WriteLine("Task 7: Demonstrating Exception handling difference...");
+
+            Console.WriteLine("\n[1] Testing async Task method:");
             try
             {
-                TaskMethod();
+                await TaskMethod();
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception is caught in Task returning method.");
+                Console.WriteLine($"Successfully caught exception from async Task method: {ex.Message}");
             }
 
+            Console.WriteLine("\n[2] Testing async void method:");
             try
             {
                 VoidMethod();
+                Console.WriteLine("VoidMethod invoked asynchronously. Exceptions in async void methods propagate to synchronization context and cannot be caught by caller try-catch.");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Console.WriteLine("This will never be caught");
+                Console.WriteLine($"This block will not catch async void exception: {ex.Message}");
             }
         }
     }
