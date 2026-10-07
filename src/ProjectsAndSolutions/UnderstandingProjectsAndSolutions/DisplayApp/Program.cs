@@ -1,4 +1,7 @@
-﻿namespace Assignments
+﻿using MathApp;
+using UtilityApp;
+
+namespace Assignments
 {
     /// <summary>
     /// Program class
@@ -35,11 +38,9 @@ Select the Arithmetic operation to perform
                     continue;
                 }
 
-                ArithmeticOperationChoices userChoice = (ArithmeticOperationChoices)choice;
-
-                switch (userChoice)
+                switch (choice)
                 {
-                    case ArithmeticOperationChoices.Add:
+                    case 1:
                         Console.Write("Enter the first addend : ");
                         if (!InputValidator.IsValidInt(Console.ReadLine(), out int firstOperand))
                         {
@@ -56,7 +57,7 @@ Select the Arithmetic operation to perform
 
                         try
                         {
-                            Console.WriteLine("Sum : " + MathUtils.Add(firstOperand, secondOperand));
+                            Console.WriteLine("Sum : " + MathOperation.Add(firstOperand, secondOperand));
                         }
                         catch (OverflowException)
                         {
@@ -65,7 +66,7 @@ Select the Arithmetic operation to perform
 
                         break;
 
-                    case ArithmeticOperationChoices.Subtract:
+                    case 2:
                         Console.Write("Enter the Minuend : ");
                         if (!InputValidator.IsValidInt(Console.ReadLine(), out int minuend))
                         {
@@ -82,7 +83,7 @@ Select the Arithmetic operation to perform
 
                         try
                         {
-                            Console.WriteLine("Difference : " + MathUtils.Subtract(minuend, subtrahend));
+                            Console.WriteLine("Difference : " + MathOperation.Subtract(minuend, subtrahend));
                         }
                         catch (OverflowException)
                         {
@@ -91,7 +92,7 @@ Select the Arithmetic operation to perform
 
                         break;
 
-                    case ArithmeticOperationChoices.Multiply:
+                    case 3:
                         Console.Write("Enter the Multiplicand : ");
                         if (!InputValidator.IsValidInt(Console.ReadLine(), out int multiplicand))
                         {
@@ -108,7 +109,7 @@ Select the Arithmetic operation to perform
 
                         try
                         {
-                            Console.WriteLine("Product : " + MathUtils.Multiply(multiplicand, multiplier));
+                            Console.WriteLine("Product : " + MathOperation.Multiply(multiplicand, multiplier));
                         }
                         catch
                         {
@@ -117,7 +118,7 @@ Select the Arithmetic operation to perform
 
                         break;
 
-                    case ArithmeticOperationChoices.Divide:
+                    case 4:
                         try
                         {
                             Console.Write("Enter the Dividend : ");
@@ -134,7 +135,7 @@ Select the Arithmetic operation to perform
                                 break;
                             }
 
-                            Console.WriteLine("Quotient : " + MathUtils.Divide(dividend, divisor));
+                            Console.WriteLine("Quotient : " + MathOperation.Divide(dividend, divisor));
                         }
                         catch (DivideByZeroException)
                         {
@@ -147,7 +148,7 @@ Select the Arithmetic operation to perform
 
                         break;
 
-                    case ArithmeticOperationChoices.Exit:
+                    case 5:
                         isAppRunning = false;
                         break;
                 }
